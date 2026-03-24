@@ -1,0 +1,137 @@
+# =============================================================================
+# CDC Portal - Git Ignore
+# =============================================================================
+
+# ---------------------------
+# Environment & Security
+# ---------------------------
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+.env.backup
+.env.production.local
+
+# Application keys
+*.key
+bootstrap/cache/*.php
+!bootstrap/cache/.gitkeep
+
+# ---------------------------
+# Laravel (Backend)
+# ---------------------------
+/cdc-portal-api/vendor/
+/cdc-portal-api/node_modules/
+/cdc-portal-api/.phpunit.cache
+/cdc-portal-api/.phpunit.result.cache
+/cdc-portal-api/storage/*.key
+/cdc-portal-api/storage/pail/
+/cdc-portal-api/storage/clockwork*
+*.log
+*.pot
+*.po
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.phpunit.result.cache
+.phpunit.xml
+semaphore.lock
+
+# Laravel Debugbar & Storage
+/storage/debugbar/*
+/storage/app/telescope/*
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+!database/*.sqlite
+
+# Coverage reports
+/coverage/
+
+# IDE
+.idea/
+.vscode/
+.fleet/
+
+# ---------------------------
+# Next.js (Frontend)
+# ---------------------------
+/cdc-portal-frontend/node_modules/
+/cdc-portal-frontend/.next/
+/cdc-portal-frontend/out/
+/cdc-portal-frontend/build/
+/cdc-portal-frontend/dist/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+cdc-portal-frontend/.env*.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# ---------------------------
+# Composer (root - stray files)
+# ---------------------------
+/vendor/
+composer.phar
+
+# ---------------------------
+# Root level node_modules (stray)
+# ---------------------------
+/node_modules/
+
+# ---------------------------
+# OS Files
+# ---------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.AppleDouble
+.LSOverride
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# ---------------------------
+# Build Artifacts
+# ---------------------------
+*.cache
+*.pid
+*.seed
+*.out
+*.pid.lock
+*.tgz
+
+# ---------------------------
+# Temporary Files
+# ---------------------------
+*.tmp
+*.temp
+*.bak
+*.orig
+*_backup*
+
+# ---------------------------
+# Docker
+# ---------------------------
+.dockerignore
+
+# ---------------------------
+# Keep required files
+# ---------------------------
+!.gitkeep

@@ -1,0 +1,82 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('auth_token');
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;
+
+export const authApi = {
+  sendOtp: (email: string) => api.post('/auth/send-otp', { email }),
+  verifyOtp: (email: string, otp: string) => api.post('/auth/verify-otp', { email, otp }),
+  register: (data: Record<string, unknown>) => api.post('/auth/register', data),
+  login: (email: string, password: string) => api.post('/auth/login', { email, password }),
+  logout: () => api.post('/auth/logout'),
+};
+
+export const companyApi = {
+  get: () => api.get('/company/company'),
+  update: (data: Record<string, unknown>) => api.patch('/company/company', data),
+  uploadLogo: (file: File) => {
+    const formData = new FormData();
+    formData.append('logo', file);
+    return api.post('/company/company/logo', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  getContacts: () => api.get('/company/company/contacts'),
+  updateContacts: (contacts: Record<string, unknown>[]) => api.patch('/company/company/contacts', { contacts }),
+};
+
+export const notificationsApi = {
+  list: () => api.get('/notifications/notifications'),
+  create: (data: { type: 'jnf' | 'inf'; season: number; year: number }) => 
+    api.post('/notifications/notifications', data),
+  get: (id: number) => api.get(`/notifications/notifications/${id}`),
+  updateJobProfile: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/job-profile`, data),
+  updateInternProfile: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/intern-profile`, data),
+  updateEligibility: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/eligibility`, data),
+  updateSalary: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/salary`, data),
+  updateSelection: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/selection`, data),
+  uploadJdPdf: (id: number, file: File) => {
+    const formData = new FormData();
+    formData.append('jd_pdf', file);
+    return api.post(`/notifications/notifications/${id}/jd-pdf`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  submit: (id: number) => api.post(`/notifications/notifications/${id}/submit`),
+  preview: (id: number) => api.get(`/notifications/notifications/${id}/preview`),
+  updateDeclaration: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/notifications/notifications/${id}/declaration`, data),
+};
