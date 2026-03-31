@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('eligibility_criteria', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('notification_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('notification_id')->constrained('notifications')->cascadeOnDelete();
             $table->decimal('min_cgpa', 3, 2)->nullable();
             $table->boolean('backlogs_allowed')->default(true);
             $table->decimal('hs_percentage', 5, 2)->nullable()->comment('High School % criterion');

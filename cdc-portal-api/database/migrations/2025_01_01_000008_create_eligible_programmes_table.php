@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::create('eligible_programmes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('eligibility_criteria_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('eligibility_criteria_id')->constrained('eligibility_criteria')->cascadeOnDelete();
             $table->string('programme_code');
             $table->string('programme_name');
             $table->decimal('min_cpi', 3, 2)->nullable();
             $table->boolean('is_selected')->default(true);
             $table->timestamps();
             
-            $table->unique(['eligibility_criteria_id', 'programme_code']);
+            $table->unique(['eligibility_criteria_id', 'programme_code'],'eligible_prog_unique');
         });
     }
 
