@@ -74,6 +74,13 @@ export const notificationsApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+  uploadSelectionPdf: (id: number, file: File) => {
+    const formData = new FormData();
+    formData.append('selection_pdf', file);
+    return api.post(`/notifications/notifications/${id}/selection-pdf`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
   submit: (id: number) => api.post(`/notifications/notifications/${id}/submit`),
   preview: (id: number) => api.get(`/notifications/notifications/${id}/preview`),
   updateDeclaration: (id: number, data: Record<string, unknown>) => 

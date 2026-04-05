@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/notifications/{id}/stipend', [App\Http\Controllers\Api\NotificationController::class, 'updateStipend']);
     Route::patch('/notifications/{id}/selection', [App\Http\Controllers\Api\NotificationController::class, 'updateSelection']);
     Route::post('/notifications/{id}/jd-pdf', [App\Http\Controllers\Api\NotificationController::class, 'uploadJdPdf']);
+    Route::post('/notifications/{id}/selection-pdf', [App\Http\Controllers\Api\NotificationController::class, 'uploadSelectionPdf']);
     Route::post('/notifications/{id}/submit', [App\Http\Controllers\Api\NotificationController::class, 'submit']);
     Route::get('/notifications/{id}/preview', [App\Http\Controllers\Api\NotificationController::class, 'preview']);
     Route::patch('/notifications/{id}/declaration', [App\Http\Controllers\Api\NotificationController::class, 'updateDeclaration']);

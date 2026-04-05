@@ -365,8 +365,8 @@ export default function RegisterPage() {
                       ...(index < activeStep
                         ? { bgcolor: '#C8922A', color: '#FEFEFE' }
                         : index === activeStep
-                        ? { bgcolor: '#0A1628', color: '#FEFEFE' }
-                        : { bgcolor: '#FEFEFE', color: '#5A6478', border: '2px solid rgba(10,22,40,0.12)' }),
+                          ? { bgcolor: '#0A1628', color: '#FEFEFE' }
+                          : { bgcolor: '#FEFEFE', color: '#5A6478', border: '2px solid rgba(10,22,40,0.12)' }),
                     }}
                   >
                     {index < activeStep ? '✓' : `0${index + 1}`}

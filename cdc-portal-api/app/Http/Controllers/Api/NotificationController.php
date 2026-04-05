@@ -316,6 +316,37 @@ class NotificationController extends Controller
         ]);
     }
 
+    public function uploadSelectionPdf(Request $request, int $id): JsonResponse
+    {
+        $notification = $request->user()->notifications()->findOrFail($id);
+
+        $request->validate([
+            'selection_pdf' => 'required|mimes:pdf|max:5120',
+        ]);
+
+        $infra = $notification->selectionInfra()->first();
+
+        if (!$infra) {
+            $infra = $notification->selectionInfra()->create([
+                'notification_id' => $id,
+            ]);
+        }
+
+        $oldPath = $infra->selection_process_pdf_path;
+
+        if ($oldPath) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        $path = $request->file('selection_pdf')->store('selection-pdfs', 'public');
+        $infra->update(['selection_process_pdf_path' => $path]);
+
+        return response()->json([
+            'message' => 'Selection process PDF uploaded.',
+            'selection_process_pdf_path' => $path,
+        ]);
+    }
+
     public function submit(Request $request, int $id): JsonResponse
     {
         $notification = $request->user()->notifications()->findOrFail($id);
@@ -369,15 +400,15 @@ class NotificationController extends Controller
         $notification = $request->user()->notifications()->findOrFail($id);
 
         $validated = $request->validate([
-            'aipc_guidelines' => 'accepted',
-            'shortlisting_commitment' => 'accepted',
-            'accuracy_profile' => 'accepted',
-            'consent_ranking_agencies' => 'accepted',
-            'adherence_toc' => 'accepted',
-            'rti_nirf_consent' => 'accepted',
-            'signatory_name' => 'required|string|max:255',
-            'signatory_designation' => 'required|string|max:255',
-            'typed_signature' => 'required|string|max:255',
+            'aipc_guidelines' => 'boolean',
+            'shortlisting_commitment' => 'boolean',
+            'accuracy_profile' => 'boolean',
+            'consent_ranking_agencies' => 'boolean',
+            'adherence_toc' => 'boolean',
+            'rti_nirf_consent' => 'boolean',
+            'signatory_name' => 'nullable|string|max:255',
+            'signatory_designation' => 'nullable|string|max:255',
+            'typed_signature' => 'nullable|string|max:255',
         ]);
 
         $notification->declaration()->updateOrCreate(

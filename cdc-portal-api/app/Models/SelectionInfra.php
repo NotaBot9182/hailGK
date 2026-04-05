@@ -17,6 +17,7 @@ class SelectionInfra extends Model
         'psychometric_test',
         'medical_test',
         'other_screening',
+        'selection_process_pdf_path',
     ];
 
     protected $casts = [
