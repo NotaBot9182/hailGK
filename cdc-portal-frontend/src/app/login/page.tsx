@@ -52,7 +52,12 @@ export default function LoginPage() {
       }
 
       setAuth(data.user, data.company, data.token);
-      router.push('/dashboard');
+      
+      if (data.user.role === 'super_admin' || data.user.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/dashboard');
+      }
     } catch (err: any) {
       setError(err.message || 'Invalid credentials');
     } finally {

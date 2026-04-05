@@ -149,6 +149,20 @@ class AdminController extends Controller
             'role' => 'in:recruiter,admin,super_admin',
         ]);
 
+        if (isset($validated['role']) && $validated['role'] !== $user->role) {
+            if (!$request->user()->isSuperAdmin()) {
+                return response()->json([
+                    'message' => 'Only Super Admin can change user roles.'
+                ], 403);
+            }
+        }
+
+        if ($user->id === $request->user()->id && isset($validated['role']) && $validated['role'] !== 'super_admin') {
+            return response()->json([
+                'message' => 'Cannot change your own role.'
+            ], 422);
+        }
+
         $user->update($validated);
 
         AuditLog::create([
@@ -169,6 +183,12 @@ class AdminController extends Controller
 
     public function deleteUser(Request $request, int $id): JsonResponse
     {
+        if (!$request->user()->isSuperAdmin()) {
+            return response()->json([
+                'message' => 'Only Super Admin can delete users.'
+            ], 403);
+        }
+
         $user = User::findOrFail($id);
 
         if ($user->id === $request->user()->id) {
@@ -177,7 +197,52 @@ class AdminController extends Controller
 
         $user->delete();
 
+        AuditLog::create([
+            'user_id' => $request->user()->id,
+            'action' => 'user_delete',
+            'entity_type' => 'user',
+            'entity_id' => $user->id,
+            'metadata' => ['deleted_user_email' => $user->email],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
         return response()->json(['message' => 'User deleted.']);
+    }
+
+    public function createUser(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:recruiter,admin',
+            'company_id' => 'nullable|exists:companies,id',
+            'designation' => 'nullable|string|max:255',
+            'mobile' => 'nullable|string|max:20',
+        ]);
+
+        $user = User::create([
+            ...$validated,
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'email_verified_at' => now(),
+            'is_active' => true,
+        ]);
+
+        AuditLog::create([
+            'user_id' => $request->user()->id,
+            'action' => 'user_create',
+            'entity_type' => 'user',
+            'entity_id' => $user->id,
+            'metadata' => ['email' => $user->email, 'role' => $user->role],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        return response()->json([
+            'message' => 'User created.',
+            'user' => $user,
+        ], 201);
     }
 
     public function analytics(Request $request): JsonResponse
@@ -209,5 +274,34 @@ class AdminController extends Controller
             'by_status' => $byStatus,
             'by_sector' => $bySector,
         ]);
+    }
+
+    public function auditLogs(Request $request): JsonResponse
+    {
+        $query = AuditLog::with('user');
+
+        if ($request->has('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        if ($request->has('action')) {
+            $query->where('action', $request->action);
+        }
+
+        if ($request->has('entity_type')) {
+            $query->where('entity_type', $request->entity_type);
+        }
+
+        if ($request->has('from')) {
+            $query->where('created_at', '>=', $request->from);
+        }
+
+        if ($request->has('to')) {
+            $query->where('created_at', '<=', $request->to);
+        }
+
+        $logs = $query->orderBy('created_at', 'desc')->paginate(50);
+
+        return response()->json($logs);
     }
 }

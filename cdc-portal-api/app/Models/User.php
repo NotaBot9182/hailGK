@@ -48,4 +48,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'super_admin']);
+    }
+
+    public function isRecruiter(): bool
+    {
+        return $this->role === 'recruiter';
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
 }

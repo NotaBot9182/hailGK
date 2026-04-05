@@ -55,16 +55,16 @@ export default function DashboardPage() {
   });
   const [statusFilter, setStatusFilter] = useState('all');
 
-  const sidebarItems = user?.role === 'admin' ? [
+  const sidebarItems = user?.role === 'recruiter' ? [
+    { label: 'Submissions' },
+    { label: 'Company Profile' },
+    { label: 'Contacts & HR' },
+  ] : [
     { label: 'Submissions' },
     { label: 'Analytics' },
     { label: 'Recruiters' },
     { label: 'Export Data' },
     { label: 'Audit Log' },
-  ] : [
-    { label: 'Submissions' },
-    { label: 'Company Profile' },
-    { label: 'Contacts & HR' },
   ];
 
   const createMutation = useMutation({

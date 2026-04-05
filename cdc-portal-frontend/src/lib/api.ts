@@ -79,3 +79,15 @@ export const notificationsApi = {
   updateDeclaration: (id: number, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/declaration`, data),
 };
+
+export const adminApi = {
+  listNotifications: (params?: Record<string, unknown>) => api.get('/admin/notifications', { params }),
+  updateNotificationStatus: (id: number, data: Record<string, unknown>) => 
+    api.patch(`/admin/notifications/${id}/status`, data),
+  export: (type?: string) => api.get('/admin/export', { params: { type } }),
+  listUsers: (params?: Record<string, unknown>) => api.get('/admin/users', { params }),
+  updateUser: (id: number, data: Record<string, unknown>) => api.patch(`/admin/users/${id}`, data),
+  deleteUser: (id: number) => api.delete(`/admin/users/${id}`),
+  getAnalytics: () => api.get('/admin/analytics'),
+  getAuditLogs: (params?: Record<string, unknown>) => api.get('/admin/audit-logs', { params }),
+};
