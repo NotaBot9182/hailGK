@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->statefulApi();
+        // Stateful SPA authentication is not needed as we use Bearer tokens
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

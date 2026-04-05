@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CDC Portal Frontend - IIT (ISM) Dhanbad",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.16.0",
     "@mui/material-nextjs": "^5.16.0",
+    "@tanstack/react-query": "^5.96.1",
     "axios": "^1.7.0",
     "next": "^14.2.0",
     "next-auth": "^5.0.0-beta.0",
