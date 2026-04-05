@@ -36,6 +36,8 @@ export const authApi = {
   register: (data: Record<string, unknown>) => api.post('/auth/register', data),
   login: (email: string, password: string) => api.post('/auth/login', { email, password }),
   logout: () => api.post('/auth/logout'),
+  forgotPassword: (email: string) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (data: Record<string, unknown>) => api.post('/auth/reset-password', data),
 };
 
 export const companyApi = {
@@ -56,18 +58,18 @@ export const notificationsApi = {
   list: () => api.get('/notifications/notifications'),
   create: (data: { type: 'jnf' | 'inf'; season: number; year: number }) => 
     api.post('/notifications/notifications', data),
-  get: (id: number) => api.get(`/notifications/notifications/${id}`),
-  updateJobProfile: (id: number, data: Record<string, unknown>) => 
+  get: (id: number | string) => api.get(`/notifications/notifications/${id}`),
+  updateJobProfile: (id: number | string, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/job-profile`, data),
-  updateInternProfile: (id: number, data: Record<string, unknown>) => 
+  updateInternProfile: (id: number | string, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/intern-profile`, data),
-  updateEligibility: (id: number, data: Record<string, unknown>) => 
+  updateEligibility: (id: number | string, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/eligibility`, data),
-  updateSalary: (id: number, data: Record<string, unknown>) => 
+  updateSalary: (id: number | string, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/salary`, data),
-  updateSelection: (id: number, data: Record<string, unknown>) => 
+  updateSelection: (id: number | string, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/selection`, data),
-  uploadJdPdf: (id: number, file: File) => {
+  uploadJdPdf: (id: number | string, file: File) => {
     const formData = new FormData();
     formData.append('jd_pdf', file);
     return api.post(`/notifications/notifications/${id}/jd-pdf`, formData, {

@@ -81,7 +81,7 @@ export default function ContactsPage() {
     setSuccess('');
 
     try {
-      await companyApi.updateContacts(contacts);
+      await companyApi.updateContacts(contacts as unknown as Record<string, unknown>[]);
       setSuccess('Contacts updated successfully');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to update contacts');
