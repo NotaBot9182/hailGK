@@ -559,29 +559,29 @@ export default function RegisterPage() {
                   </Typography>
 
                   <Grid container spacing={2}>
-                    <Grid size={12}>
+                    <Grid item xs={12}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Full Name <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
                       <TextField fullWidth placeholder="John Doe" value={formData.name} onChange={handleChange('name')} required size="small" id="register-name" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Designation <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
                       <TextField fullWidth placeholder="HR Manager" value={formData.designation} onChange={handleChange('designation')} required size="small" id="register-designation" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Mobile (+91) <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
                       <TextField fullWidth placeholder="+91 98765 43210" value={formData.mobile} onChange={handleChange('mobile')} required size="small" id="register-mobile" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Alternative Mobile</Typography>
                       <TextField fullWidth placeholder="Optional" value={formData.alt_mobile} onChange={handleChange('alt_mobile')} size="small" id="register-alt-mobile" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Password <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
@@ -605,7 +605,7 @@ export default function RegisterPage() {
                         }}
                       />
                     </Grid>
-                    <Grid size={12}>
+                    <Grid item xs={12}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Confirm Password <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
@@ -623,13 +623,13 @@ export default function RegisterPage() {
                   </Typography>
 
                   <Grid container spacing={2}>
-                    <Grid size={12}>
+                    <Grid item xs={12}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Company Name <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
                       <TextField fullWidth placeholder="Acme Corporation" value={formData.company_name} onChange={handleChange('company_name')} required size="small" id="register-company-name" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                         Category <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                       </Typography>
@@ -640,23 +640,23 @@ export default function RegisterPage() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Website</Typography>
                       <TextField fullWidth placeholder="https://company.com" value={formData.company_website} onChange={handleChange('company_website')} size="small" id="register-website" />
                     </Grid>
-                    <Grid size={12}>
+                    <Grid item xs={12}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Postal Address</Typography>
                       <TextField fullWidth multiline rows={2} placeholder="Registered office address" value={formData.company_address} onChange={handleChange('company_address')} size="small" id="register-address" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Sector</Typography>
                       <TextField fullWidth placeholder="e.g., IT, Manufacturing" value={formData.company_sector} onChange={handleChange('company_sector')} size="small" id="register-sector" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Nature of Business</Typography>
                       <TextField fullWidth placeholder="e.g., Product, Services" value={formData.company_nature} onChange={handleChange('company_nature')} size="small" id="register-nature" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>No. of Employees</Typography>
                       <FormControl fullWidth size="small">
                         <Select value={formData.company_employees} onChange={handleSelectChange('company_employees')} displayEmpty id="register-employees">
@@ -665,11 +665,11 @@ export default function RegisterPage() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Date of Establishment</Typography>
                       <TextField fullWidth type="date" value={formData.company_establishment} onChange={handleChange('company_establishment')} InputLabelProps={{ shrink: true }} size="small" id="register-established" />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Annual Turnover (NIRF)</Typography>
                       <FormControl fullWidth size="small">
                         <Select value={formData.company_turnover} onChange={handleSelectChange('company_turnover')} displayEmpty id="register-turnover">
@@ -678,19 +678,19 @@ export default function RegisterPage() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <Grid item xs={12} sm={6}>
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>LinkedIn URL</Typography>
                       <TextField fullWidth placeholder="https://linkedin.com/company/..." value={formData.linkedin_url} onChange={handleChange('linkedin_url')} size="small" id="register-linkedin" />
                     </Grid>
                     {formData.company_category === 'MNC' && (
                       <>
-                        <Grid size={{ xs: 12, sm: 6 }}>
+                        <Grid item xs={12} sm={6}>
                           <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                             Parent HQ Country <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                           </Typography>
                           <TextField fullWidth value={formData.parent_hq_country} onChange={handleChange('parent_hq_country')} required size="small" id="register-hq-country" />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6 }}>
+                        <Grid item xs={12} sm={6}>
                           <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>
                             Parent HQ City <Box component="span" sx={{ color: '#8B1A1A' }}>*</Box>
                           </Typography>
@@ -698,7 +698,7 @@ export default function RegisterPage() {
                         </Grid>
                       </>
                     )}
-                    <Grid size={12}>
+                    <Grid item xs={12}>
                       <Box sx={{ height: '1px', bgcolor: 'rgba(10,22,40,0.08)', my: 1 }} />
                       <Typography sx={{ fontSize: '12px', color: '#5A6478', fontWeight: 500, mb: '6px' }}>Industry Tags</Typography>
                       <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>

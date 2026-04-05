@@ -164,7 +164,7 @@ export default function CompanyProfilePage() {
 
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            <Grid size={12}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Company Name"
@@ -173,7 +173,7 @@ export default function CompanyProfilePage() {
                 required
               />
             </Grid>
-            <Grid size={12}>
+            <Grid item xs={12}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Avatar
                   src={logoPreview || (company.logo_path ? `/storage/${company.logo_path}` : undefined)}
@@ -197,7 +197,7 @@ export default function CompanyProfilePage() {
                 </Box>
               </Box>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth required>
                 <InputLabel>Category</InputLabel>
                 <Select value={company.category} onChange={handleSelectChange('category')} label="Category">
@@ -207,10 +207,10 @@ export default function CompanyProfilePage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField fullWidth label="Website" value={company.website || ''} onChange={handleChange('website')} />
             </Grid>
-            <Grid size={12}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Postal Address"
@@ -220,13 +220,13 @@ export default function CompanyProfilePage() {
                 onChange={handleChange('postal_address')}
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField fullWidth label="Sector" value={company.sector || ''} onChange={handleChange('sector')} />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField fullWidth label="Nature of Business" value={company.nature_of_business || ''} onChange={handleChange('nature_of_business')} />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>No. of Employees</InputLabel>
                 <Select value={company.no_of_employees || ''} onChange={handleSelectChange('no_of_employees')} label="No. of Employees">
@@ -236,7 +236,7 @@ export default function CompanyProfilePage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Date of Establishment"
@@ -246,7 +246,7 @@ export default function CompanyProfilePage() {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Annual Turnover (NIRF)</InputLabel>
                 <Select value={company.annual_turnover || ''} onChange={handleSelectChange('annual_turnover')} label="Annual Turnover (NIRF)">
@@ -256,20 +256,20 @@ export default function CompanyProfilePage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField fullWidth label="LinkedIn URL" value={company.linkedin_url || ''} onChange={handleChange('linkedin_url')} />
             </Grid>
             {company.category === 'MNC' && (
               <>
-                <Grid size={{ xs: 12, sm: 6 }}>
+                <Grid item xs={12} sm={6}>
                   <TextField fullWidth label="Parent HQ Country" value={company.parent_hq_country || ''} onChange={handleChange('parent_hq_country')} required />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6 }}>
+                <Grid item xs={12} sm={6}>
                   <TextField fullWidth label="Parent HQ City" value={company.parent_hq_city || ''} onChange={handleChange('parent_hq_city')} required />
                 </Grid>
               </>
             )}
-            <Grid size={12}>
+            <Grid item xs={12}>
               <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
                 <TextField label="Industry Sector Tags" value={newTag} onChange={(e) => setNewTag(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())} />
                 <Button variant="outlined" onClick={handleAddTag}>Add</Button>
@@ -280,7 +280,7 @@ export default function CompanyProfilePage() {
                 ))}
               </Box>
             </Grid>
-            <Grid size={12}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Company Description"
@@ -290,7 +290,7 @@ export default function CompanyProfilePage() {
                 onChange={handleChange('description')}
               />
             </Grid>
-            <Grid size={12}>
+            <Grid item xs={12}>
               <Button type="submit" variant="contained" size="large" disabled={saving}>
                 {saving ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
               </Button>

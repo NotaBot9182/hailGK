@@ -120,7 +120,7 @@ export default function ContactsPage() {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             {contacts.map((contact, index) => (
-              <Grid size={12} key={contact.type}>
+              <Grid item xs={12} key={contact.type}>
                 <Card variant="outlined">
                   <CardHeader
                     title={contactTypes.find(ct => ct.type === contact.type)?.label}
@@ -128,7 +128,7 @@ export default function ContactsPage() {
                   />
                   <CardContent>
                     <Grid container spacing={2}>
-                      <Grid size={{ xs: 12, sm: 6 }}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
                           label="Full Name"
@@ -137,7 +137,7 @@ export default function ContactsPage() {
                           required
                         />
                       </Grid>
-                      <Grid size={{ xs: 12, sm: 6 }}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
                           label="Designation"
@@ -146,7 +146,7 @@ export default function ContactsPage() {
                           required
                         />
                       </Grid>
-                      <Grid size={{ xs: 12, sm: 6 }}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
                           label="Email"
@@ -156,7 +156,7 @@ export default function ContactsPage() {
                           required
                         />
                       </Grid>
-                      <Grid size={{ xs: 12, sm: 6 }}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
                           label="Mobile (+91)"
@@ -165,7 +165,7 @@ export default function ContactsPage() {
                           required
                         />
                       </Grid>
-                      <Grid size={{ xs: 12, sm: 6 }}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
                           label="Landline"
@@ -178,7 +178,7 @@ export default function ContactsPage() {
                 </Card>
               </Grid>
             ))}
-            <Grid size={12}>
+            <Grid item xs={12}>
               <Button type="submit" variant="contained" size="large" disabled={saving}>
                 {saving ? <CircularProgress size={24} color="inherit" /> : 'Save Contacts'}
               </Button>
