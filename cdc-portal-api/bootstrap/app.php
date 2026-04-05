@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Trust all proxies (needed for Railway, Vercel, etc. reverse proxies)
+        $middleware->trustProxies(at: '*');
         // Stateful SPA authentication is not needed as we use Bearer tokens
     })
     ->withExceptions(function (Exceptions $exceptions): void {
