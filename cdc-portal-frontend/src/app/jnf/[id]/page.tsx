@@ -284,7 +284,50 @@ export default function JnfFormShell() {
       const data = res.data.notification;
       
       // Initialize salary fields if missing
-      if (!data.salary_details) data.salary_details = {};
+      const mapperReverse: Record<string, string> = {
+        'btech_dual': 'btech',
+        'mtech': 'mtech',
+        'mba': 'mba',
+        'msc_msctech': 'msc',
+        'phd': 'phd',
+        'ma': 'ma'
+      };
+
+      if (!data.salary_details) {
+        data.salary_details = {};
+        if (data.salaries && Array.isArray(data.salaries)) {
+          data.salaries.forEach((s: any) => {
+            const frontKey = mapperReverse[s.programme];
+            if (frontKey) {
+              data.salary_details[frontKey] = {
+                ctc: s.ctc_annual,
+                base: s.base_fixed,
+                take_home: s.monthly_takehome
+              };
+              
+              // Only parse additional components once from the first salary record 
+              // (since UI treats additional components globally per notification)
+              if (!data.additional_salary_components) {
+                data.additional_salary_components = {
+                  joining_bonus: s.joining_bonus,
+                  retention_bonus: s.retention_bonus,
+                  performance_bonus: s.variable_bonus,
+                  esops: s.esop_value,
+                  stocks_options: s.stocks_options,
+                  relocation_allowance: s.relocation_allowance,
+                  medical_allowance: s.medical_allowance,
+                  deductions: s.deductions,
+                  bond_amount: s.bond_amount,
+                  ctc_breakup: s.ctc_breakup,
+                  gross_salary: s.gross_salary
+                };
+                data.salary_currency = s.currency || 'INR';
+              }
+            }
+          });
+        }
+      }
+      
       if (!data.additional_salary_components) data.additional_salary_components = {};
       if (!data.salary_currency) data.salary_currency = 'INR';
       if (data.salary_same_for_all === undefined) data.salary_same_for_all = false;
@@ -320,28 +363,47 @@ export default function JnfFormShell() {
       };
 
       // field normalization
-      data.job_title = data.jobProfile?.profile_name || '';
-      data.job_designation = data.jobProfile?.designation || '';
-      data.place_of_posting = data.jobProfile?.place_of_posting || [];
-      data.work_location_mode = data.jobProfile?.work_mode || 'on_site';
-      data.expected_hires = data.jobProfile?.expected_hires || '';
-      data.minimum_hires = data.jobProfile?.min_hires || '';
-      data.tentative_joining_month = data.jobProfile?.tentative_joining_month ? data.jobProfile.tentative_joining_month.substring(0, 7) : '';
-      data.required_skills = data.jobProfile?.required_skills || [];
-      data.job_description = data.jobProfile?.job_description || '';
-      data.additional_job_info = data.jobProfile?.additional_job_info || '';
-      data.bond_details = data.jobProfile?.bond_details || '';
-      data.registration_link = data.jobProfile?.registration_link || '';
-      data.onboarding_procedure = data.jobProfile?.onboarding_procedure || '';
+      data.job_title = data.job_profile?.profile_name || '';
+      data.job_designation = data.job_profile?.designation || '';
+      data.place_of_posting = data.job_profile?.place_of_posting || [];
+      
+      // format work mode back to standard label
+      if (data.job_profile?.work_mode === 'on_site') data.work_location_mode = 'On-site';
+      else if (data.job_profile?.work_mode === 'remote') data.work_location_mode = 'Remote';
+      else if (data.job_profile?.work_mode === 'hybrid') data.work_location_mode = 'Hybrid';
+      else data.work_location_mode = 'On-site';
+
+      data.expected_hires = data.job_profile?.expected_hires || '';
+      data.minimum_hires = data.job_profile?.min_hires || '';
+      data.tentative_joining_month = data.job_profile?.tentative_joining_month ? data.job_profile.tentative_joining_month.substring(0, 7) : '';
+      data.required_skills = data.job_profile?.required_skills || [];
+      data.job_description = data.job_profile?.job_description || '';
+      data.additional_job_info = data.job_profile?.additional_job_info || '';
+      data.bond_details = data.job_profile?.bond_details || '';
+      data.registration_link = data.job_profile?.registration_link || '';
+      data.onboarding_procedure = data.job_profile?.onboarding_procedure || '';
 
       // Eligibility normalization
-      data.min_cpi = data.eligibilityCriteria?.min_cgpa || '';
-      data.high_school_criterion = data.eligibilityCriteria?.hs_percentage || '';
-      data.backlogs_allowed = data.eligibilityCriteria?.backlogs_allowed || false;
-      data.gender_filter = data.eligibilityCriteria?.gender_filter || 'all';
-      data.eligible_courses = (data.eligibilityCriteria?.programmes || []).flatMap((p: any) => 
-        (p.courses || []).map((c: string) => `${p.name}|${c}`)
-      );
+      data.min_cpi = data.eligibility_criteria?.min_cgpa || '';
+      data.high_school_criterion = data.eligibility_criteria?.hs_percentage || '';
+      data.backlogs_allowed = data.eligibility_criteria?.backlogs_allowed || false;
+      data.gender_filter = data.eligibility_criteria?.gender_filter || 'all';
+      data.phd_allowed = !!data.eligibility_criteria?.phd_allowed;
+      data.ma_dhss_allowed = !!data.eligibility_criteria?.ma_dhss_allowed;
+
+      // Extract previously saved courses correctly
+      data.eligible_courses = (data.eligibility_criteria?.programmes || []).flatMap((p: any) => {
+        // The API sends courses as a JSON string under programmes, we need to parse it if it is a string
+        let coursesArray = p.courses || [];
+        if (typeof coursesArray === 'string') {
+          try {
+            coursesArray = JSON.parse(coursesArray);
+          } catch (e) {
+            coursesArray = [];
+          }
+        }
+        return coursesArray.map((c: string) => `${p.programme_name}|${c}`);
+      });
 
       setFormData(data);
     } catch (err) {
@@ -515,6 +577,9 @@ export default function JnfFormShell() {
         backlogs_allowed: !!formData.backlogs_allowed,
         hs_percentage: safeFloat(formData.high_school_criterion),
         gender_filter: (formData.gender_filter || 'all').toLowerCase(),
+        phd_allowed: !!formData.phd_allowed,
+        phd_departments: formData.phd_departments || '',
+        ma_dhss_allowed: !!formData.ma_dhss_allowed,
         programmes: programmes
       };
 

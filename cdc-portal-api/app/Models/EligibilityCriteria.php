@@ -20,12 +20,16 @@ class EligibilityCriteria extends Model
         'hs_percentage',
         'gender_filter',
         'slp_requirement',
+        'phd_allowed',
+        'ma_dhss_allowed',
     ];
 
     protected $casts = [
         'min_cgpa' => 'decimal:2',
         'backlogs_allowed' => 'boolean',
         'hs_percentage' => 'decimal:2',
+        'phd_allowed' => 'boolean',
+        'ma_dhss_allowed' => 'boolean',
     ];
 
     public function notification(): BelongsTo

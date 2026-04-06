@@ -16,11 +16,13 @@ class EligibleProgramme extends Model
         'programme_name',
         'min_cpi',
         'is_selected',
+        'courses',
     ];
 
     protected $casts = [
         'min_cpi' => 'decimal:2',
         'is_selected' => 'boolean',
+        'courses' => 'array',
     ];
 
     public function eligibilityCriteria(): BelongsTo

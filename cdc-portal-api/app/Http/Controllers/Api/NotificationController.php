@@ -147,11 +147,15 @@ class NotificationController extends Controller
             'hs_percentage' => 'nullable|numeric|min:0|max:100',
             'gender_filter' => 'in:all,male,female,others',
             'slp_requirement' => 'nullable|string',
+            'phd_allowed' => 'boolean',
+            'phd_departments' => 'nullable|string',
+            'ma_dhss_allowed' => 'boolean',
             'programmes' => 'nullable|array',
             'programmes.*.code' => 'required|string',
             'programmes.*.name' => 'required|string',
             'programmes.*.min_cpi' => 'nullable|numeric|min:0|max:10',
             'programmes.*.is_selected' => 'boolean',
+            'programmes.*.courses' => 'nullable|array',
         ]);
 
         $eligibility = $notification->eligibilityCriteria()->updateOrCreate(
@@ -162,19 +166,27 @@ class NotificationController extends Controller
                 'hs_percentage' => $validated['hs_percentage'] ?? null,
                 'gender_filter' => $validated['gender_filter'] ?? 'all',
                 'slp_requirement' => $validated['slp_requirement'] ?? null,
+                'phd_allowed' => $validated['phd_allowed'] ?? false,
+                'ma_dhss_allowed' => $validated['ma_dhss_allowed'] ?? false,
             ]
         );
 
         if (isset($validated['programmes'])) {
-            $eligibility->programmes()->delete();
+            $submittedCodes = [];
             foreach ($validated['programmes'] as $prog) {
-                $eligibility->programmes()->create([
-                    'programme_code' => $prog['code'],
-                    'programme_name' => $prog['name'],
-                    'min_cpi' => $prog['min_cpi'] ?? null,
-                    'is_selected' => $prog['is_selected'] ?? true,
-                ]);
+                $eligibility->programmes()->updateOrCreate(
+                    ['programme_code' => $prog['code']],
+                    [
+                        'programme_name' => $prog['name'],
+                        'min_cpi' => $prog['min_cpi'] ?? null,
+                        'is_selected' => $prog['is_selected'] ?? true,
+                        'courses' => $prog['courses'] ?? [],
+                    ]
+                );
+                $submittedCodes[] = $prog['code'];
             }
+            // Remove programmes no longer in the submission
+            $eligibility->programmes()->whereNotIn('programme_code', $submittedCodes)->delete();
         }
 
         return response()->json([
