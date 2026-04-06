@@ -33,6 +33,8 @@ export default function InfFormShell() {
       setFormData(res.data.notification);
     } catch (err) {
       console.error('Failed to load INF', err);
+      router.push('/dashboard');
+      return;
     } finally {
       setLoading(false);
     }

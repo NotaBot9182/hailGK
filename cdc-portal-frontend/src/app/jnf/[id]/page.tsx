@@ -346,6 +346,8 @@ export default function JnfFormShell() {
       setFormData(data);
     } catch (err) {
       console.error('Failed to load JNF', err);
+      router.push('/dashboard');
+      return; // prevent flash of broken state
     } finally {
       setLoading(false);
     }
@@ -1023,13 +1025,11 @@ export default function JnfFormShell() {
 
               {/* Salary Table */}
               <Box sx={{ border: '1px solid rgba(10,22,40,0.15)', borderRadius: 1.5, overflow: 'hidden', mb: 4, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr 1fr 1fr', bgcolor: '#0A1628', color: '#FFF', py: 1.8, px: 2 }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', bgcolor: '#0A1628', color: '#FFF', py: 1.8, px: 2 }}>
                   <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#C8922A' }}>PROGRAMME</Typography>
                   <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>CTC (Annual)</Typography>
                   <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>Base/Fixed</Typography>
                   <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>Monthly Take-home</Typography>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>UG CTC</Typography>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>PG CTC</Typography>
                 </Box>
                 
                 {getActiveSalaryGroups().length === 0 ? (
@@ -1042,7 +1042,7 @@ export default function JnfFormShell() {
                   getActiveSalaryGroups().map((group, idx) => (
                     <Box key={group.id} sx={{ 
                       display: 'grid', 
-                      gridTemplateColumns: '2fr 1fr 1fr 1.2fr 1fr 1fr', 
+                      gridTemplateColumns: '2fr 1fr 1fr 1.2fr', 
                       px: 2, 
                       py: 2, 
                       alignItems: 'center',
@@ -1053,8 +1053,6 @@ export default function JnfFormShell() {
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.ctc} onChange={(val: string) => handleSalaryChange(group.id, 'ctc', val)} /></Box>
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.base} onChange={(val: string) => handleSalaryChange(group.id, 'base', val)} /></Box>
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.take_home} onChange={(val: string) => handleSalaryChange(group.id, 'take_home', val)} /></Box>
-                      <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.ug_ctc} onChange={(val: string) => handleSalaryChange(group.id, 'ug_ctc', val)} /></Box>
-                      <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.pg_ctc} onChange={(val: string) => handleSalaryChange(group.id, 'pg_ctc', val)} /></Box>
                     </Box>
                   ))
                 )}

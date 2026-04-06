@@ -26,6 +26,9 @@ class InternProfile extends Model
         'additional_info',
         'registration_link',
         'onboarding_procedure',
+        'stipend_amount',
+        'currency',
+        'ctc_breakup',
     ];
 
     protected $casts = [

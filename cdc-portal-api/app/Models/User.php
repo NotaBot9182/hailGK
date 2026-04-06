@@ -68,4 +68,13 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    /**
+     * Override the default Notifiable trait to point to our custom Notification model.
+     * This fixes the 'notifiable_type' column not found error.
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

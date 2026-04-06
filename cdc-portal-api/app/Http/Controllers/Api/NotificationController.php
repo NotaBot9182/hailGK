@@ -233,8 +233,17 @@ class NotificationController extends Controller
             'ctc_breakup' => 'nullable|string',
         ]);
 
+        if (!$notification->internProfile) {
+            return response()->json([
+                'message' => 'Please fill out and save the Intern Profile tab first.',
+            ], 422);
+        }
+
+        $notification->internProfile->update($validated);
+
         return response()->json([
             'message' => 'Stipend details saved.',
+            'intern_profile' => $notification->internProfile,
         ]);
     }
 
