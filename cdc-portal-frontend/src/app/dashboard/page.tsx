@@ -476,21 +476,28 @@ export default function DashboardPage() {
                             : '—'}
                         </TableCell>
                         <TableCell>
-                          <Box
-                            component="span"
-                            sx={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '5px',
-                              px: '10px',
-                              py: '3px',
-                              borderRadius: '20px',
-                              fontSize: '11.5px',
-                              fontWeight: 500,
-                              ...(statusStyleMap[notification.status] || statusStyleMap['draft']),
-                            }}
-                          >
-                            {notification.status.replace('_', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())}
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
+                            <Box
+                              component="span"
+                              sx={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                px: '10px',
+                                py: '3px',
+                                borderRadius: '20px',
+                                fontSize: '11.5px',
+                                fontWeight: 500,
+                                ...(statusStyleMap[notification.status] || statusStyleMap['draft']),
+                              }}
+                            >
+                              {notification.status.replace('_', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())}
+                            </Box>
+                            {notification.review_notes && (
+                              <Typography sx={{ fontSize: '10.5px', color: '#5A6478', fontStyle: 'italic', maxWidth: '200px', lineHeight: 1.2 }}>
+                                ↳ {notification.review_notes}
+                              </Typography>
+                            )}
                           </Box>
                         </TableCell>
                         <TableCell>
@@ -517,6 +524,45 @@ export default function DashboardPage() {
                               >
                                 Preview
                               </Link>
+                            )}
+                            <Box
+                              component="span"
+                              onClick={() => {
+                                if (confirm('Duplicate this submission for the current season?')) {
+                                  notificationsApi.duplicate(notification.id).then(() => {
+                                    window.location.reload();
+                                  }).catch(() => alert('Failed to duplicate.'));
+                                }
+                              }}
+                              sx={{
+                                fontSize: '12.5px',
+                                color: '#5A6478',
+                                cursor: 'pointer',
+                                '&:hover': { color: '#2A8A9E' }
+                              }}
+                            >
+                              Duplicate
+                            </Box>
+                            {notification.status === 'draft' && (
+                              <Box
+                                component="span"
+                                onClick={() => {
+                                  if (confirm('Delete this draft permanently?')) {
+                                    notificationsApi.delete(notification.id).then(() => {
+                                      window.location.reload();
+                                    }).catch(() => alert('Failed to delete.'));
+                                  }
+                                }}
+                                sx={{
+                                  fontSize: '12.5px',
+                                  color: '#8B1A1A',
+                                  opacity: 0.8,
+                                  cursor: 'pointer',
+                                  '&:hover': { opacity: 1 }
+                                }}
+                              >
+                                Delete
+                              </Box>
                             )}
                           </Box>
                         </TableCell>

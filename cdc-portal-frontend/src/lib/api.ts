@@ -87,6 +87,8 @@ export const notificationsApi = {
   preview: (id: number) => api.get(`/notifications/notifications/${id}/preview`),
   updateDeclaration: (id: number, data: Record<string, unknown>) => 
     api.patch(`/notifications/notifications/${id}/declaration`, data),
+  duplicate: (id: number) => api.post(`/notifications/notifications/${id}/duplicate`),
+  delete: (id: number) => api.delete(`/notifications/notifications/${id}`),
 };
 
 export const adminApi = {

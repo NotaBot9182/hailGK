@@ -442,4 +442,97 @@ class NotificationController extends Controller
             'declaration' => $notification->fresh()->declaration,
         ]);
     }
+
+    public function duplicate(Request $request, int $id): JsonResponse
+    {
+        $notification = $request->user()->notifications()
+            ->with(['jobProfile', 'internProfile', 'salaries', 'eligibilityCriteria.programmes', 'selectionStages', 'selectionInfra'])
+            ->findOrFail($id);
+
+        $newNotification = $notification->replicate();
+        $newNotification->status = 'draft';
+        $newNotification->reference_number = null;
+        $newNotification->submitted_at = null;
+        $newNotification->reviewed_at = null;
+        $newNotification->reviewed_by = null;
+        $newNotification->review_notes = null;
+        $newNotification->save();
+
+        if ($notification->jobProfile) {
+            $newProfile = $notification->jobProfile->replicate();
+            $newProfile->notification_id = $newNotification->id;
+            $newProfile->save();
+        }
+
+        if ($notification->internProfile) {
+            $newProfile = $notification->internProfile->replicate();
+            $newProfile->notification_id = $newNotification->id;
+            $newProfile->save();
+        }
+
+        foreach ($notification->salaries as $salary) {
+            $newSalary = $salary->replicate();
+            $newSalary->notification_id = $newNotification->id;
+            $newSalary->save();
+        }
+
+        if ($notification->eligibilityCriteria) {
+            $newEligibility = $notification->eligibilityCriteria->replicate();
+            $newEligibility->notification_id = $newNotification->id;
+            $newEligibility->save();
+
+            foreach ($notification->eligibilityCriteria->programmes as $programme) {
+                $newProgramme = $programme->replicate();
+                $newProgramme->eligibility_criteria_id = $newEligibility->id;
+                $newProgramme->save();
+            }
+        }
+
+        foreach ($notification->selectionStages as $stage) {
+            $newStage = $stage->replicate();
+            $newStage->notification_id = $newNotification->id;
+            $newStage->save();
+        }
+
+        if ($notification->selectionInfra) {
+            $newInfra = $notification->selectionInfra->replicate();
+            $newInfra->notification_id = $newNotification->id;
+            $newInfra->selection_process_pdf_path = null;
+            $newInfra->save();
+        }
+
+        return response()->json([
+            'message' => 'Submission duplicated successfully.',
+            'notification' => $newNotification->fresh(),
+        ]);
+    }
+
+    public function destroy(Request $request, int $id): JsonResponse
+    {
+        $notification = $request->user()->notifications()->findOrFail($id);
+
+        if ($notification->status !== 'draft') {
+            return response()->json([
+                'message' => 'Only drafts can be deleted.',
+            ], 422);
+        }
+
+        if ($notification->jobProfile) $notification->jobProfile->delete();
+        if ($notification->internProfile) $notification->internProfile->delete();
+        if ($notification->selectionInfra) $notification->selectionInfra->delete();
+        if ($notification->declaration) $notification->declaration->delete();
+        $notification->selectionStages()->delete();
+        $notification->salaries()->delete();
+        
+        if ($notification->eligibilityCriteria) {
+            $notification->eligibilityCriteria->programmes()->delete();
+            $notification->eligibilityCriteria->delete();
+        }
+
+        $notification->delete();
+
+        return response()->json([
+            'message' => 'Draft deleted successfully.',
+        ]);
+    }
 }

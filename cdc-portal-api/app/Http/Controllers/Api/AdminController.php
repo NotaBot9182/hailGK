@@ -50,12 +50,38 @@ class AdminController extends Controller
             'review_notes' => 'nullable|string',
         ]);
 
+        $oldStatus = $notification->status;
+        $newStatus = $validated['status'];
+
         $notification->update([
-            'status' => $validated['status'],
+            'status' => $newStatus,
             'reviewed_by' => $request->user()->id,
             'reviewed_at' => now(),
             'review_notes' => $validated['review_notes'] ?? null,
         ]);
+
+        if ($oldStatus !== $newStatus && in_array($newStatus, ['approved', 'changes_requested', 'rejected'])) {
+            try {
+                $userEmail = $notification->user->email ?? null;
+                if ($userEmail) {
+                    \Illuminate\Support\Facades\Mail::to($userEmail)
+                        ->queue(new \App\Mail\JnfVerifiedEmail($notification));
+                }
+
+                \App\Models\Alert::create([
+                    'type' => 'App\Notifications\JnfStatusUpdated',
+                    'notifiable_type' => \App\Models\User::class,
+                    'notifiable_id' => $notification->user_id,
+                    'data' => [
+                        'status' => $newStatus,
+                        'reference_number' => $notification->reference_number,
+                        'message' => "Your " . strtoupper($notification->type) . " submission status was updated to " . str_replace('_', ' ', $newStatus),
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Verification notification failed: ' . $e->getMessage());
+            }
+        }
 
         AuditLog::create([
             'user_id' => $request->user()->id,

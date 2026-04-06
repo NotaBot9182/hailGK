@@ -17,4 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/{id}/submit', [App\Http\Controllers\Api\NotificationController::class, 'submit']);
     Route::get('/notifications/{id}/preview', [App\Http\Controllers\Api\NotificationController::class, 'preview']);
     Route::patch('/notifications/{id}/declaration', [App\Http\Controllers\Api\NotificationController::class, 'updateDeclaration']);
+    
+    Route::post('/notifications/{id}/duplicate', [App\Http\Controllers\Api\NotificationController::class, 'duplicate']);
+    Route::delete('/notifications/{id}', [App\Http\Controllers\Api\NotificationController::class, 'destroy']);
 });
