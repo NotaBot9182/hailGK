@@ -91,7 +91,7 @@ class AuthController extends Controller
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {
             return response()->json([
-                'message' => 'User already exists with this email.',
+                'message' => 'You are already registered. Please proceed to login.',
             ], 422);
         }
 
@@ -121,6 +121,8 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        \Illuminate\Support\Facades\Mail::to($user->email)->queue(new \App\Mail\RecruiterRegistrationSuccessEmail($user->name, $company->name));
 
         return response()->json([
             'message' => 'Registration successful.',

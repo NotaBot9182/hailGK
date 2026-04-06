@@ -27,10 +27,7 @@ class OtpService
     {
         $otp = $this->generate($email);
 
-        Mail::raw("Your CDC Portal OTP is: {$otp}. It is valid for 5 minutes.", function ($message) use ($email) {
-            $message->to($email)
-                ->subject('CDC Portal - OTP Verification');
-        });
+        Mail::to($email)->queue(new \App\Mail\OtpEmail($otp));
     }
 
     public function sendOtp(string $email): void
