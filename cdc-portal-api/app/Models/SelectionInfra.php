@@ -10,6 +10,8 @@ class SelectionInfra extends Model
 {
     use HasFactory;
 
+    protected $table = 'selection_infra';
+
     protected $fillable = [
         'notification_id',
         'team_members_required',
