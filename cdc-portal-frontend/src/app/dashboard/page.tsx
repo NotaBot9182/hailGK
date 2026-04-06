@@ -22,7 +22,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import { useAuth } from '@/lib/auth';
-import { notificationsApi } from '@/lib/api';
+import { notificationsApi, companyApi } from '@/lib/api';
 import { Notification } from '@/types';
 import Link from 'next/link';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -40,11 +40,38 @@ const statusStyleMap: Record<string, { bgcolor: string; color: string }> = {
 export default function DashboardPage() {
   const { user, company, logout } = useAuth();
   
+  const isRecruiter = user?.role === 'recruiter';
+
   const { data: notificationsData, isLoading: loading } = useQuery({
     queryKey: ['notifications'],
     queryFn: notificationsApi.list,
   });
   const notifications: Notification[] = notificationsData?.data?.notifications || [];
+
+  const { data: companyResponse } = useQuery({
+    queryKey: ['companyProfile'],
+    queryFn: companyApi.get,
+    enabled: !!isRecruiter,
+  });
+
+  const { data: contactsResponse } = useQuery({
+    queryKey: ['companyContacts'],
+    queryFn: companyApi.getContacts,
+    enabled: !!isRecruiter,
+  });
+
+  const contacts = contactsResponse?.data?.contacts || [];
+  const hasHeadHr = contacts.some((c: any) => c.type === 'head_hr' && Boolean(c.name));
+  const hasPrimaryPoc = contacts.some((c: any) => c.type === 'poc1' && Boolean(c.name));
+  
+  const freshCompany = companyResponse?.data?.company || company;
+  const isCompanyProfileComplete = Boolean(freshCompany?.category && freshCompany?.sector);
+  const isContactsComplete = hasHeadHr && hasPrimaryPoc;
+
+  let currentWorkflowStep = 1;
+  if (isCompanyProfileComplete) currentWorkflowStep = 2;
+  if (isCompanyProfileComplete && isContactsComplete) currentWorkflowStep = 3;
+  if (isCompanyProfileComplete && isContactsComplete && notifications.length > 0) currentWorkflowStep = 4;
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [activeSideItem, setActiveSideItem] = useState('Submissions');
@@ -270,6 +297,32 @@ export default function DashboardPage() {
 
           {activeSideItem === 'Submissions' && (
             <>
+              {/* Workflow Banner for Recruiters */}
+              {isRecruiter && currentWorkflowStep < 4 && (
+                <Box sx={{ px: 3, pt: 3, pb: 1.5, bgcolor: '#FEFEFE', borderBottom: '1px solid rgba(10,22,40,0.12)' }}>
+                  <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#0A1628', mb: 2, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    Onboarding Progress
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 2, mb: 1, flexDirection: { xs: 'column', md: 'row' } }}>
+                    <Box sx={{ flex: 1, p: 2, borderRadius: 2, border: '1px solid', borderColor: currentWorkflowStep >= 1 ? '#1B5E6B' : 'rgba(10,22,40,0.1)', bgcolor: currentWorkflowStep > 1 ? 'rgba(27,94,107,0.05)' : '#FEFEFE', position: 'relative' }}>
+                      <Typography sx={{ fontSize: '11px', fontWeight: 700, color: currentWorkflowStep > 1 ? '#1B5E6B' : '#C8922A', mb: 0.5 }}>STEP 1</Typography>
+                      <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628' }}>Company Profile</Typography>
+                      <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: 0.5 }}>{currentWorkflowStep > 1 ? '✓ Complete' : 'Pending Review'}</Typography>
+                    </Box>
+                    <Box sx={{ flex: 1, p: 2, borderRadius: 2, border: '1px solid', borderColor: currentWorkflowStep >= 2 ? '#1B5E6B' : 'rgba(10,22,40,0.1)', bgcolor: currentWorkflowStep > 2 ? 'rgba(27,94,107,0.05)' : '#FEFEFE', opacity: currentWorkflowStep < 2 ? 0.6 : 1 }}>
+                      <Typography sx={{ fontSize: '11px', fontWeight: 700, color: currentWorkflowStep > 2 ? '#1B5E6B' : currentWorkflowStep === 2 ? '#C8922A' : '#5A6478', mb: 0.5 }}>STEP 2</Typography>
+                      <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628' }}>Contacts & HR</Typography>
+                      <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: 0.5 }}>{currentWorkflowStep > 2 ? '✓ Complete' : 'Requires Head HR & PoC1'}</Typography>
+                    </Box>
+                    <Box sx={{ flex: 1, p: 2, borderRadius: 2, border: '1px solid', borderColor: currentWorkflowStep >= 3 ? '#1B5E6B' : 'rgba(10,22,40,0.1)', bgcolor: currentWorkflowStep >= 3 ? 'rgba(27,94,107,0.05)' : '#FEFEFE', opacity: currentWorkflowStep < 3 ? 0.6 : 1 }}>
+                      <Typography sx={{ fontSize: '11px', fontWeight: 700, color: currentWorkflowStep === 3 ? '#1B5E6B' : '#5A6478', mb: 0.5 }}>STEP 3</Typography>
+                      <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628' }}>JNF / INF Filing</Typography>
+                      <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: 0.5 }}>{currentWorkflowStep === 3 ? '✓ Unlocked' : 'Complete previous steps'}</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              )}
+
               {/* Metrics */}
               <Box
             sx={{
@@ -318,15 +371,16 @@ export default function DashboardPage() {
               <Button
                 onClick={() => { setNewFormData({ ...newFormData, type: 'jnf' }); setCreateDialogOpen(true); }}
                 id="new-jnf-btn"
+                disabled={currentWorkflowStep < 3 && isRecruiter}
                 sx={{
-                  bgcolor: '#0A1628',
-                  color: '#FEFEFE',
+                  bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#0A1628',
+                  color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#FEFEFE',
                   fontSize: '12.5px',
                   px: '16px',
                   py: '6px',
                   borderRadius: '4px',
                   fontWeight: 500,
-                  '&:hover': { bgcolor: '#2C3345' },
+                  '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#2C3345' },
                 }}
               >
                 + New JNF
@@ -334,14 +388,16 @@ export default function DashboardPage() {
               <Button
                 onClick={() => { setNewFormData({ ...newFormData, type: 'inf' }); setCreateDialogOpen(true); }}
                 id="new-inf-btn"
+                disabled={currentWorkflowStep < 3 && isRecruiter}
                 sx={{
                   fontSize: '12.5px',
-                  color: '#1B5E6B',
-                  border: '1px solid rgba(27,94,107,0.3)',
+                  color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#1B5E6B',
+                  border: '1px solid',
+                  borderColor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : 'rgba(27,94,107,0.3)',
                   borderRadius: '4px',
                   px: '16px',
                   py: '6px',
-                  '&:hover': { bgcolor: 'rgba(27,94,107,0.05)' },
+                  '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'transparent' : 'rgba(27,94,107,0.05)' },
                 }}
               >
                 + New INF
