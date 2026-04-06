@@ -11,6 +11,8 @@ class EligibilityCriteria extends Model
 {
     use HasFactory;
 
+    protected $table = 'eligibility_criteria';
+
     protected $fillable = [
         'notification_id',
         'min_cgpa',
