@@ -23,6 +23,7 @@ import {
   TextField,
   Chip,
   IconButton,
+  Checkbox,
 } from '@mui/material';
 import { useAuth } from '@/lib/auth';
 import { notificationsApi, adminApi } from '@/lib/api';
@@ -50,6 +51,7 @@ export default function AdminPage() {
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const [newStatus, setNewStatus] = useState('');
   const [reviewNotes, setReviewNotes] = useState('');
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const isSuperAdmin = user?.role === 'super_admin';
 
@@ -129,22 +131,38 @@ export default function AdminPage() {
 
   const filteredNotifications = notifications;
 
-  const handleExport = async () => {
+  const handleExport = async (exportType: 'all' | 'selected' | 'filtered' = 'filtered') => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/export?type=${typeFilter}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-        },
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/admin/export?type=${typeFilter !== 'all' ? typeFilter : ''}`;
+      if (exportType === 'selected' && selectedIds.length > 0) {
+        url += `&ids=${selectedIds.join(',')}`;
+      }
+      if (statusFilter !== 'all') {
+        url += `&status=${statusFilter}`;
+      }
+      const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` },
       });
       const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `notifications-export-${new Date().toISOString().split('T')[0]}.csv`;
+      a.href = window.URL.createObjectURL(blob);
+      a.download = `${exportType === 'selected' ? 'selected' : 'notifications'}-export-${new Date().toISOString().split('T')[0]}.csv`;
       a.click();
     } catch (error) {
       console.error('Export failed:', error);
     }
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === filteredNotifications.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredNotifications.map(n => n.id));
+    }
+  };
+
+  const toggleSelect = (id: number) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
   };
 
   return (
@@ -257,7 +275,7 @@ export default function AdminPage() {
           {/* Submissions View */}
           {activeSideItem === 'Submissions' && (
             <>
-              <Box sx={{ px: 3, py: 2, display: 'flex', gap: 2, borderBottom: '1px solid rgba(10,22,40,0.12)' }}>
+              <Box sx={{ px: 3, py: 2, display: 'flex', gap: 2, borderBottom: '1px solid rgba(10,22,40,0.12)', alignItems: 'center', flexWrap: 'wrap' }}>
                 <FormControl size="small" sx={{ minWidth: 120 }}>
                   <InputLabel>Status</InputLabel>
                   <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Status">
@@ -278,7 +296,15 @@ export default function AdminPage() {
                     <MenuItem value="inf">INF</MenuItem>
                   </Select>
                 </FormControl>
-                <Button size="small" variant="outlined" onClick={handleExport}>Export CSV</Button>
+                <Box sx={{ flex: 1 }} />
+                {selectedIds.length > 0 && (
+                  <Chip label={`${selectedIds.length} selected`} size="small" onDelete={() => setSelectedIds([])} 
+                    sx={{ bgcolor: 'rgba(200,146,42,0.15)', color: '#8B6000', fontWeight: 600 }} />
+                )}
+                <Button size="small" variant="outlined" onClick={() => handleExport(selectedIds.length > 0 ? 'selected' : 'filtered')}
+                  sx={{ borderColor: '#0A1628', color: '#0A1628', fontWeight: 500, fontSize: '12px' }}>
+                  {selectedIds.length > 0 ? `Export Selected (${selectedIds.length})` : 'Export All CSV'}
+                </Button>
               </Box>
 
               <Box sx={{ flex: 1, overflow: 'auto', px: 3 }}>
@@ -286,31 +312,41 @@ export default function AdminPage() {
                   <Table sx={{ '& td, & th': { borderBottomColor: 'rgba(10,22,40,0.08)' } }}>
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Company</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Type</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Reference</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Season</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Submitted</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Status</TableCell>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Action</TableCell>
+                        <TableCell padding="checkbox">
+                          <Checkbox size="small" checked={selectedIds.length === filteredNotifications.length && filteredNotifications.length > 0}
+                            indeterminate={selectedIds.length > 0 && selectedIds.length < filteredNotifications.length}
+                            onChange={toggleSelectAll}
+                            sx={{ color: '#5A6478', '&.Mui-checked': { color: '#C8922A' }, '&.MuiCheckbox-indeterminate': { color: '#C8922A' } }} />
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Company</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Type</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Reference</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Season</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Submitted</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Status</TableCell>
+                        <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {loadingNotifications ? (
                         <TableRow>
-                          <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
+                          <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
                             <CircularProgress size={28} />
                           </TableCell>
                         </TableRow>
                       ) : filteredNotifications.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
+                          <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
                             <Typography sx={{ color: '#5A6478' }}>No submissions found</Typography>
                           </TableCell>
                         </TableRow>
                       ) : (
                         filteredNotifications.map((n) => (
-                          <TableRow key={n.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' } }}>
+                          <TableRow key={n.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' }, bgcolor: selectedIds.includes(n.id) ? 'rgba(200,146,42,0.04)' : 'transparent' }}>
+                            <TableCell padding="checkbox">
+                              <Checkbox size="small" checked={selectedIds.includes(n.id)} onChange={() => toggleSelect(n.id)}
+                                sx={{ color: '#5A6478', '&.Mui-checked': { color: '#C8922A' } }} />
+                            </TableCell>
                             <TableCell sx={{ fontWeight: 500, fontSize: '13px' }}>{n.company?.name || '—'}</TableCell>
                             <TableCell>
                               <Chip label={n.type.toUpperCase()} size="small" sx={{ fontSize: '10px', fontWeight: 600 }} />
@@ -330,7 +366,12 @@ export default function AdminPage() {
                               />
                             </TableCell>
                             <TableCell>
-                              <Button size="small" onClick={() => openStatusDialog(n)}>Update</Button>
+                              <Box sx={{ display: 'flex', gap: 1 }}>
+                                <Link href={`/${n.type}/${n.id}`} style={{ textDecoration: 'none' }}>
+                                  <Button size="small" variant="outlined" sx={{ fontSize: '11px', minWidth: 0, px: 1.5, borderColor: '#0A1628', color: '#0A1628' }}>View</Button>
+                                </Link>
+                                <Button size="small" onClick={() => openStatusDialog(n)} sx={{ fontSize: '11px', minWidth: 0, px: 1.5 }}>Update</Button>
+                              </Box>
                             </TableCell>
                           </TableRow>
                         ))
@@ -408,29 +449,121 @@ export default function AdminPage() {
           {activeSideItem === 'Audit Log' && isSuperAdmin && (
             <Box sx={{ flex: 1, overflow: 'auto', px: 3 }}>
               <TableContainer>
-                <Table>
+                <Table sx={{ '& td, & th': { borderBottomColor: 'rgba(10,22,40,0.08)' } }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478' }}>User</TableCell>
-                      <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478' }}>Action</TableCell>
-                      <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478' }}>Entity</TableCell>
-                      <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478' }}>Date</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Admin</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Action</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Target (JNF/INF)</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Details</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Date & Time</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {loadingLogs ? (
-                      <TableRow><TableCell colSpan={4} sx={{ textAlign: 'center' }}><CircularProgress /></TableCell></TableRow>
+                      <TableRow><TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}><CircularProgress size={28} /></TableCell></TableRow>
                     ) : auditLogs.length === 0 ? (
-                      <TableRow><TableCell colSpan={4} sx={{ textAlign: 'center' }}>No logs</TableCell></TableRow>
+                      <TableRow><TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}>No audit logs found</TableCell></TableRow>
                     ) : (
-                      auditLogs.map((log: any) => (
-                        <TableRow key={log.id}>
-                          <TableCell>{log.user?.name || '—'}</TableCell>
-                          <TableCell><Chip label={log.action} size="small" /></TableCell>
-                          <TableCell>{log.entity_type} #{log.entity_id}</TableCell>
-                          <TableCell>{new Date(log.created_at).toLocaleString()}</TableCell>
-                        </TableRow>
-                      ))
+                      auditLogs.map((log: any) => {
+                        const meta = log.metadata || {};
+                        const actionLabels: Record<string, { label: string; color: string; bg: string }> = {
+                          'status_update': { label: 'Status Update', color: '#1B5E6B', bg: 'rgba(27,94,107,0.1)' },
+                          'user_update': { label: 'User Modified', color: '#8B6000', bg: 'rgba(200,146,42,0.15)' },
+                          'user_delete': { label: 'User Deleted', color: '#8B1A1A', bg: 'rgba(139,26,26,0.1)' },
+                          'user_create': { label: 'User Created', color: '#1d6b3a', bg: 'rgba(34,100,60,0.1)' },
+                        };
+                        const actionStyle = actionLabels[log.action] || { label: log.action, color: '#5A6478', bg: '#eee' };
+
+                        return (
+                          <TableRow key={log.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' } }}>
+                            {/* Admin who performed the action */}
+                            <TableCell>
+                              <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#0A1628' }}>{log.user?.name || '—'}</Typography>
+                              <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>{log.user?.email || ''}</Typography>
+                            </TableCell>
+
+                            {/* Action type */}
+                            <TableCell>
+                              <Chip label={actionStyle.label} size="small"
+                                sx={{ fontSize: '10px', fontWeight: 600, bgcolor: actionStyle.bg, color: actionStyle.color }} />
+                            </TableCell>
+
+                            {/* Target - which JNF/INF */}
+                            <TableCell>
+                              {log.entity_type === 'notification' ? (
+                                <Box>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <Chip label={meta.notification_type || 'N/A'} size="small"
+                                      sx={{ fontSize: '10px', fontWeight: 700, bgcolor: (meta.notification_type === 'JNF') ? 'rgba(27,94,107,0.1)' : 'rgba(200,146,42,0.15)', color: (meta.notification_type === 'JNF') ? '#1B5E6B' : '#8B6000' }} />
+                                    <Typography sx={{ fontSize: '12px', fontFamily: '"JetBrains Mono", monospace', color: '#0A1628' }}>
+                                      {meta.reference_number || `#${log.entity_id}`}
+                                    </Typography>
+                                  </Box>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.3 }}>
+                                    {(meta.company_name || log.notification_company) && (
+                                      <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>{meta.company_name || log.notification_company}</Typography>
+                                    )}
+                                    {log.notification_current_status && (
+                                      <Chip
+                                        label={`Currently: ${log.notification_current_status.replace('_', ' ')}`}
+                                        size="small"
+                                        sx={{
+                                          fontSize: '9px', fontWeight: 600, height: 18,
+                                          ...(statusStyleMap[log.notification_current_status] || { bgcolor: '#eee', color: '#666' })
+                                        }}
+                                      />
+                                    )}
+                                  </Box>
+                                </Box>
+                              ) : (
+                                <Typography sx={{ fontSize: '12px', color: '#5A6478' }}>
+                                  {log.entity_type} #{log.entity_id}
+                                  {meta.email && <span style={{ marginLeft: 6 }}>({meta.email})</span>}
+                                  {meta.deleted_user_email && <span style={{ marginLeft: 6 }}>({meta.deleted_user_email})</span>}
+                                </Typography>
+                              )}
+                            </TableCell>
+
+                            {/* Details - status change, metadata */}
+                            <TableCell>
+                              {log.action === 'status_update' && meta.old_status && meta.new_status ? (
+                                <Box>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <Chip label={meta.old_status.replace('_', ' ')} size="small"
+                                      sx={{ fontSize: '10px', ...(statusStyleMap[meta.old_status] || { bgcolor: '#eee', color: '#666' }) }} />
+                                    <Typography sx={{ fontSize: '12px', color: '#5A6478' }}>→</Typography>
+                                    <Chip label={meta.new_status.replace('_', ' ')} size="small"
+                                      sx={{ fontSize: '10px', fontWeight: 600, ...(statusStyleMap[meta.new_status] || { bgcolor: '#eee', color: '#666' }) }} />
+                                  </Box>
+                                  {meta.review_notes && (
+                                    <Typography sx={{ fontSize: '11px', color: '#5A6478', mt: 0.5, fontStyle: 'italic' }}>
+                                      "{meta.review_notes.substring(0, 80)}{meta.review_notes.length > 80 ? '...' : ''}"
+                                    </Typography>
+                                  )}
+                                </Box>
+                              ) : log.action === 'user_update' ? (
+                                <Typography sx={{ fontSize: '12px', color: '#5A6478' }}>
+                                  {meta.role && `Role: ${meta.role}`}
+                                  {meta.is_active !== undefined && ` · ${meta.is_active ? 'Activated' : 'Deactivated'}`}
+                                </Typography>
+                              ) : (
+                                <Typography sx={{ fontSize: '12px', color: '#94a3b8' }}>—</Typography>
+                              )}
+                            </TableCell>
+
+                            {/* Timestamp */}
+                            <TableCell>
+                              <Typography sx={{ fontSize: '12px', color: '#0A1628' }}>
+                                {new Date(log.created_at).toLocaleDateString()}
+                              </Typography>
+                              <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>
+                                {new Date(log.created_at).toLocaleTimeString()}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
                     )}
                   </TableBody>
                 </Table>
@@ -441,10 +574,30 @@ export default function AdminPage() {
           {/* Export Data */}
           {activeSideItem === 'Export Data' && (
             <Box sx={{ p: 3 }}>
-              <Typography sx={{ mb: 2 }}>Export Submissions</Typography>
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <Button variant="contained" onClick={handleExport}>Download CSV</Button>
+              <Typography sx={{ fontSize: '16px', fontWeight: 600, mb: 3, color: '#0A1628' }}>Export Submissions</Typography>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                <Button variant="contained" onClick={() => handleExport('filtered')}
+                  sx={{ bgcolor: '#0A1628', '&:hover': { bgcolor: '#2C3345' } }}>Export All (CSV)</Button>
+                <Button variant="outlined" onClick={async () => {
+                  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/export?type=jnf`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` },
+                  });
+                  const blob = await response.blob();
+                  const a = document.createElement('a'); a.href = window.URL.createObjectURL(blob);
+                  a.download = `jnf-export-${new Date().toISOString().split('T')[0]}.csv`; a.click();
+                }} sx={{ borderColor: '#1B5E6B', color: '#1B5E6B' }}>Export JNF Only</Button>
+                <Button variant="outlined" onClick={async () => {
+                  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/export?type=inf`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` },
+                  });
+                  const blob = await response.blob();
+                  const a = document.createElement('a'); a.href = window.URL.createObjectURL(blob);
+                  a.download = `inf-export-${new Date().toISOString().split('T')[0]}.csv`; a.click();
+                }} sx={{ borderColor: '#8B6000', color: '#8B6000' }}>Export INF Only</Button>
               </Box>
+              <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: 2 }}>
+                Tip: Use the Submissions tab to select specific rows and export only those.
+              </Typography>
             </Box>
           )}
         </Box>

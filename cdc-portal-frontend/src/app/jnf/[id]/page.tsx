@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Checkbox, FormControlLabel, FormGroup, Switch, Divider, Collapse, IconButton, Snackbar, Alert } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Checkbox, FormControlLabel, FormGroup, Switch, Divider, Collapse, IconButton, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useParams, useRouter } from 'next/navigation';
-import { notificationsApi } from '@/lib/api';
+import { notificationsApi, adminApi } from '@/lib/api';
+import { useAuth } from '@/lib/auth';
 
 const JNF_TABS = [
   'Job Profile',
@@ -269,6 +270,14 @@ export default function JnfFormShell() {
   const [formData, setFormData] = useState<any>(null);
   const [selectionPdf, setSelectionPdf] = useState<File | null>(null);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ open: false, message: '', severity: 'success' });
+  const [requestingChanges, setRequestingChanges] = useState(false);
+  const [changeNotes, setChangeNotes] = useState('');
+  const [showChangeDialog, setShowChangeDialog] = useState(false);
+
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
+  const isSubmitted = ['submitted', 'under_review', 'approved', 'rejected'].includes(formData?.status || '');
+  const isReadOnly = isAdmin || (isSubmitted && formData?.status !== 'changes_requested');
 
   useEffect(() => {
     if (id) fetchNotification();
@@ -755,22 +764,48 @@ export default function JnfFormShell() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <Typography sx={{ 
-            fontSize: '12px', 
-            fontWeight: 500,
-            color: savingStatus === 'saving' ? '#E8B64A' : savingStatus === 'error' ? '#EF4444' : '#10B981'
-          }}>
-            {savingStatus === 'saving' ? 'Saving...' : savingStatus === 'error' ? 'Save Failed' : 'All changes saved'}
-          </Typography>
+          {!isAdmin && (
+            <Typography sx={{ 
+              fontSize: '12px', 
+              fontWeight: 500,
+              color: savingStatus === 'saving' ? '#E8B64A' : savingStatus === 'error' ? '#EF4444' : '#10B981'
+            }}>
+              {savingStatus === 'saving' ? 'Saving...' : savingStatus === 'error' ? 'Save Failed' : 'All changes saved'}
+            </Typography>
+          )}
+          {isAdmin && formData?.status && (
+            <Chip label={formData.status.replace('_', ' ').toUpperCase()} size="small" sx={{ bgcolor: 'rgba(200,146,42,0.2)', color: '#FFF', fontWeight: 600, fontSize: '11px' }} />
+          )}
           <Button 
             variant="outlined" 
-            onClick={() => router.push('/dashboard')}
+            onClick={() => router.push(isAdmin ? '/admin' : '/dashboard')}
             sx={{ color: '#FEFEFE', borderColor: 'rgba(255,255,255,0.3)', '&:hover': { borderColor: '#FEFEFE' } }}
           >
-            Back to Dashboard
+            {isAdmin ? 'Back to Admin Panel' : 'Back to Dashboard'}
           </Button>
         </Box>
       </Box>
+
+      {/* Admin View-Only Banner */}
+      {isAdmin && (
+        <Box sx={{ bgcolor: '#FEF3C7', borderBottom: '1px solid #F59E0B', px: 4, py: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#92400E' }}>
+              🔒 Admin View Only
+            </Typography>
+            <Typography sx={{ fontSize: '12px', color: '#A16207' }}>
+              You are viewing this {formData?.type?.toUpperCase() || 'JNF'} as an admin. Fields are read-only.
+            </Typography>
+          </Box>
+          {['submitted', 'under_review'].includes(formData?.status || '') && (
+            <Button size="small" variant="contained"
+              onClick={() => setShowChangeDialog(true)}
+              sx={{ bgcolor: '#92400E', fontSize: '12px', fontWeight: 600, '&:hover': { bgcolor: '#78350F' } }}>
+              Request Changes
+            </Button>
+          )}
+        </Box>
+      )}
 
       {/* Tabs Layout */}
       <Box sx={{ px: 4, pt: 2, bgcolor: '#FEFEFE', borderBottom: '1px solid rgba(10,22,40,0.1)' }}>
@@ -793,6 +828,7 @@ export default function JnfFormShell() {
 
       {/* Content Area (Phase 3 implementation for Job Profile tab, placeholders for others) */}
       <Box sx={{ flex: 1, p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <fieldset disabled={isReadOnly} style={{ border: 'none', padding: 0, margin: 0, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: isReadOnly ? 0.85 : 1 }}>
         <Box sx={{ 
           width: '100%', 
           maxWidth: 900, 
@@ -1676,8 +1712,44 @@ export default function JnfFormShell() {
               </Box>
             </Box>
           )}
+        </Box>
+        </fieldset>
 
-          <Snackbar 
+        {/* Request Changes Dialog */}
+        <Dialog open={showChangeDialog} onClose={() => setShowChangeDialog(false)} maxWidth="sm" fullWidth>
+          <DialogTitle sx={{ fontWeight: 600, color: '#0A1628' }}>Request Changes</DialogTitle>
+          <DialogContent>
+            <Typography sx={{ fontSize: '13px', color: '#5A6478', mb: 2 }}>
+              This will change the status to &quot;Changes Requested&quot; and send an email to the company asking them to update the form.
+            </Typography>
+            <TextField fullWidth multiline rows={4} label="What changes are needed?" placeholder="Please describe the required changes..." 
+              value={changeNotes} onChange={(e) => setChangeNotes(e.target.value)}
+              sx={{ mt: 1 }} />
+          </DialogContent>
+          <DialogActions sx={{ px: 3, pb: 2 }}>
+            <Button onClick={() => setShowChangeDialog(false)} sx={{ color: '#5A6478' }}>Cancel</Button>
+            <Button variant="contained" disabled={!changeNotes.trim() || requestingChanges}
+              onClick={async () => {
+                try {
+                  setRequestingChanges(true);
+                  await adminApi.updateNotificationStatus(parseInt(id), { status: 'changes_requested', review_notes: changeNotes });
+                  setFormData((prev: any) => ({ ...prev, status: 'changes_requested' }));
+                  setShowChangeDialog(false);
+                  setChangeNotes('');
+                  setSnackbar({ open: true, message: 'Changes requested — email sent to the company.', severity: 'success' });
+                } catch (err) {
+                  setSnackbar({ open: true, message: 'Failed to request changes.', severity: 'error' });
+                } finally {
+                  setRequestingChanges(false);
+                }
+              }}
+              sx={{ bgcolor: '#92400E', '&:hover': { bgcolor: '#78350F' } }}>
+              {requestingChanges ? 'Sending...' : 'Send Request & Notify Company'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Snackbar 
             open={snackbar.open} 
             autoHideDuration={4000} 
             onClose={() => setSnackbar({ ...snackbar, open: false })}
@@ -1689,6 +1761,5 @@ export default function JnfFormShell() {
           </Snackbar>
         </Box>
       </Box>
-    </Box>
   );
 }

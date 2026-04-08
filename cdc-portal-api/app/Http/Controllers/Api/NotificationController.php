@@ -56,9 +56,11 @@ class NotificationController extends Controller
 
     public function show(Request $request, int $id): JsonResponse
     {
-        $notification = $request->user()
-            ->notifications()
-            ->with([
+        $user = $request->user();
+
+        // Admins can view any notification; recruiters can only view their own
+        if (in_array($user->role, ['admin', 'super_admin'])) {
+            $notification = Notification::with([
                 'company.contacts',
                 'jobProfile',
                 'internProfile',
@@ -67,8 +69,21 @@ class NotificationController extends Controller
                 'selectionStages',
                 'selectionInfra',
                 'declaration',
-            ])
-            ->findOrFail($id);
+            ])->findOrFail($id);
+        } else {
+            $notification = $user->notifications()
+                ->with([
+                    'company.contacts',
+                    'jobProfile',
+                    'internProfile',
+                    'salaries',
+                    'eligibilityCriteria.programmes',
+                    'selectionStages',
+                    'selectionInfra',
+                    'declaration',
+                ])
+                ->findOrFail($id);
+        }
 
         return response()->json([
             'notification' => $notification,
