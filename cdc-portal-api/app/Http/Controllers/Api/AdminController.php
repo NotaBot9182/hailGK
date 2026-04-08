@@ -88,7 +88,14 @@ class AdminController extends Controller
             'action' => 'status_update',
             'entity_type' => 'notification',
             'entity_id' => $notification->id,
-            'metadata' => ['new_status' => $validated['status']],
+            'metadata' => [
+                'old_status' => $oldStatus,
+                'new_status' => $validated['status'],
+                'reference_number' => $notification->reference_number,
+                'notification_type' => strtoupper($notification->type),
+                'company_name' => $notification->company?->name ?? 'Unknown',
+                'review_notes' => $validated['review_notes'] ?? null,
+            ],
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
@@ -101,13 +108,38 @@ class AdminController extends Controller
 
     public function export(Request $request)
     {
-        $type = $request->get('type', 'all');
+        $type = $request->get('type');
+        if (empty($type)) {
+            $type = 'all';
+        }
         $format = $request->get('format', 'csv');
 
-        $query = Notification::with(['company', 'eligibilityCriteria.programmes']);
+        $query = Notification::with([
+            'company.contacts', 'user', 'eligibilityCriteria.programmes', 
+            'jobProfile', 'internProfile', 'salaries', 
+            'selectionStages', 'selectionInfra', 'declaration'
+        ]);
+
+        // Filter by specific IDs (for selected export)
+        if ($request->has('ids')) {
+            $ids = is_array($request->ids) ? $request->ids : explode(',', $request->ids);
+            $query->whereIn('id', $ids);
+        }
 
         if ($type !== 'all') {
             $query->where('type', $type);
+        }
+
+        if ($request->has('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        if ($request->has('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('company')) {
+            $query->whereHas('company', fn($q) => $q->where('name', 'like', "%{$request->company}%"));
         }
 
         if ($request->has('year')) {
@@ -118,17 +150,80 @@ class AdminController extends Controller
             $query->where('season', $request->season);
         }
 
-        $notifications = $query->get();
+        $notifications = $query->orderBy('created_at', 'desc')->get();
 
         $data = $notifications->map(function ($n) {
+            $profile = $n->type === 'jnf' ? $n->jobProfile : $n->internProfile;
+            $topSalary = $n->salaries->first();
+            $eligibility = $n->eligibilityCriteria;
+            $infra = $n->selectionInfra;
+            $declaration = $n->declaration;
+            
+            // Format places of posting
+            $locations = $profile?->place_of_posting ?? '—';
+            if (is_string($locations)) {
+                $locationsDecoded = json_decode($locations, true);
+                if (is_array($locationsDecoded)) {
+                    $locations = $locationsDecoded;
+                }
+            }
+            if (is_array($locations)) {
+                // flatten and filter strings
+                $flat = [];
+                array_walk_recursive($locations, function($val) use (&$flat) {
+                    if (is_scalar($val) && $val !== '') $flat[] = $val;
+                });
+                $locations = empty($flat) ? '—' : implode('; ', $flat);
+            }
+
+            // Format programs allowed
+            $programs = '—';
+            if ($eligibility && $eligibility->programmes) {
+                $programs = $eligibility->programmes->map(fn($p) => "{$p->programme_name} ({$p->course_name})")->implode('; ');
+            }
+
+            // Format selection stages
+            $stages = '—';
+            if ($n->selectionStages && $n->selectionStages->isNotEmpty()) {
+                $stages = $n->selectionStages->map(fn($s) => $s->stage_type . ($s->mode ? " ({$s->mode})" : ""))->implode(' -> ');
+            }
+
+            // Format HR contacts
+            $hrContacts = '—';
+            if ($n->company && $n->company->contacts) {
+                $hrContacts = $n->company->contacts->map(fn($c) => "{$c->name} ({$c->email})")->implode(' | ');
+            }
+
             return [
                 'Reference' => $n->reference_number,
                 'Type' => strtoupper($n->type),
-                'Company' => $n->company?->name,
                 'Status' => ucfirst(str_replace('_', ' ', $n->status)),
                 'Season' => "{$n->year} - " . ($n->season === 1 ? 'First' : 'Second'),
-                'Submitted At' => $n->submitted_at?->format('Y-m-d H:i:s'),
-                'Reviewed At' => $n->reviewed_at?->format('Y-m-d H:i:s'),
+                'Company' => $n->company?->name ?? '—',
+                'Sector' => $n->company?->sector ?? '—',
+                'Website' => $n->company?->website ?? '—',
+                'HR Contacts' => $hrContacts,
+                'Submitted By' => $n->user?->name ?? '—',
+                'Email' => $n->user?->email ?? '—',
+                'Profile Title' => $profile?->title ?? ($profile?->profile_name ?? '—'),
+                'Designation' => $profile?->designation ?? '—',
+                'Description' => $profile?->description ?? '—',
+                'Location' => $locations,
+                'CTC/Stipend' => $topSalary?->ctc_annual ?? ($topSalary?->stipend ?? '—'),
+                'Additional Salary Info' => is_array($topSalary?->additional_salary_components) ? json_encode($topSalary->additional_salary_components) : '—',
+                'Currency' => $topSalary?->currency ?? '—',
+                'Eligible Programs' => $programs,
+                'CGPA Cutoff' => $eligibility?->cgpa_cutoff ?? '—',
+                'Class 10 Cutoff' => $eligibility?->tenth_marks_cutoff ?? '—',
+                'Class 12 Cutoff' => $eligibility?->twelfth_marks_cutoff ?? '—',
+                'Selection Flow' => $stages,
+                'Rooms Required' => $infra?->rooms_required ?? '0',
+                'Team Members Expected' => $infra?->team_members_required ?? '0',
+                'Signatory Name' => $declaration?->signatory_name ?? '—',
+                'Signatory Designation' => $declaration?->signatory_designation ?? '—',
+                'Submitted At' => $n->submitted_at?->format('Y-m-d H:i:s') ?? '—',
+                'Reviewed At' => $n->reviewed_at?->format('Y-m-d H:i:s') ?? '—',
+                'Review Notes' => $n->review_notes ?? '',
             ];
         });
 
@@ -136,9 +231,11 @@ class AdminController extends Controller
             return response()->json(['data' => $data]);
         }
 
+        // Proper CSV with quoting
+        $csvQuote = fn($val) => '"' . str_replace('"', '""', (string)$val) . '"';
         $csv = implode("\n", [
-            implode(',', array_keys($data->first() ?? [])),
-            ...$data->map(fn($row) => implode(',', $row)),
+            implode(',', array_map($csvQuote, array_keys($data->first() ?? []))),
+            ...$data->map(fn($row) => implode(',', array_map($csvQuote, $row))),
         ]);
 
         return response()->streamDownload(
@@ -327,6 +424,31 @@ class AdminController extends Controller
         }
 
         $logs = $query->orderBy('created_at', 'desc')->paginate(50);
+
+        // Enrich notification logs with current status
+        $notificationIds = $logs->getCollection()
+            ->where('entity_type', 'notification')
+            ->pluck('entity_id')
+            ->unique()
+            ->values();
+
+        if ($notificationIds->isNotEmpty()) {
+            $notifications = Notification::with('company')
+                ->whereIn('id', $notificationIds)
+                ->get()
+                ->keyBy('id');
+
+            $logs->getCollection()->transform(function ($log) use ($notifications) {
+                if ($log->entity_type === 'notification' && isset($notifications[$log->entity_id])) {
+                    $notification = $notifications[$log->entity_id];
+                    $log->notification_current_status = $notification->status;
+                    $log->notification_reference = $notification->reference_number;
+                    $log->notification_type_label = strtoupper($notification->type);
+                    $log->notification_company = $notification->company?->name ?? null;
+                }
+                return $log;
+            });
+        }
 
         return response()->json($logs);
     }
