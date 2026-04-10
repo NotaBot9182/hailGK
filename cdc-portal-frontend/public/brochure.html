@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIT (ISM) Dhanbad - Brochure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2e4a;
+            --navy-light: #2d4563;
+            --navy-dark: #0f1f2e;
+            --gold: #d4af37;
+            --gold-light: #e8c547;
+            --white: #f8f7f5;
+            --text-dark: #2c2c2c;
+            --border: #d4af37;
+            --accent-bg: #f5f3f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'EB Garamond', serif;
+            color: var(--navy);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            margin-top: 0;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #555;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 120px 60px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            margin-bottom: 0;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-year {
+            display: inline-block;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 600;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid #e8e4e0;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-intro {
+            color: var(--gold);
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text p:first-child {
+            font-size: 1.15rem;
+            color: var(--navy);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlight {
+            background: var(--accent-bg);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 2px;
+        }
+
+        .highlight-stat {
+            display: flex;
+            align-items: baseline;
+            margin: 1rem 0;
+        }
+
+        .highlight-stat strong {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-right: 0.5rem;
+            font-family: 'EB Garamond', serif;
+        }
+
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: var(--white);
+            border: 1px solid #e0dbd3;
+            border-radius: 4px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .program-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 24px rgba(26, 46, 74, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .program-card:hover::before {
+            width: 100%;
+        }
+
+        .program-title {
+            font-family: 'EB Garamond', serif;
+            color: var(--navy);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .program-list {
+            list-style: none;
+        }
+
+        .program-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #666;
+        }
+
+        .program-list li::before {
+            content: '▪';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        /* Departments Section */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .department-item {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            border-right: 3px solid var(--gold);
+            border-radius: 2px;
+        }
+
+        .department-name {
+            font-family: 'EB Garamond', serif;
+            color: var(--navy);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .department-desc {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* Campus Section */
+        .campus-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid #e0dbd3;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .feature:hover {
+            background: var(--accent-bg);
+            border-color: var(--gold);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .feature-title {
+            font-family: 'EB Garamond', serif;
+            color: var(--navy);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Student Life Section */
+        .life-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .life-item {
+            border-top: 4px solid var(--gold);
+            padding-top: 2rem;
+        }
+
+        .life-item h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        /* Placements Section */
+        .placement-highlight {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 4rem;
+            border-radius: 4px;
+            margin: 3rem 0;
+            border-left: 4px solid var(--gold);
+        }
+
+        .placement-highlight p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .recruiters {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .recruiter {
+            background: var(--accent-bg);
+            padding: 2rem;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #e0dbd3;
+            font-weight: 600;
+            color: var(--navy);
+            transition: all 0.3s ease;
+        }
+
+        .recruiter:hover {
+            background: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 4px 12px rgba(26, 46, 74, 0.1);
+        }
+
+        /* Why Choose Section */
+        .reasons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .reason {
+            padding: 2rem;
+            background: var(--white);
+            border: 1px solid #e0dbd3;
+            border-radius: 4px;
+            position: relative;
+            padding-left: 3.5rem;
+        }
+
+        .reason::before {
+            content: '✓';
+            position: absolute;
+            left: 1.2rem;
+            top: 1.8rem;
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .reason h3 {
+            margin-top: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 4rem 60px;
+            text-align: center;
+            border-top: 4px solid var(--gold);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin: 2rem 0;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-info a {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--gold);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .container,
+            .hero {
+                padding: 60px 30px;
+            }
+
+            .about-grid,
+            .departments-grid,
+            .reasons {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .programs-grid,
+            .campus-features,
+            .recruiters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .life-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>IIT (ISM) Dhanbad</h1>
+            <p class="tagline">Indian Institute of Technology — Excellence in Engineering, Science & Research</p>
+            <div class="hero-year">Established 1926 • IIT Status 2016</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="container">
+        <div class="section-intro">About The Institute</div>
+        <h2>A Legacy of Excellence</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>One of India's oldest and most prestigious engineering institutions, IIT (ISM) Dhanbad has been advancing knowledge and innovation since 1926. With its elevation to IIT status in 2016, the institute has strengthened its commitment to academic excellence and research.</p>
+                <p>We combine decades of institutional heritage with cutting-edge research capabilities, creating an environment where students and faculty push the boundaries of engineering, science, and technology.</p>
+                <p>Our mission is to cultivate talented minds, foster groundbreaking research, and contribute meaningfully to India's development through excellence in education and innovation.</p>
+            </div>
+            <div class="about-highlight">
+                <h3 style="margin-top: 0;">Key Strengths</h3>
+                <div class="highlight-stat">
+                    <strong>100+</strong>
+                    <span>Years of Heritage & Impact</span>
+                </div>
+                <div class="highlight-stat">
+                    <strong>444</strong>
+                    <span>Acre Residential Campus</span>
+                </div>
+                <div class="highlight-stat">
+                    <strong>IIT</strong>
+                    <span>National Institute Status</span>
+                </div>
+                <div class="highlight-stat">
+                    <strong>Elite</strong>
+                    <span>Research & Innovation Hub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Programs Section -->
+    <section class="container">
+        <div class="section-intro">Academic Excellence</div>
+        <h2>World-Class Programs</h2>
+        <div class="programs-grid">
+            <div class="program-card">
+                <div class="program-title">Undergraduate</div>
+                <ul class="program-list">
+                    <li>B.Tech Programs</li>
+                    <li>Integrated Programs</li>
+                    <li>Specialized Tracks</li>
+                    <li>Industry-Focused Curriculum</li>
+                </ul>
+            </div>
+            <div class="program-card">
+                <div class="program-title">Postgraduate</div>
+                <ul class="program-list">
+                    <li>M.Tech Programs</li>
+                    <li>M.Sc Programs</li>
+                    <li>MBA</li>
+                    <li>MA Programs</li>
+                </ul>
+            </div>
+            <div class="program-card">
+                <div class="program-title">Doctoral</div>
+                <ul class="program-list">
+                    <li>PhD Programs</li>
+                    <li>Research Fellowship</li>
+                    <li>Advanced Studies</li>
+                    <li>Expert Mentorship</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section class="container">
+        <div class="section-intro">Academic Divisions</div>
+        <h2>Diverse Departments</h2>
+        <div class="departments-grid">
+            <div class="department-item">
+                <div class="department-name">Engineering</div>
+                <div class="department-desc">Excellence in core engineering disciplines with industry-relevant expertise and cutting-edge research.</div>
+            </div>
+            <div class="department-item">
+                <div class="department-name">Sciences</div>
+                <div class="department-desc">Advanced research in physics, chemistry, mathematics, and biological sciences with world-class facilities.</div>
+            </div>
+            <div class="department-item">
+                <div class="department-name">Earth Sciences</div>
+                <div class="department-desc">Specialized programs in mining, geology, petroleum engineering, and environmental sciences.</div>
+            </div>
+            <div class="department-item">
+                <div class="department-name">Humanities & Management</div>
+                <div class="department-desc">Social sciences, management studies, and humanities education for holistic development.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Section -->
+    <section class="container">
+        <div class="section-intro">Campus & Facilities</div>
+        <h2>A Premier Living & Learning Environment</h2>
+        <div class="campus-features">
+            <div class="feature">
+                <div class="feature-icon">🏢</div>
+                <div class="feature-title">Residential Campus</div>
+                <div class="feature-desc">444 acres of dedicated space for learning and growth</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <div class="feature-title">Central Library</div>
+                <div class="feature-desc">Comprehensive collection and digital resources</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔬</div>
+                <div class="feature-title">Research Labs</div>
+                <div class="feature-desc">State-of-the-art facilities for innovation</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚽</div>
+                <div class="feature-title">Sports Complex</div>
+                <div class="feature-desc">Complete athletic and recreational facilities</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Life Section -->
+    <section class="container">
+        <div class="section-intro">Campus Culture</div>
+        <h2>Vibrant Student Life</h2>
+        <div class="life-grid">
+            <div class="life-item">
+                <h3>Srijan</h3>
+                <p>Our premier cultural festival celebrating artistic expression, talent, and creativity through performances, exhibitions, and competitions.</p>
+            </div>
+            <div class="life-item">
+                <h3>Concetto</h3>
+                <p>The flagship technical festival showcasing innovation, engineering excellence, and problem-solving prowess across diverse domains.</p>
+            </div>
+            <div class="life-item">
+                <h3>Parakram</h3>
+                <p>Our sports festival bringing together athletes for inter-department and inter-hostel competitions across multiple disciplines.</p>
+            </div>
+        </div>
+        <p style="margin-top: 3rem; color: #666;"><strong>Beyond Fests:</strong> With numerous clubs and societies spanning academics, culture, sports, and social initiatives, students find countless opportunities to develop skills, build networks, and make lasting friendships.</p>
+    </section>
+
+    <!-- Placements Section -->
+    <section class="container">
+        <div class="section-intro">Career Prospects</div>
+        <h2>Outstanding Placement Record</h2>
+        <div class="placement-highlight">
+            <p><strong>Our alumni are recruited by India's and the world's leading organizations.</strong> We maintain consistently strong placement records with competitive salary packages, reflecting the quality of our education and the industry's confidence in our graduates.</p>
+        </div>
+        <h3>Top Recruiters</h3>
+        <div class="recruiters">
+            <div class="recruiter">Google</div>
+            <div class="recruiter">Microsoft</div>
+            <div class="recruiter">Tata Steel</div>
+            <div class="recruiter">Accenture</div>
+        </div>
+        <p style="margin-top: 2rem; text-align: center; color: #666; font-size: 0.95rem;">And many more leading organizations across sectors including IT, manufacturing, consulting, energy, and finance</p>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section class="container">
+        <div class="section-intro">Why Choose IIT (ISM)</div>
+        <h2>Your Journey to Excellence</h2>
+        <div class="reasons">
+            <div class="reason">
+                <h3>Rich Legacy</h3>
+                <p>A century of heritage, tradition, and excellence in higher education and research, establishing us among India's most respected institutions.</p>
+            </div>
+            <div class="reason">
+                <h3>IIT Status & Prestige</h3>
+                <p>Recognition as a premier National Institute, ensuring quality standards and global competitiveness in education and research.</p>
+            </div>
+            <div class="reason">
+                <h3>Strong Placements</h3>
+                <p>Consistent recruitment by top national and international companies with attractive packages and career growth opportunities.</p>
+            </div>
+            <div class="reason">
+                <h3>Industry Connections</h3>
+                <p>Deep-rooted partnerships with industry leaders enabling internships, collaborative research, and career opportunities.</p>
+            </div>
+            <div class="reason">
+                <h3>Vibrant Campus Life</h3>
+                <p>A thriving community of students and faculty engaged in academics, sports, culture, and extracurricular activities.</p>
+            </div>
+            <div class="reason">
+                <h3>Research Excellence</h3>
+                <p>World-class facilities and faculty fostering innovation, groundbreaking research, and contributions to national development.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h2 style="color: var(--gold); border: none; padding-bottom: 0; margin-bottom: 1.5rem;">IIT (ISM) Dhanbad</h2>
+            <div class="contact-info">
+                <span>📍 Dhanbad, Jharkhand, India</span>
+                <a href="https://www.iitism.ac.in" target="_blank">🌐 www.iitism.ac.in</a>
+            </div>
+            <p style="margin-top: 2rem; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 2rem; color: rgba(255, 255, 255, 0.7);">Shaping Minds. Building Futures. Advancing India.</p>
+        </div>
+    </footer>
+</body>
+</html>

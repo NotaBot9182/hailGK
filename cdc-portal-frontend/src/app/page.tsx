@@ -6,7 +6,7 @@ import Link from 'next/link';
 const stats = [
   { value: '98', suffix: '', label: 'Years of academic excellence' },
   { value: '500', suffix: '+', label: 'Recruiting companies' },
-  { value: '₹48', suffix: 'L', label: 'Highest CTC (2024–25)' },
+  { value: '1200', suffix: '+', label: 'Offers made (2024–25)' },
   { value: '32', suffix: '+', label: 'Academic departments' },
   { value: '12', suffix: '', label: 'B.Tech / Dual Degree branches' },
 ];
@@ -60,8 +60,15 @@ export default function LandingPage() {
           </Box>
           <Box sx={{ width: '1px', height: 32, bgcolor: '#E8EBF0', ml: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: '4px', flex: 1 }}>
-            {['Home', 'Why IIT (ISM)', 'Programmes', 'Past Recruiters', 'Brochure', 'Contact'].map((link) => (
-              <Box key={link} component="a" href="#" sx={{ px: '14px', py: '6px', fontSize: '13.5px', color: '#5A6478', textDecoration: 'none', borderRadius: '4px', transition: 'all 0.15s', '&:hover': { bgcolor: '#F4F6F9', color: '#0A1628' } }}>{link}</Box>
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'Why IIT (ISM)', href: '#' },
+              { label: 'Programmes', href: '#' },
+              { label: 'Past Recruiters', href: '#' },
+              { label: 'Brochure', href: '/brochure.html' },
+              { label: 'Contact', href: '#' }
+            ].map((link) => (
+              <Box key={link.label} component="a" href={link.href} target={link.href === '/brochure.html' ? "_blank" : undefined} sx={{ px: '14px', py: '6px', fontSize: '13.5px', color: '#5A6478', textDecoration: 'none', borderRadius: '4px', transition: 'all 0.15s', '&:hover': { bgcolor: '#F4F6F9', color: '#0A1628' } }}>{link.label}</Box>
             ))}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', ml: 'auto' }}>
@@ -93,7 +100,7 @@ export default function LandingPage() {
                 Register as Recruiter
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </Button>
-              <Button sx={{ bgcolor: 'transparent', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.25)', px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', '&:hover': { borderColor: 'rgba(255,255,255,0.5)', bgcolor: 'rgba(255,255,255,0.06)' } }}>
+              <Button component="a" href="/brochure.html" target="_blank" sx={{ bgcolor: 'transparent', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.25)', px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', '&:hover': { borderColor: 'rgba(255,255,255,0.5)', bgcolor: 'rgba(255,255,255,0.06)' } }}>
                 Download Brochure
               </Button>
             </Box>
@@ -108,13 +115,13 @@ export default function LandingPage() {
                 <Typography sx={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', mt: '4px' }}>Companies visit annually</Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#FEFEFE', lineHeight: 1 }}>₹48<Box component="span" sx={{ color: '#E8B64A', fontSize: '24px' }}>L</Box></Typography>
-                <Typography sx={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', mt: '4px' }}>Highest CTC offered</Typography>
+                <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#FEFEFE', lineHeight: 1 }}>1200<Box component="span" sx={{ color: '#E8B64A', fontSize: '24px' }}>+</Box></Typography>
+                <Typography sx={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', mt: '4px' }}>Offers distributed</Typography>
               </Box>
               <Box sx={{ gridColumn: '1 / -1', height: '1px', bgcolor: 'rgba(200,146,42,0.15)' }} />
               <Box>
-                <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#FEFEFE', lineHeight: 1 }}>92<Box component="span" sx={{ color: '#E8B64A', fontSize: '24px' }}>%</Box></Typography>
-                <Typography sx={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', mt: '4px' }}>Placement rate (UG)</Typography>
+                <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#FEFEFE', lineHeight: 1 }}>250<Box component="span" sx={{ color: '#E8B64A', fontSize: '24px' }}>+</Box></Typography>
+                <Typography sx={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', mt: '4px' }}>Job profiles offered</Typography>
               </Box>
               <Box>
                 <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#FEFEFE', lineHeight: 1 }}>32<Box component="span" sx={{ color: '#E8B64A', fontSize: '24px' }}>+</Box></Typography>
@@ -122,9 +129,13 @@ export default function LandingPage() {
               </Box>
             </Box>
             <Box sx={{ mt: 2.5, pt: 2.5, borderTop: '1px solid rgba(200,146,42,0.15)', display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {['Placement Brochure 2025', 'AIPC Guidelines', 'Past Recruiters List'].map((link) => (
-                <Box key={link} component="a" href="#" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '12px', py: '8px', borderRadius: '4px', bgcolor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.75)', textDecoration: 'none', fontSize: '13px', transition: 'all 0.15s', '&:hover': { bgcolor: 'rgba(255,255,255,0.08)', color: '#E8B64A' } }}>
-                  <span>{link}</span>
+              {[
+                { label: 'Placement Brochure 2025', href: '/brochure.html' },
+                { label: 'AIPC Guidelines', href: '#' },
+                { label: 'Past Recruiters List', href: '#' }
+              ].map((link) => (
+                <Box key={link.label} component="a" href={link.href} target={link.href !== '#' ? '_blank' : undefined} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '12px', py: '8px', borderRadius: '4px', bgcolor: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.75)', textDecoration: 'none', fontSize: '13px', transition: 'all 0.15s', '&:hover': { bgcolor: 'rgba(255,255,255,0.08)', color: '#E8B64A' } }}>
+                  <span>{link.label}</span>
                   <span style={{ fontSize: '12px', opacity: 0.5 }}>↗</span>
                 </Box>
               ))}
@@ -257,8 +268,13 @@ export default function LandingPage() {
             <Box>
               <Typography sx={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#E8B64A', mb: 1.5 }}>Resources</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                {['Placement Brochure', 'Past Recruiters', 'AIPC Guidelines', 'NIRF Data'].map((l) => (
-                  <Box key={l} component="a" href="#" sx={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', '&:hover': { color: 'rgba(255,255,255,0.85)' } }}>{l}</Box>
+                {[
+                  { label: 'Placement Brochure', href: '/brochure.html' },
+                  { label: 'Past Recruiters', href: '#' },
+                  { label: 'AIPC Guidelines', href: '#' },
+                  { label: 'NIRF Data', href: '#' }
+                ].map((l) => (
+                  <Box key={l.label} component="a" href={l.href} target={l.href !== '#' ? '_blank' : undefined} sx={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', '&:hover': { color: 'rgba(255,255,255,0.85)' } }}>{l.label}</Box>
                 ))}
               </Box>
             </Box>

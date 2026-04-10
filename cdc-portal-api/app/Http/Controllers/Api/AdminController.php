@@ -53,12 +53,28 @@ class AdminController extends Controller
         $oldStatus = $notification->status;
         $newStatus = $validated['status'];
 
-        $notification->update([
+        // Enforce the 2-revision limit
+        if ($newStatus === 'changes_requested') {
+            if (($notification->revision_count ?? 0) >= 2) {
+                return response()->json([
+                    'message' => 'Changes can only be requested a maximum of 2 times per submission. This limit has been reached.',
+                ], 422);
+            }
+        }
+
+        $updateData = [
             'status' => $newStatus,
             'reviewed_by' => $request->user()->id,
             'reviewed_at' => now(),
             'review_notes' => $validated['review_notes'] ?? null,
-        ]);
+        ];
+
+        // Increment revision_count when requesting changes
+        if ($newStatus === 'changes_requested') {
+            $updateData['revision_count'] = ($notification->revision_count ?? 0) + 1;
+        }
+
+        $notification->update($updateData);
 
         if ($oldStatus !== $newStatus && in_array($newStatus, ['approved', 'changes_requested', 'rejected'])) {
             try {
@@ -95,6 +111,7 @@ class AdminController extends Controller
                 'notification_type' => strtoupper($notification->type),
                 'company_name' => $notification->company?->name ?? 'Unknown',
                 'review_notes' => $validated['review_notes'] ?? null,
+                'revision_count' => $notification->fresh()->revision_count,
             ],
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
@@ -105,6 +122,7 @@ class AdminController extends Controller
             'notification' => $notification->fresh(['company', 'reviewer']),
         ]);
     }
+
 
     public function export(Request $request)
     {
@@ -159,37 +177,69 @@ class AdminController extends Controller
             $infra = $n->selectionInfra;
             $declaration = $n->declaration;
             
-            // Format places of posting
-            $locations = $profile?->place_of_posting ?? '—';
-            if (is_string($locations)) {
-                $locationsDecoded = json_decode($locations, true);
-                if (is_array($locationsDecoded)) {
-                    $locations = $locationsDecoded;
-                }
-            }
-            if (is_array($locations)) {
-                // flatten and filter strings
+            // Format places of posting (stored as JSON array, Eloquent auto-casts to array)
+            $rawLocations = $profile?->place_of_posting;
+            if ($rawLocations === null || $rawLocations === '' || $rawLocations === []) {
+                $locations = '';
+            } elseif (is_array($rawLocations)) {
+                // Already decoded by Eloquent cast — flatten nested arrays and filter empties
                 $flat = [];
-                array_walk_recursive($locations, function($val) use (&$flat) {
-                    if (is_scalar($val) && $val !== '') $flat[] = $val;
+                array_walk_recursive($rawLocations, function ($val) use (&$flat) {
+                    $val = trim((string) $val);
+                    if ($val !== '') $flat[] = $val;
                 });
-                $locations = empty($flat) ? '—' : implode('; ', $flat);
+                $locations = implode('; ', $flat);
+            } elseif (is_string($rawLocations)) {
+                // Fallback: stored as raw JSON string (double-encoded edge case)
+                $decoded = json_decode($rawLocations, true);
+                if (is_array($decoded)) {
+                    $flat = [];
+                    array_walk_recursive($decoded, function ($val) use (&$flat) {
+                        $val = trim((string) $val);
+                        if ($val !== '') $flat[] = $val;
+                    });
+                    $locations = implode('; ', $flat);
+                } else {
+                    $locations = $rawLocations;
+                }
+            } else {
+                $locations = '';
             }
 
-            // Format programs allowed
-            $programs = '—';
-            if ($eligibility && $eligibility->programmes) {
-                $programs = $eligibility->programmes->map(fn($p) => "{$p->programme_name} ({$p->course_name})")->implode('; ');
+            // Format eligible programmes — each programme row has a `courses` JSON array
+            // e.g. programme_name="B.Tech", courses=["Computer Science","Electronics"]
+            // Output: "B.Tech (Computer Science); B.Tech (Electronics); M.Tech (Mining)"
+            $programs = '';
+            if ($eligibility && $eligibility->programmes && $eligibility->programmes->isNotEmpty()) {
+                $programParts = [];
+                foreach ($eligibility->programmes as $p) {
+                    $courses = $p->courses; // already decoded to array by Eloquent cast
+                    if (is_string($courses)) {
+                        $courses = json_decode($courses, true) ?? [];
+                    }
+                    if (!is_array($courses) || empty($courses)) {
+                        // No courses array — fall back to just the programme name
+                        $programParts[] = $p->programme_name;
+                    } else {
+                        foreach ($courses as $course) {
+                            $course = trim((string) $course);
+                            if ($course !== '') {
+                                $programParts[] = "{$p->programme_name} ({$course})";
+                            }
+                        }
+                    }
+                }
+                $programs = implode('; ', $programParts);
             }
 
             // Format selection stages
-            $stages = '—';
+            $stages = '';
             if ($n->selectionStages && $n->selectionStages->isNotEmpty()) {
                 $stages = $n->selectionStages->map(fn($s) => $s->stage_type . ($s->mode ? " ({$s->mode})" : ""))->implode(' -> ');
             }
 
             // Format HR contacts
-            $hrContacts = '—';
+            $hrContacts = '';
             if ($n->company && $n->company->contacts) {
                 $hrContacts = $n->company->contacts->map(fn($c) => "{$c->name} ({$c->email})")->implode(' | ');
             }
@@ -199,30 +249,30 @@ class AdminController extends Controller
                 'Type' => strtoupper($n->type),
                 'Status' => ucfirst(str_replace('_', ' ', $n->status)),
                 'Season' => "{$n->year} - " . ($n->season === 1 ? 'First' : 'Second'),
-                'Company' => $n->company?->name ?? '—',
-                'Sector' => $n->company?->sector ?? '—',
-                'Website' => $n->company?->website ?? '—',
+                'Company' => $n->company?->name ?? '',
+                'Sector' => $n->company?->sector ?? '',
+                'Website' => $n->company?->website ?? '',
                 'HR Contacts' => $hrContacts,
-                'Submitted By' => $n->user?->name ?? '—',
-                'Email' => $n->user?->email ?? '—',
-                'Profile Title' => $profile?->title ?? ($profile?->profile_name ?? '—'),
-                'Designation' => $profile?->designation ?? '—',
-                'Description' => $profile?->description ?? '—',
-                'Location' => $locations,
-                'CTC/Stipend' => $topSalary?->ctc_annual ?? ($topSalary?->stipend ?? '—'),
-                'Additional Salary Info' => is_array($topSalary?->additional_salary_components) ? json_encode($topSalary->additional_salary_components) : '—',
-                'Currency' => $topSalary?->currency ?? '—',
+                'Submitted By' => $n->user?->name ?? '',
+                'Email' => $n->user?->email ?? '',
+                'Profile Title' => $profile?->title ?? ($profile?->profile_name ?? ''),
+                'Designation' => $profile?->designation ?? '',
+                'Description' => $profile?->description ?? '',
+                'Place of Posting' => $locations,
+                'CTC/Stipend' => $topSalary?->ctc_annual ?? ($topSalary?->stipend ?? ''),
+                'Additional Salary Info' => is_array($topSalary?->additional_salary_components) ? implode('; ', array_map(fn($k, $v) => "$k: $v", array_keys($topSalary->additional_salary_components), $topSalary->additional_salary_components)) : '',
+                'Currency' => $topSalary?->currency ?? '',
                 'Eligible Programs' => $programs,
-                'CGPA Cutoff' => $eligibility?->cgpa_cutoff ?? '—',
-                'Class 10 Cutoff' => $eligibility?->tenth_marks_cutoff ?? '—',
-                'Class 12 Cutoff' => $eligibility?->twelfth_marks_cutoff ?? '—',
+                'CGPA Cutoff' => $eligibility?->cgpa_cutoff ?? '',
+                'Class 10 Cutoff' => $eligibility?->tenth_marks_cutoff ?? '',
+                'Class 12 Cutoff' => $eligibility?->twelfth_marks_cutoff ?? '',
                 'Selection Flow' => $stages,
                 'Rooms Required' => $infra?->rooms_required ?? '0',
                 'Team Members Expected' => $infra?->team_members_required ?? '0',
-                'Signatory Name' => $declaration?->signatory_name ?? '—',
-                'Signatory Designation' => $declaration?->signatory_designation ?? '—',
-                'Submitted At' => $n->submitted_at?->format('Y-m-d H:i:s') ?? '—',
-                'Reviewed At' => $n->reviewed_at?->format('Y-m-d H:i:s') ?? '—',
+                'Signatory Name' => $declaration?->signatory_name ?? '',
+                'Signatory Designation' => $declaration?->signatory_designation ?? '',
+                'Submitted At' => $n->submitted_at?->format('Y-m-d H:i:s') ?? '',
+                'Reviewed At' => $n->reviewed_at?->format('Y-m-d H:i:s') ?? '',
                 'Review Notes' => $n->review_notes ?? '',
             ];
         });
@@ -231,9 +281,10 @@ class AdminController extends Controller
             return response()->json(['data' => $data]);
         }
 
-        // Proper CSV with quoting
+        // Proper CSV with quoting and UTF-8 BOM for Excel compatibility
         $csvQuote = fn($val) => '"' . str_replace('"', '""', (string)$val) . '"';
-        $csv = implode("\n", [
+        $bom = "\xEF\xBB\xBF"; // UTF-8 BOM — ensures Excel opens the file with correct encoding
+        $csv = $bom . implode("\r\n", [
             implode(',', array_map($csvQuote, array_keys($data->first() ?? []))),
             ...$data->map(fn($row) => implode(',', array_map($csvQuote, $row))),
         ]);
@@ -241,7 +292,7 @@ class AdminController extends Controller
         return response()->streamDownload(
             fn() => print($csv),
             "notifications-export.{$format}",
-            ['Content-Type' => 'text/csv']
+            ['Content-Type' => 'text/csv; charset=UTF-8']
         );
     }
 
