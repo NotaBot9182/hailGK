@@ -215,8 +215,8 @@ export default function LoginPage() {
             <Box sx={{ display: 'flex', gap: 4 }}>
               {[
                 { value: '500+', label: 'Companies' },
-                { value: '₹48L', label: 'Highest CTC' },
-                { value: '92%', label: 'Placement Rate' },
+                { value: '1200+', label: 'Offers Given' },
+                { value: '250+', label: 'Job Profiles' },
               ].map((stat) => (
                 <Box key={stat.label}>
                   <Typography
@@ -413,17 +413,21 @@ export default function LoginPage() {
                 gap: '16px',
               }}
             >
-              {['Home', 'Brochure', 'Contact CDC'].map((link) => (
+              {[
+                { name: 'Home', path: '/' },
+                { name: 'Brochure', path: '/brochure.html' },
+                { name: 'Contact CDC', path: '/' }
+              ].map((link) => (
                 <Link
-                  key={link}
-                  href="/"
+                  key={link.name}
+                  href={link.path}
                   style={{
                     fontSize: '12px',
                     color: '#5A6478',
                     textDecoration: 'none',
                   }}
                 >
-                  {link}
+                  {link.name}
                 </Link>
               ))}
             </Box>

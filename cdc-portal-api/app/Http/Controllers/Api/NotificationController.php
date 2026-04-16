@@ -387,9 +387,10 @@ class NotificationController extends Controller
     {
         $notification = $request->user()->notifications()->findOrFail($id);
 
-        if ($notification->status !== 'draft') {
+        $allowedStatuses = ['draft', 'changes_requested'];
+        if (!in_array($notification->status, $allowedStatuses)) {
             return response()->json([
-                'message' => 'Notification already submitted.',
+                'message' => 'This submission cannot be re-submitted in its current state.',
             ], 422);
         }
 
@@ -405,10 +406,13 @@ class NotificationController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Notification submitted successfully.',
+            'message' => $notification->revision_count > 0
+                ? 'Form re-submitted successfully after revision.'
+                : 'Notification submitted successfully.',
             'notification' => $notification->fresh(),
         ]);
     }
+
 
     public function preview(Request $request, int $id): JsonResponse
     {

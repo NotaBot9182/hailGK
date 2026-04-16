@@ -209,7 +209,8 @@ export default function InfFormShell() {
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
   const isSubmitted = ['submitted', 'under_review', 'approved', 'rejected'].includes(formData?.status || '');
-  const isReadOnly = isAdmin || (isSubmitted && formData?.status !== 'changes_requested');
+  const isChangesRequested = formData?.status === 'changes_requested';
+  const isReadOnly = isAdmin || isSubmitted; // changes_requested is editable for recruiter
 
   useEffect(() => {
     if (id) fetchNotification();
@@ -608,31 +609,112 @@ export default function InfFormShell() {
           </Box>
           {['submitted', 'under_review'].includes(formData?.status || '') && (
             <Button size="small" variant="contained"
+              disabled={(formData?.revision_count ?? 0) >= 2}
               onClick={() => setShowChangeDialog(true)}
-              sx={{ bgcolor: '#92400E', fontSize: '12px', fontWeight: 600, '&:hover': { bgcolor: '#78350F' } }}>
-              Request Changes
+              sx={{ bgcolor: '#92400E', fontSize: '12px', fontWeight: 600, '&:hover': { bgcolor: '#78350F' }, '&:disabled': { bgcolor: 'rgba(146,64,14,0.3)', color: '#fff' } }}>
+              {(formData?.revision_count ?? 0) >= 2
+                ? 'Revision Limit Reached (2/2)'
+                : `Request Changes (${formData?.revision_count ?? 0}/2 used)`}
             </Button>
           )}
         </Box>
       )}
 
-      {/* Tabs Layout */}
-      <Box sx={{ px: 4, pt: 2, bgcolor: '#FEFEFE', borderBottom: '1px solid rgba(10,22,40,0.1)' }}>
-        <Tabs 
-          value={activeTab} 
-          onChange={handleTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          sx={{
-            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, color: '#5A6478', fontSize: '14px' },
-            '& .Mui-selected': { color: '#0A1628' },
-            '& .MuiTabs-indicator': { bgcolor: '#C8922A' }
-          }}
-        >
-          {INF_TABS.map((label, i) => (
-            <Tab key={i} label={label} />
-          ))}
-        </Tabs>
+      {/* Changes Requested Banner – shown to the recruiter */}
+      {!isAdmin && isChangesRequested && (
+        <Box sx={{ bgcolor: '#FEF3C7', borderBottom: '2px solid #F59E0B', px: 4, py: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+            <Typography sx={{ fontSize: '20px', lineHeight: 1 }}>✏️</Typography>
+            <Box sx={{ flex: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 0.5 }}>
+                <Typography sx={{ fontSize: '14px', fontWeight: 700, color: '#92400E' }}>
+                  Changes Requested by Admin
+                </Typography>
+                <Chip
+                  label={`Revision ${formData?.revision_count ?? 1} of 2`}
+                  size="small"
+                  sx={{ bgcolor: '#F59E0B', color: '#fff', fontWeight: 700, fontSize: '11px' }}
+                />
+              </Box>
+              <Typography sx={{ fontSize: '13px', color: '#78350F', lineHeight: 1.5 }}>
+                Please read the admin&apos;s notes below, update the form, and re-submit when ready.
+              </Typography>
+              {formData?.review_notes && (
+                <Box sx={{ mt: 1.5, p: 2, bgcolor: 'rgba(245,158,11,0.1)', borderRadius: 1, border: '1px solid rgba(245,158,11,0.3)' }}>
+                  <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#92400E', mb: 0.5 }}>Admin Notes:</Typography>
+                  <Typography sx={{ fontSize: '13px', color: '#78350F', whiteSpace: 'pre-line' }}>{formData.review_notes}</Typography>
+                </Box>
+              )}
+              {(formData?.revision_count ?? 0) >= 2 && (
+                <Typography sx={{ fontSize: '12px', color: '#DC2626', fontWeight: 600, mt: 1 }}>
+                  ⚠️ This is your final revision — no further changes can be requested after re-submission.
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        </Box>
+      )}
+
+      {/* Tabs Layout - Premium Process Stepper (Compact) */}
+      <Box sx={{ py: 3.5, bgcolor: '#FEFEFE', background: 'radial-gradient(circle at 50% 0%, rgba(200,146,42,0.04) 0%, transparent 60%), linear-gradient(180deg, #FEFEFE 0%, #F8F9FA 100%)', borderBottom: '1px solid rgba(10,22,40,0.08)' }}>
+        <Box sx={{ maxWidth: 1000, mx: 'auto', px: '2rem' }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: `repeat(${INF_TABS.length}, 1fr)` }, gap: 0, position: 'relative' }}>
+            <Box sx={{ position: 'absolute', top: 16, left: `calc(${100 / (INF_TABS.length * 2)}% + 20px)`, right: `calc(${100 / (INF_TABS.length * 2)}% + 20px)`, height: '2px', bgcolor: 'rgba(10,22,40,0.06)', display: { xs: 'none', md: 'block' }, zIndex: 0 }} />
+            
+            {INF_TABS.map((label, i) => {
+              const isActive = activeTab === i;
+              
+              let isSaved = false;
+              if (formData) {
+                if (i === 0) isSaved = !!formData.intern_title;
+                else if (i === 1) isSaved = (formData.eligible_courses?.length > 0) || (formData.min_cpi !== null && formData.min_cpi !== undefined);
+                else if (i === 2) isSaved = Object.keys(formData.stipend_details || {}).length > 0;
+                else if (i === 3) isSaved = (formData.selection_stages || []).length > 0;
+                else if (i === 4) isSaved = !!formData.declaration?.signatory_name || Object.keys(formData.declaration || {}).length > 0;
+              }
+
+              const isPast = isSaved && !isActive;
+
+              return (
+                <Box 
+                  key={i} 
+                  onClick={() => handleTabChange(null as any, i)}
+                  sx={{ 
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.25, px: 1, textAlign: 'center', 
+                    cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)', 
+                    opacity: isActive ? 1 : isPast ? 0.9 : 0.6, 
+                    '&:hover': { opacity: 1, transform: isActive ? 'none' : 'translateY(-2px)' },
+                    position: 'relative', zIndex: 2
+                  }}
+                >
+                  <Box sx={{ 
+                    width: 34, height: 34, 
+                    bgcolor: isActive ? '#0A1628' : isPast ? '#FEFEFE' : '#FEFEFE', 
+                    border: `1.5px solid ${isActive ? '#0A1628' : isPast ? '#107B4F' : '#E2E8F0'}`, 
+                    borderRadius: '50%', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                    fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', fontWeight: isActive ? 700 : 600, 
+                    color: isActive ? '#FEFEFE' : isPast ? '#107B4F' : '#94A3B8', 
+                    boxShadow: isActive ? '0 8px 16px rgba(10,22,40,0.15), 0 0 0 4px rgba(10,22,40,0.03)' : isPast ? '0 2px 8px rgba(16,123,79,0.08)' : 'none',
+                    transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                    transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                    '&:hover': {
+                      boxShadow: isActive ? '0 8px 16px rgba(10,22,40,0.15), 0 0 0 4px rgba(10,22,40,0.03)' : '0 4px 8px rgba(10,22,40,0.05)'
+                    }
+                  }}>
+                    {isPast ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> : `0${i + 1}`}
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, transform: isActive ? 'translateY(2px)' : 'none', transition: 'transform 0.3s' }}>
+                    <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: isActive ? '15.5px' : '14px', fontWeight: isActive ? 600 : 500, color: isActive ? '#0A1628' : '#334155', lineHeight: 1.1, transition: 'all 0.3s' }}>{label}</Typography>
+                    <Typography sx={{ fontSize: '10px', letterSpacing: '0.04em', textTransform: 'uppercase', fontWeight: isActive ? 700 : 600, color: isPast ? '#107B4F' : isActive ? '#C8922A' : '#94A3B8', transition: 'all 0.3s' }}>
+                      {isPast ? 'Saved' : isActive ? 'Active' : 'Pending'}
+                    </Typography>
+                  </Box>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
       </Box>
 
       {/* Content Area */}
@@ -1215,8 +1297,8 @@ export default function InfFormShell() {
                 <Button variant="contained"
                   disabled={!formData?.declaration?.aipc_guidelines || !formData?.declaration?.shortlisting_commitment || !formData?.declaration?.accuracy_profile || !formData?.declaration?.consent_ranking_agencies || !formData?.declaration?.adherence_toc || !formData?.declaration?.signatory_name}
                   onClick={handleInfSubmit}
-                  sx={{ bgcolor: '#0A1628', px: 6, py: 1.2, fontWeight: 700, '&:hover': { bgcolor: '#1B2430' }, '&:disabled': { bgcolor: 'rgba(10,22,40,0.1)' } }}>
-                  Confirm & Submit INF
+                  sx={{ bgcolor: isChangesRequested ? '#92400E' : '#0A1628', px: 6, py: 1.2, fontWeight: 700, '&:hover': { bgcolor: isChangesRequested ? '#78350F' : '#1B2430' }, '&:disabled': { bgcolor: 'rgba(10,22,40,0.1)' } }}>
+                  {isChangesRequested ? '✓ Re-submit After Revision' : 'Confirm & Submit INF'}
                 </Button>
               </Box>
             </Box>

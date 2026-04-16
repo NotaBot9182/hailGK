@@ -24,11 +24,13 @@ class Notification extends Model
         'submitted_at',
         'reviewed_at',
         'review_notes',
+        'revision_count',
     ];
 
     protected $casts = [
         'submitted_at' => 'datetime',
         'reviewed_at' => 'datetime',
+        'revision_count' => 'integer',
     ];
 
     protected static function boot()
