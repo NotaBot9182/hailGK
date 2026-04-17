@@ -20,7 +20,13 @@ import {
   MenuItem,
   CircularProgress,
   InputLabel,
+  Tooltip,
+  IconButton
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ForkRightIcon from '@mui/icons-material/ForkRight';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '@/lib/auth';
 import { notificationsApi, companyApi } from '@/lib/api';
 import { Notification } from '@/types';
@@ -501,68 +507,60 @@ export default function DashboardPage() {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Box sx={{ display: 'flex', gap: 1 }}>
-                            <Link
-                              href={`/${notification.type}/${notification.id}`}
-                              style={{
-                                fontSize: '12.5px',
-                                color: '#2A8A9E',
-                                textDecoration: 'none',
-                                fontWeight: 500,
-                              }}
-                            >
-                              {notification.status === 'draft' ? 'Edit' : 'View'}
-                            </Link>
-                            {notification.status === 'draft' && (
-                              <Link
-                                href={`/${notification.type}/${notification.id}/preview`}
-                                style={{
-                                  fontSize: '12.5px',
-                                  color: '#5A6478',
-                                  textDecoration: 'none',
-                                }}
+                          <Box sx={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+                            <Tooltip title={notification.status === 'draft' ? "Edit this draft" : "View submission"}>
+                              <IconButton
+                                component={Link}
+                                href={`/${notification.type}/${notification.id}`}
+                                size="small"
+                                sx={{ p: '5px', borderRadius: '6px', color: '#1B5E6B', '&:hover': { bgcolor: 'rgba(27,94,107,0.1)' } }}
                               >
-                                Preview
-                              </Link>
-                            )}
-                            <Box
-                              component="span"
-                              onClick={() => {
-                                if (confirm('Duplicate this submission for the current season?')) {
-                                  notificationsApi.duplicate(notification.id).then(() => {
-                                    window.location.reload();
-                                  }).catch(() => alert('Failed to duplicate.'));
-                                }
-                              }}
-                              sx={{
-                                fontSize: '12.5px',
-                                color: '#5A6478',
-                                cursor: 'pointer',
-                                '&:hover': { color: '#2A8A9E' }
-                              }}
-                            >
-                              Duplicate
-                            </Box>
+                                {notification.status === 'draft' ? <EditIcon sx={{ fontSize: '17px' }} /> : <VisibilityIcon sx={{ fontSize: '17px' }} />}
+                              </IconButton>
+                            </Tooltip>
                             {notification.status === 'draft' && (
-                              <Box
-                                component="span"
+                              <Tooltip title="Preview form">
+                                <IconButton
+                                  component={Link}
+                                  href={`/${notification.type}/${notification.id}/preview`}
+                                  size="small"
+                                  sx={{ p: '5px', borderRadius: '6px', color: '#5A6478', '&:hover': { bgcolor: 'rgba(90,100,120,0.1)' } }}
+                                >
+                                  <VisibilityIcon sx={{ fontSize: '17px' }} />
+                                </IconButton>
+                              </Tooltip>
+                            )}
+                            <Tooltip title="Duplicate for this season">
+                              <IconButton
+                                size="small"
                                 onClick={() => {
-                                  if (confirm('Delete this draft permanently?')) {
-                                    notificationsApi.delete(notification.id).then(() => {
+                                  if (confirm('Duplicate this submission for the current season?')) {
+                                    notificationsApi.duplicate(notification.id).then(() => {
                                       window.location.reload();
-                                    }).catch(() => alert('Failed to delete.'));
+                                    }).catch(() => alert('Failed to duplicate.'));
                                   }
                                 }}
-                                sx={{
-                                  fontSize: '12.5px',
-                                  color: '#8B1A1A',
-                                  opacity: 0.8,
-                                  cursor: 'pointer',
-                                  '&:hover': { opacity: 1 }
-                                }}
+                                sx={{ p: '6px', borderRadius: '8px', color: '#1B5E6B', bgcolor: 'rgba(27,94,107,0.06)', transition: 'all 0.2s ease', '&:hover': { color: '#2A8A9E', bgcolor: 'rgba(42,138,158,0.15)', transform: 'scale(1.05)' } }}
                               >
-                                Delete
-                              </Box>
+                                <ForkRightIcon sx={{ fontSize: '20px' }} />
+                              </IconButton>
+                            </Tooltip>
+                            {notification.status === 'draft' && (
+                              <Tooltip title="Delete permanently">
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    if (confirm('Delete this draft permanently?')) {
+                                      notificationsApi.delete(notification.id).then(() => {
+                                        window.location.reload();
+                                      }).catch(() => alert('Failed to delete.'));
+                                    }
+                                  }}
+                                  sx={{ p: '5px', borderRadius: '6px', color: '#8B1A1A', opacity: 0.8, '&:hover': { opacity: 1, bgcolor: 'rgba(139,26,26,0.1)' } }}
+                                >
+                                  <DeleteIcon sx={{ fontSize: '17px' }} />
+                                </IconButton>
+                              </Tooltip>
                             )}
                           </Box>
                         </TableCell>
