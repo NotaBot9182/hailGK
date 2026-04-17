@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Checkbox, FormControlLabel, FormGroup, Switch, Divider, Collapse, IconButton, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useParams, useRouter } from 'next/navigation';
 import { notificationsApi, adminApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
+import AiParsePdfDialog from '@/components/AiParsePdfDialog';
 
 const JNF_TABS = [
   'Job Profile',
@@ -273,6 +275,9 @@ export default function JnfFormShell() {
   const [requestingChanges, setRequestingChanges] = useState(false);
   const [changeNotes, setChangeNotes] = useState('');
   const [showChangeDialog, setShowChangeDialog] = useState(false);
+  const [showAiDialog, setShowAiDialog] = useState(false);
+  // Cached salary data from AI — auto-applied when courses are selected
+  const [aiSalaryCache, setAiSalaryCache] = useState<Record<string, any>>({});
 
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
@@ -283,6 +288,49 @@ export default function JnfFormShell() {
   useEffect(() => {
     if (id) fetchNotification();
   }, [id]);
+
+  // Auto-fill salary for newly active programme groups whenever courses change
+  useEffect(() => {
+    if (!formData || Object.keys(aiSalaryCache).length === 0) return;
+    const activeGroups = getActiveSalaryGroups();
+    if (activeGroups.length === 0) return;
+
+    setFormData((prev: any) => {
+      const currency = prev.salary_currency || 'INR';
+      const INR_PER_LAKH = 100_000;
+      const cvt = (lpa: number | null | undefined): number | null => {
+        if (lpa == null) return null;
+        if (currency === 'USD') return Math.round((lpa * INR_PER_LAKH / 83.5) * 100) / 100;
+        if (currency === 'EUR') return Math.round((lpa * INR_PER_LAKH / 90.5) * 100) / 100;
+        return Math.round(lpa * INR_PER_LAKH); // INR — full decimal rupees
+      };
+
+      const salaryDetails = { ...(prev.salary_details || {}) };
+      const addComp = { ...(prev.additional_salary_components || {}) };
+      let changed = false;
+
+      activeGroups.forEach((group: any) => {
+        const gid = group.id;
+        const ctc   = cvt(aiSalaryCache[`ctc_${gid}`]);
+        const base  = cvt(aiSalaryCache.base_salary);
+        const gross = cvt(aiSalaryCache.gross_salary);
+        if (ctc != null || base != null || gross != null) {
+          if (!salaryDetails[gid]) salaryDetails[gid] = {};
+          if (ctc  != null && !salaryDetails[gid].ctc)  { salaryDetails[gid].ctc  = ctc;  changed = true; }
+          if (base != null && !salaryDetails[gid].base) { salaryDetails[gid].base = base; changed = true; }
+          if (gross != null && !salaryDetails[gid].gross) { salaryDetails[gid].gross = gross; changed = true; }
+        }
+      });
+
+      if (aiSalaryCache.joining_bonus && !addComp.joining_bonus) { addComp.joining_bonus = aiSalaryCache.joining_bonus; changed = true; }
+      if (aiSalaryCache.performance_bonus && !addComp.performance_bonus) { addComp.performance_bonus = aiSalaryCache.performance_bonus; changed = true; }
+      if (aiSalaryCache.retention_bonus && !addComp.retention_bonus) { addComp.retention_bonus = aiSalaryCache.retention_bonus; changed = true; }
+
+      if (!changed) return prev;
+      return { ...prev, salary_details: salaryDetails, additional_salary_components: addComp };
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData?.eligible_courses, formData?.phd_allowed, formData?.salary_currency, aiSalaryCache]);
 
   const fetchNotification = async () => {
     try {
@@ -738,13 +786,126 @@ export default function JnfFormShell() {
     const selectedCourses = formData?.eligible_courses || [];
     return SALARY_GROUPS.filter(group => {
       if (group.isPhd) return !!formData?.phd_allowed;
-      // In the unique key system, we check if any course ID starts with the source program title
       return group.sourcePrograms?.some(progTitle => 
         selectedCourses.some((cId: string) => cId.startsWith(`${progTitle}|`))
       );
     });
   };
 
+  /**
+   * Converts a value in LPA (INR, Lakhs Per Annum) to the currently selected currency.
+   * - INR  → returned as LPA (no conversion)
+   * - USD  → annual USD (rounded to 2 dp)
+   * - EUR  → annual EUR (rounded to 2 dp)
+   */
+  const convertLpa = (lpa: number | null | undefined): number | null => {
+    if (lpa == null) return null;
+    const currency = formData?.salary_currency || 'INR';
+    const INR_PER_LAKH = 100_000;
+    if (currency === 'USD') return Math.round((lpa * INR_PER_LAKH / 83.5) * 100) / 100;
+    if (currency === 'EUR') return Math.round((lpa * INR_PER_LAKH / 90.5) * 100) / 100;
+    return Math.round(lpa * INR_PER_LAKH); // INR — full decimal rupees
+  };
+
+
+  const handleAiApply = (aiData: Record<string, any>) => {
+    // Build and persist the salary cache (always in LPA/INR as extracted)
+    const salaryCache: Record<string, any> = {};
+    const salaryFields = [
+      'ctc_btech','ctc_mtech','ctc_mba','ctc_msc','ctc_phd',
+      'base_salary','gross_salary','take_home_monthly',
+      'joining_bonus','performance_bonus','retention_bonus','relocation_allowance',
+    ];
+    salaryFields.forEach(k => { if (aiData[k] != null) salaryCache[k] = aiData[k]; });
+    setAiSalaryCache(salaryCache);
+
+    setFormData((prev: any) => {
+      const next = { ...prev };
+
+      // Job Profile fields
+      if (aiData.job_title)       next.job_title = aiData.job_title;
+      // Always fill designation: use extracted designation, or fall back to title if AI returned null
+      const des = aiData.job_designation || aiData.job_title;
+      if (des) next.job_designation = des;
+      if (aiData.place_of_posting?.length) next.place_of_posting = aiData.place_of_posting;
+      if (aiData.work_location_mode) next.work_location_mode = aiData.work_location_mode;
+      if (aiData.expected_hires)     next.expected_hires = aiData.expected_hires;
+      if (aiData.job_description)    next.job_description = aiData.job_description;
+      if (aiData.required_skills?.length) next.required_skills = aiData.required_skills;
+      if (aiData.bond_details)       next.bond_details = aiData.bond_details;
+      if (aiData.tentative_joining_month) next.tentative_joining_month = aiData.tentative_joining_month;
+
+      // Eligibility fields
+      if (aiData.min_cpi != null)          next.min_cpi = aiData.min_cpi;
+      if (aiData.backlogs_allowed != null) next.backlogs_allowed = aiData.backlogs_allowed;
+      if (aiData.gender_filter)            next.gender_filter = aiData.gender_filter;
+
+      // Auto-select courses based on target_programmes
+      if (aiData.target_programmes && Array.isArray(aiData.target_programmes)) {
+        const newCourses = new Set(prev.eligible_courses || []);
+        const mappedTitles: string[] = [];
+        const targets = aiData.target_programmes.map((p: string) => p.toLowerCase());
+        
+        if (targets.some(t => t.includes('b.tech') || t.includes('btech') || t.includes('b.e'))) {
+          mappedTitles.push('B.Tech / B.E (Bachelor of Technology / Engineering)', 'Dual Degree', 'Integrated M.Sc & M.Tech');
+        }
+        if (targets.some(t => t.includes('m.tech') || t.includes('mtech'))) {
+          mappedTitles.push('M.Tech (Master of Technology)');
+        }
+        if (targets.some(t => t.includes('mba'))) {
+          mappedTitles.push('MBA (Master of Business Administration)', 'Executive MBA', 'MBA (Business Analytics)');
+        }
+        if (targets.some(t => t.includes('m.sc') || t.includes('msc') || t.includes('m.a') || t.includes('ma'))) {
+          mappedTitles.push('M.Sc (Master of Science)', 'M.A (Master of Arts)');
+        }
+        if (targets.some(t => t.includes('ph.d') || t.includes('phd'))) {
+          next.phd_allowed = true;
+        }
+
+        ELIGIBLE_PROGRAMS.forEach(prog => {
+          if (mappedTitles.includes(prog.title)) {
+            prog.courses.forEach(c => newCourses.add(`${prog.title}|${c}`));
+          }
+        });
+        next.eligible_courses = Array.from(newCourses);
+      }
+
+      // Salary — convert LPA to the selected currency then apply for already-active groups
+      const currency = prev.salary_currency || 'INR';
+      const INR_PER_LAKH = 100_000;
+      const cvt = (lpa: number | null | undefined): number | null => {
+        if (lpa == null) return null;
+        if (currency === 'USD') return Math.round((lpa * INR_PER_LAKH / 83.5) * 100) / 100;
+        if (currency === 'EUR') return Math.round((lpa * INR_PER_LAKH / 90.5) * 100) / 100;
+        return Math.round(lpa * INR_PER_LAKH); // INR — full decimal rupees
+      };
+
+      const salaryDetails = { ...(prev.salary_details || {}) };
+      const addComp = { ...(prev.additional_salary_components || {}) };
+
+      const groupMap: Record<string, string> = { btech: 'ctc_btech', mtech: 'ctc_mtech', mba: 'ctc_mba', msc: 'ctc_msc', phd: 'ctc_phd' };
+      Object.entries(groupMap).forEach(([gid, key]) => {
+        const ctcConverted = cvt(aiData[key]);
+        if (ctcConverted != null) {
+          if (!salaryDetails[gid]) salaryDetails[gid] = {};
+          salaryDetails[gid].ctc = ctcConverted;
+          const baseConverted = cvt(aiData.base_salary);
+          const grossConverted = cvt(aiData.gross_salary);
+          if (baseConverted  != null) salaryDetails[gid].base  = baseConverted;
+          if (grossConverted != null) salaryDetails[gid].gross = grossConverted;
+        }
+      });
+      if (aiData.joining_bonus)        addComp.joining_bonus        = aiData.joining_bonus;
+      if (aiData.performance_bonus)    addComp.performance_bonus    = aiData.performance_bonus;
+      if (aiData.retention_bonus)      addComp.retention_bonus      = aiData.retention_bonus;
+      if (aiData.relocation_allowance) addComp.relocation_allowance = aiData.relocation_allowance;
+
+      next.salary_details = salaryDetails;
+      next.additional_salary_components = addComp;
+      return next;
+    });
+    setSnackbar({ open: true, message: '✨ AI data applied! Courses and salary details have been auto-populated based on the document.', severity: 'success' });
+  };
 
   if (loading) {
     return (
@@ -776,6 +937,25 @@ export default function JnfFormShell() {
           )}
           {isAdmin && formData?.status && (
             <Chip label={formData.status.replace('_', ' ').toUpperCase()} size="small" sx={{ bgcolor: 'rgba(200,146,42,0.2)', color: '#FFF', fontWeight: 600, fontSize: '11px' }} />
+          )}
+          {!isAdmin && !isSubmitted && (
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<AutoAwesomeIcon sx={{ fontSize: '15px !important' }} />}
+              onClick={() => setShowAiDialog(true)}
+              sx={{
+                bgcolor: 'rgba(200,146,42,0.15)',
+                color: '#C8922A',
+                border: '1px solid rgba(200,146,42,0.4)',
+                fontWeight: 700,
+                fontSize: '12px',
+                boxShadow: 'none',
+                '&:hover': { bgcolor: 'rgba(200,146,42,0.25)', boxShadow: 'none' },
+              }}
+            >
+              AI Auto-Fill
+            </Button>
           )}
           <Button 
             variant="outlined" 
@@ -1842,6 +2022,14 @@ export default function JnfFormShell() {
             </Alert>
           </Snackbar>
         </Box>
+
+        {/* AI Auto-Fill Dialog */}
+        <AiParsePdfDialog
+          open={showAiDialog}
+          onClose={() => setShowAiDialog(false)}
+          onApply={handleAiApply}
+          type="jnf"
+        />
       </Box>
   );
 }

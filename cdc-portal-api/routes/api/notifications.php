@@ -20,4 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('/notifications/{id}/duplicate', [App\Http\Controllers\Api\NotificationController::class, 'duplicate']);
     Route::delete('/notifications/{id}', [App\Http\Controllers\Api\NotificationController::class, 'destroy']);
+
+    // AI PDF auto-fill
+    Route::post('/ai-parse-pdf', [App\Http\Controllers\Api\AiParseController::class, 'parse']);
 });

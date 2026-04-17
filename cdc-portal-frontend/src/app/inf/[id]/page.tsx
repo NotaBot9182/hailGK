@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Switch, Snackbar, Alert, Checkbox, FormControlLabel, Collapse, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useParams, useRouter } from 'next/navigation';
 import { notificationsApi, adminApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
+import AiParsePdfDialog from '@/components/AiParsePdfDialog';
 
 const INF_TABS = [
   'Intern Profile',
@@ -205,6 +207,9 @@ export default function InfFormShell() {
   const [requestingChanges, setRequestingChanges] = useState(false);
   const [changeNotes, setChangeNotes] = useState('');
   const [showChangeDialog, setShowChangeDialog] = useState(false);
+  const [showAiDialog, setShowAiDialog] = useState(false);
+  // Cached stipend data from AI — auto-applied when courses are selected
+  const [aiStipendCache, setAiStipendCache] = useState<Record<string, any>>({})
 
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
@@ -215,6 +220,31 @@ export default function InfFormShell() {
   useEffect(() => {
     if (id) fetchNotification();
   }, [id]);
+
+  // Auto-fill stipend for newly active programme groups whenever courses change
+  useEffect(() => {
+    if (!formData || Object.keys(aiStipendCache).length === 0) return;
+    const activeGroups = getActiveStipendGroups();
+    if (activeGroups.length === 0) return;
+
+    setFormData((prev: any) => {
+      const stipendDetails = { ...(prev.stipend_details || {}) };
+      let changed = false;
+
+      activeGroups.forEach((group: any) => {
+        const gid = group.id;
+        const stipend = aiStipendCache[`stipend_${gid}`];
+        if (stipend != null) {
+          if (!stipendDetails[gid]) stipendDetails[gid] = {};
+          if (!stipendDetails[gid].stipend) { stipendDetails[gid].stipend = stipend; changed = true; }
+        }
+      });
+
+      if (!changed) return prev;
+      return { ...prev, stipend_details: stipendDetails };
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData?.eligible_courses, formData?.phd_allowed, aiStipendCache]);
 
   const fetchNotification = async () => {
     try {
@@ -555,6 +585,76 @@ export default function InfFormShell() {
     }
   };
 
+  const handleAiApply = (aiData: Record<string, any>) => {
+    // Cache stipend data so it can be applied when courses are selected later
+    const stipendCache: Record<string, any> = {};
+    ['btech','mtech','mba','msc','phd'].forEach(g => {
+      if (aiData[`stipend_${g}`] != null) stipendCache[`stipend_${g}`] = aiData[`stipend_${g}`];
+    });
+    setAiStipendCache(stipendCache);
+
+    setFormData((prev: any) => {
+      const next = { ...prev };
+      if (aiData.intern_title)          next.intern_title = aiData.intern_title;
+      // Always fill designation: use extracted designation, or fall back to title if AI returned null
+      const des = aiData.intern_designation || aiData.intern_title;
+      if (des) next.intern_designation = des;
+      if (aiData.place_of_posting?.length) next.place_of_posting = aiData.place_of_posting;
+      if (aiData.work_location_mode)    next.work_location_mode = aiData.work_location_mode;
+      if (aiData.expected_hires)        next.expected_hires = aiData.expected_hires;
+      if (aiData.expected_duration_months) next.expected_duration_months = aiData.expected_duration_months;
+      if (aiData.ppo_provision != null) next.ppo_provision = aiData.ppo_provision;
+      if (aiData.internship_description) next.internship_description = aiData.internship_description;
+      if (aiData.required_skills?.length) next.required_skills = aiData.required_skills;
+      if (aiData.min_cpi != null)       next.min_cpi = aiData.min_cpi;
+      if (aiData.backlogs_allowed != null) next.backlogs_allowed = aiData.backlogs_allowed;
+      if (aiData.gender_filter)         next.gender_filter = aiData.gender_filter;
+
+      // Auto-select courses based on target_programmes
+      if (aiData.target_programmes && Array.isArray(aiData.target_programmes)) {
+        const newCourses = new Set(prev.eligible_courses || []);
+        const mappedTitles: string[] = [];
+        const targets = aiData.target_programmes.map((p: string) => p.toLowerCase());
+        
+        if (targets.some(t => t.includes('b.tech') || t.includes('btech') || t.includes('b.e'))) {
+          mappedTitles.push('B.Tech / B.E (Bachelor of Technology / Engineering)', 'Dual Degree', 'Integrated M.Sc & M.Tech');
+        }
+        if (targets.some(t => t.includes('m.tech') || t.includes('mtech'))) {
+          mappedTitles.push('M.Tech (Master of Technology)');
+        }
+        if (targets.some(t => t.includes('mba'))) {
+          mappedTitles.push('MBA (Master of Business Administration)', 'Executive MBA', 'MBA (Business Analytics)');
+        }
+        if (targets.some(t => t.includes('m.sc') || t.includes('msc') || t.includes('m.a') || t.includes('ma'))) {
+          mappedTitles.push('M.Sc (Master of Science)', 'M.A (Master of Arts)');
+        }
+        if (targets.some(t => t.includes('ph.d') || t.includes('phd'))) {
+          next.phd_allowed = true;
+        }
+
+        ELIGIBLE_PROGRAMS.forEach(prog => {
+          if (mappedTitles.includes(prog.title)) {
+            prog.courses.forEach(c => newCourses.add(`${prog.title}|${c}`));
+          }
+        });
+        next.eligible_courses = Array.from(newCourses);
+      }
+
+      // Apply stipend immediately for already-active groups
+      const stipendDetails = { ...(prev.stipend_details || {}) };
+      ['btech','mtech','mba','msc','phd'].forEach(g => {
+        const val = aiData[`stipend_${g}`];
+        if (val != null) {
+          if (!stipendDetails[g]) stipendDetails[g] = {};
+          stipendDetails[g].stipend = val;
+        }
+      });
+      next.stipend_details = stipendDetails;
+      return next;
+    });
+    setSnackbar({ open: true, message: '✨ AI data applied! Courses and stipend details have been auto-populated based on the document.', severity: 'success' });
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
@@ -585,6 +685,25 @@ export default function InfFormShell() {
           )}
           {isAdmin && formData?.status && (
             <Chip label={formData.status.replace('_', ' ').toUpperCase()} size="small" sx={{ bgcolor: 'rgba(200,146,42,0.2)', color: '#FFF', fontWeight: 600, fontSize: '11px' }} />
+          )}
+          {!isAdmin && !isSubmitted && (
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<AutoAwesomeIcon sx={{ fontSize: '15px !important' }} />}
+              onClick={() => setShowAiDialog(true)}
+              sx={{
+                bgcolor: 'rgba(200,146,42,0.15)',
+                color: '#C8922A',
+                border: '1px solid rgba(200,146,42,0.4)',
+                fontWeight: 700,
+                fontSize: '12px',
+                boxShadow: 'none',
+                '&:hover': { bgcolor: 'rgba(200,146,42,0.25)', boxShadow: 'none' },
+              }}
+            >
+              AI Auto-Fill
+            </Button>
           )}
           <Button 
             variant="outlined" 
@@ -1352,6 +1471,14 @@ export default function InfFormShell() {
           </Alert>
         </Snackbar>
       </Box>
+
+      {/* AI Auto-Fill Dialog */}
+      <AiParsePdfDialog
+        open={showAiDialog}
+        onClose={() => setShowAiDialog(false)}
+        onApply={handleAiApply}
+        type="inf"
+      />
     </Box>
   );
 }

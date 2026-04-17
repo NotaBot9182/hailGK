@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, Grid, MenuItem, Autocomplete, Chip, Snackbar, Alert, Divider, CircularProgress } from '@mui/material';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { companyApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
+import AiParsePdfDialog from '@/components/AiParsePdfDialog';
 
 const categories = ['PSU', 'Private', 'MNC', 'Startup', 'Govt', 'NGO'];
 const employeeRanges = ['1-50', '51-200', '201-500', '501-1000', '1001-5000', '5001-10000', '10000+'];
@@ -14,6 +16,7 @@ export default function CompanyProfile() {
   const queryClient = useQueryClient();
   const [successMsg, setSuccessMsg] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [showAiDialog, setShowAiDialog] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -106,6 +109,28 @@ export default function CompanyProfile() {
   const handleLogoUpload = (e: any) => {
     const file = e.target.files?.[0];
     if (file) uploadLogoMutation.mutate(file);
+  };
+
+  const handleAiApply = (aiData: Record<string, any>) => {
+    setFormData((prev: any) => {
+      const next = { ...prev };
+      if (aiData.name)                   next.name = aiData.name;
+      if (aiData.category)               next.category = aiData.category;
+      if (aiData.website)                next.website = aiData.website;
+      if (aiData.postal_address)         next.postal_address = aiData.postal_address;
+      if (aiData.sector)                 next.sector = aiData.sector;
+      if (aiData.industry_sector_tags?.length) next.industry_sector_tags = aiData.industry_sector_tags;
+      if (aiData.nature_of_business)     next.nature_of_business = aiData.nature_of_business;
+      if (aiData.no_of_employees)        next.no_of_employees = aiData.no_of_employees;
+      if (aiData.annual_turnover)        next.annual_turnover = aiData.annual_turnover;
+      if (aiData.date_of_establishment)  next.date_of_establishment = aiData.date_of_establishment;
+      if (aiData.linkedin_url)           next.linkedin_url = aiData.linkedin_url;
+      if (aiData.parent_hq_country)      next.parent_hq_country = aiData.parent_hq_country;
+      if (aiData.parent_hq_city)         next.parent_hq_city = aiData.parent_hq_city;
+      if (aiData.description)            next.description = aiData.description;
+      return next;
+    });
+    setSuccessMsg('✨ AI data applied! Review and click Save Profile.');
   };
 
   if (isFetching) return <Box p={4}><CircularProgress /></Box>;
@@ -208,7 +233,7 @@ export default function CompanyProfile() {
       ) : (
         <Grid container spacing={3}>
           <Grid item xs={12} sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
               {formData.logo_path ? (
                 <img
                   src={`/storage/${formData.logo_path}`}
@@ -220,10 +245,29 @@ export default function CompanyProfile() {
                   No Logo
                 </Box>
               )}
-              <Button variant="outlined" component="label" disabled={uploadLogoMutation.isPending} size="small" sx={{ color: '#0A1628', borderColor: 'rgba(10,22,40,0.2)' }}>
-                {uploadLogoMutation.isPending ? 'Uploading...' : 'Upload New Logo'}
-                <input type="file" hidden accept="image/jpeg, image/png, image/jpg" onChange={handleLogoUpload} />
-              </Button>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Button variant="outlined" component="label" disabled={uploadLogoMutation.isPending} size="small" sx={{ color: '#0A1628', borderColor: 'rgba(10,22,40,0.2)' }}>
+                  {uploadLogoMutation.isPending ? 'Uploading...' : 'Upload New Logo'}
+                  <input type="file" hidden accept="image/jpeg, image/png, image/jpg" onChange={handleLogoUpload} />
+                </Button>
+                <Button
+                  size="small"
+                  variant="contained"
+                  startIcon={<AutoAwesomeIcon sx={{ fontSize: '15px !important' }} />}
+                  onClick={() => setShowAiDialog(true)}
+                  sx={{
+                    bgcolor: 'rgba(200,146,42,0.12)',
+                    color: '#C8922A',
+                    border: '1px solid rgba(200,146,42,0.35)',
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    boxShadow: 'none',
+                    '&:hover': { bgcolor: 'rgba(200,146,42,0.22)', boxShadow: 'none' },
+                  }}
+                >
+                  Fill from Brochure
+                </Button>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -405,6 +449,14 @@ export default function CompanyProfile() {
       <Snackbar open={!!successMsg} autoHideDuration={4000} onClose={() => setSuccessMsg('')}>
         <Alert severity="success" onClose={() => setSuccessMsg('')}>{successMsg}</Alert>
       </Snackbar>
+
+      {/* AI Fill from Brochure Dialog */}
+      <AiParsePdfDialog
+        open={showAiDialog}
+        onClose={() => setShowAiDialog(false)}
+        onApply={handleAiApply}
+        type="company"
+      />
     </Box>
   );
 }

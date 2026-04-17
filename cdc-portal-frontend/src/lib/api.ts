@@ -91,6 +91,14 @@ export const notificationsApi = {
     api.patch(`/notifications/notifications/${id}/stipend`, data),
   duplicate: (id: number) => api.post(`/notifications/notifications/${id}/duplicate`),
   delete: (id: number) => api.delete(`/notifications/notifications/${id}`),
+  aiParsePdf: (file: File, type: 'jnf' | 'inf' | 'company') => {
+    const formData = new FormData();
+    formData.append('pdf', file);
+    formData.append('type', type);
+    return api.post('/notifications/ai-parse-pdf', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
 
 export const adminApi = {
