@@ -20,6 +20,9 @@ class EligibilityCriteria extends Model
         'hs_percentage',
         'gender_filter',
         'slp_requirement',
+        'course_cpi_required',
+        'course_cpi_mode',
+        'course_cpi_default',
         'phd_allowed',
         'ma_dhss_allowed',
     ];
@@ -28,6 +31,8 @@ class EligibilityCriteria extends Model
         'min_cgpa' => 'decimal:2',
         'backlogs_allowed' => 'boolean',
         'hs_percentage' => 'decimal:2',
+        'course_cpi_required' => 'boolean',
+        'course_cpi_default' => 'decimal:2',
         'phd_allowed' => 'boolean',
         'ma_dhss_allowed' => 'boolean',
     ];

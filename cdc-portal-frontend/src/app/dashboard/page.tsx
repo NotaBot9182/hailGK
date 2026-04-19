@@ -40,7 +40,7 @@ const statusStyleMap: Record<string, { bgcolor: string; color: string }> = {
   under_review: { bgcolor: 'rgba(200,146,42,0.15)', color: '#8B6000' },
   approved: { bgcolor: 'rgba(34,100,60,0.1)', color: '#1d6b3a' },
   rejected: { bgcolor: 'rgba(139,26,26,0.1)', color: '#8B1A1A' },
-  changes_requested: { bgcolor: 'rgba(139,26,26,0.1)', color: '#8B1A1A' },
+  changes_requested: { bgcolor: 'rgba(217,119,6,0.1)', color: '#D97706' },
 };
 
 export default function DashboardPage() {
@@ -508,17 +508,17 @@ export default function DashboardPage() {
                         </TableCell>
                         <TableCell>
                           <Box sx={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
-                            <Tooltip title={notification.status === 'draft' ? "Edit this draft" : "View submission"}>
+                            <Tooltip title={['draft', 'changes_requested'].includes(notification.status) ? "Edit submission" : "View submission"}>
                               <IconButton
                                 component={Link}
                                 href={`/${notification.type}/${notification.id}`}
                                 size="small"
                                 sx={{ p: '5px', borderRadius: '6px', color: '#1B5E6B', '&:hover': { bgcolor: 'rgba(27,94,107,0.1)' } }}
                               >
-                                {notification.status === 'draft' ? <EditIcon sx={{ fontSize: '17px' }} /> : <VisibilityIcon sx={{ fontSize: '17px' }} />}
+                                {['draft', 'changes_requested'].includes(notification.status) ? <EditIcon sx={{ fontSize: '17px' }} /> : <VisibilityIcon sx={{ fontSize: '17px' }} />}
                               </IconButton>
                             </Tooltip>
-                            {notification.status === 'draft' && (
+                            {['draft', 'changes_requested'].includes(notification.status) && (
                               <Tooltip title="Preview form">
                                 <IconButton
                                   component={Link}
