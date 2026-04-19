@@ -132,7 +132,7 @@ const SALARY_GROUPS = [
 function SalaryTextField({ label, value, onChange, placeholder = "", multiline = false, rows = 1, borderColor = "#0A1628" }: any) {
   return (
     <Box sx={{ mb: 0 }}>
-      {label && <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#5A6478', mb: 0.5 }}>{label}</Typography>}
+      {label && <Typography sx={{ fontSize: '14px', fontWeight: 600, color: '#5A6478', mb: 0.5 }}>{label}</Typography>}
       <TextField
         fullWidth
         size="small"
@@ -144,7 +144,7 @@ function SalaryTextField({ label, value, onChange, placeholder = "", multiline =
         sx={{
           '& .MuiOutlinedInput-root': {
             bgcolor: '#FFF',
-            fontSize: '13px',
+            fontSize: '15px',
             borderLeft: `3px solid ${borderColor}`,
             boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
             '& fieldset': { borderColor: 'rgba(200, 146, 42, 0.2)' },
@@ -1203,7 +1203,7 @@ export default function JnfFormShell() {
           boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
           textAlign: activeTab === 0 ? 'left' : 'center' 
         }}>
-          <Typography sx={{ fontSize: '20px', fontWeight: 500, color: '#0A1628', mb: 2, textAlign: 'center' }}>
+          <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#0A1628', mb: 2, textAlign: 'center' }}>
             {JNF_TABS[activeTab]}
           </Typography>
 
@@ -1211,10 +1211,10 @@ export default function JnfFormShell() {
             <Box sx={{ mt: 4 }}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="Profile Name / Job Title *" size="small" value={formData?.job_title || ''} onChange={(e) => handleChange('job_title', e.target.value)} />
+                  <TextField fullWidth label={<>Profile Name / Job Title <span style={{ color: '#EF4444' }}>*</span></>} size="small" value={formData?.job_title || ''} onChange={(e) => handleChange('job_title', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="Job Designation (formal)" size="small" value={formData?.job_designation || ''} onChange={(e) => handleChange('job_designation', e.target.value)} />
+                  <TextField fullWidth label="Job Designation (formal)" size="small" value={formData?.job_designation || ''} onChange={(e) => handleChange('job_designation', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
                 </Grid>
                 
                 <Grid item xs={12} md={6}>
@@ -1230,11 +1230,11 @@ export default function JnfFormShell() {
                         <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
                       ))
                     }
-                    renderInput={(params) => <TextField {...params} label="Place of Posting *" placeholder="Add locations" />}
+                    renderInput={(params) => <TextField {...params} label={<>Place of Posting <span style={{ color: '#EF4444' }}>*</span></>} placeholder="Add locations" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth select label="Work Location Mode" size="small" value={formData?.work_location_mode || ''} onChange={(e) => handleChange('work_location_mode', e.target.value)}>
+                  <TextField fullWidth select label="Work Location Mode" size="small" value={formData?.work_location_mode || ''} onChange={(e) => handleChange('work_location_mode', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}>
                     <MenuItem value="On-site">On-site</MenuItem>
                     <MenuItem value="Remote">Remote</MenuItem>
                     <MenuItem value="Hybrid">Hybrid</MenuItem>
@@ -1243,19 +1243,20 @@ export default function JnfFormShell() {
 
                 <Grid item xs={12} md={6}>
                   <Box sx={{ display: 'flex', gap: 2 }}>
-                    <TextField fullWidth label="Expected Hires *" type="number" size="small" value={formData?.expected_hires || ''} onChange={(e) => handleChange('expected_hires', e.target.value)} />
-                    <TextField fullWidth label="Minimum Hires" type="number" size="small" value={formData?.minimum_hires || ''} onChange={(e) => handleChange('minimum_hires', e.target.value)} />
+                    <TextField fullWidth label={<>Expected Hires <span style={{ color: '#EF4444' }}>*</span></>} type="number" size="small" value={formData?.expected_hires || ''} onChange={(e) => handleChange('expected_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
+                    <TextField fullWidth label="Minimum Hires" type="number" size="small" value={formData?.minimum_hires || ''} onChange={(e) => handleChange('minimum_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField 
                     fullWidth 
-                    label="Tentative Joining Month *" 
+                    label={<>Tentative Joining Month <span style={{ color: '#EF4444' }}>*</span></>} 
                     type="month" 
                     size="small" 
                     InputLabelProps={{ shrink: true }} 
                     value={formData?.tentative_joining_month || ''} 
                     onChange={(e) => handleChange('tentative_joining_month', e.target.value)} 
+                    sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
                   />
                 </Grid>
 
@@ -1272,7 +1273,7 @@ export default function JnfFormShell() {
                         <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
                       ))
                     }
-                    renderInput={(params) => <TextField {...params} label="Required Skills" placeholder="Add skills" />}
+                    renderInput={(params) => <TextField {...params} label="Required Skills" placeholder="Add skills" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
                   />
                 </Grid>
 
@@ -1286,6 +1287,7 @@ export default function JnfFormShell() {
                     helperText="Provide full description. Alternatively, you can upload a PDF below." 
                     value={formData?.job_description || ''} 
                     onChange={(e) => handleChange('job_description', e.target.value)} 
+                    sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
                   />
                 </Grid>
 
@@ -1339,9 +1341,13 @@ export default function JnfFormShell() {
               </Box>
               
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleJobProfileSave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, '&:hover': { bgcolor: '#2C3345' }}}>
+                <Button variant="contained" onClick={handleJobProfileSave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
                   Save Job Profile
                 </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                <Button variant="outlined" disabled sx={{ visibility: 'hidden', px: 4, py: 1, fontSize: '15px' }}>← Prev</Button>
+                <Button variant="contained" onClick={() => setActiveTab(1)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
               </Box>
             </Box>
           )}
@@ -1540,9 +1546,13 @@ export default function JnfFormShell() {
               </Box>
 
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleEligibilitySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, '&:hover': { bgcolor: '#2C3345' }}}>
+                <Button variant="contained" onClick={handleEligibilitySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
                   Save Eligibility Settings
                 </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                <Button variant="outlined" onClick={() => setActiveTab(0)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                <Button variant="contained" onClick={() => setActiveTab(2)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
               </Box>
             </Box>
           )}
@@ -1550,39 +1560,51 @@ export default function JnfFormShell() {
           {activeTab === 2 && (
             <Box sx={{ mt: 2 }}>
               {/* Header with Currency and Same Structure Toggle */}
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, bgcolor: '#C8922A', px: 2, py: 0.8, borderRadius: 1, boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                  <Typography sx={{ color: '#FEFEFE', fontWeight: 600, fontSize: '13px' }}>★ Currency Selector:</Typography>
-                  <Typography sx={{ color: '#FEFEFE', fontWeight: 500, fontSize: '13px' }}>
-                    {['INR', 'USD', 'EUR'].map((curr, idx) => (
-                      <span key={curr} 
-                        style={{ cursor: 'pointer', textDecoration: (formData?.salary_currency || 'INR') === curr ? 'underline' : 'none', fontWeight: (formData?.salary_currency || 'INR') === curr ? 700 : 500 }}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '15px', color: '#5A6478', mr: 1 }}>Currency:</Typography>
+                  {['INR', 'USD', 'EUR'].map((curr) => {
+                    const isSelected = (formData?.salary_currency || 'INR') === curr;
+                    return (
+                      <Box
+                        key={curr}
                         onClick={() => handleChange('salary_currency', curr)}
+                        sx={{
+                          px: 2.5, py: 0.8, borderRadius: '20px', cursor: 'pointer',
+                          fontWeight: 700, fontSize: '14px', letterSpacing: '0.03em',
+                          transition: 'all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                          bgcolor: isSelected ? '#0A1628' : 'transparent',
+                          color: isSelected ? '#FEFEFE' : '#5A6478',
+                          border: `1.5px solid ${isSelected ? '#0A1628' : 'rgba(10,22,40,0.15)'}`,
+                          boxShadow: isSelected ? '0 4px 12px rgba(10,22,40,0.2)' : 'none',
+                          transform: isSelected ? 'scale(1.05)' : 'scale(1)',
+                          '&:hover': { borderColor: '#0A1628', bgcolor: isSelected ? '#0A1628' : 'rgba(10,22,40,0.04)' },
+                        }}
                       >
-                        {curr}{idx < 2 ? ' / ' : ''}
-                      </span>
-                    ))}
-                  </Typography>
+                        {curr === 'INR' ? '₹ INR' : curr === 'USD' ? '$ USD' : '€ EUR'}
+                      </Box>
+                    );
+                  })}
                 </Box>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#107B4F', color: '#FFF', px: 2, py: 0.8, borderRadius: 1, gap: 1 }}>
-                  <Checkbox 
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Switch 
                     size="small" 
                     checked={!!formData?.salary_same_for_all} 
                     onChange={(e) => handleSameForAllToggle(e.target.checked)}
-                    sx={{ color: '#FFF', '&.Mui-checked': { color: '#FFF' }, p: 0 }} 
+                    sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }} 
                   />
-                  <Typography sx={{ fontSize: '13px', fontWeight: 500 }}>Same structure for all programmes</Typography>
+                  <Typography sx={{ fontSize: '14px', fontWeight: 600, color: '#334155' }}>Same structure for all programmes</Typography>
                 </Box>
               </Box>
 
               {/* Salary Table */}
               <Box sx={{ border: '1px solid rgba(10,22,40,0.15)', borderRadius: 1.5, overflow: 'hidden', mb: 4, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', bgcolor: '#0A1628', color: '#FFF', py: 1.8, px: 2 }}>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#C8922A' }}>PROGRAMME</Typography>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>CTC (Annual)</Typography>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>Base/Fixed</Typography>
-                  <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>Monthly Take-home</Typography>
+                  <Typography sx={{ fontSize: '15px', fontWeight: 600, color: '#C8922A' }}>PROGRAMME</Typography>
+                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>CTC (Annual) <span style={{ color: '#EF4444' }}>*</span></Typography>
+                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Base/Fixed</Typography>
+                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Monthly Take-home</Typography>
                 </Box>
                 
                 {getActiveSalaryGroups().length === 0 ? (
@@ -1602,7 +1624,7 @@ export default function JnfFormShell() {
                       borderTop: idx > 0 ? '1px solid rgba(10,22,40,0.05)' : 'none',
                       bgcolor: idx % 2 === 1 ? 'rgba(244,246,249,0.3)' : 'transparent'
                     }}>
-                      <Typography sx={{ fontSize: '13px', fontWeight: 700, color: '#0A1628' }}>{group.label}</Typography>
+                      <Typography sx={{ fontSize: '15px', fontWeight: 700, color: '#0A1628' }}>{group.label}</Typography>
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.ctc} onChange={(val: string) => handleSalaryChange(group.id, 'ctc', val)} /></Box>
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.base} onChange={(val: string) => handleSalaryChange(group.id, 'base', val)} /></Box>
                       <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.take_home} onChange={(val: string) => handleSalaryChange(group.id, 'take_home', val)} /></Box>
@@ -1613,7 +1635,7 @@ export default function JnfFormShell() {
 
               {/* Additional Components */}
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ bgcolor: '#0A1628', color: '#FFF', py: 1.2, px: 2, fontSize: '13px', fontWeight: 600, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
+                <Typography sx={{ bgcolor: '#0A1628', color: '#FFF', py: 1.2, px: 2, fontSize: '15px', fontWeight: 600, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
                   ADDITIONAL SALARY COMPONENTS (Select which ones to include)
                 </Typography>
                 
@@ -1689,9 +1711,13 @@ export default function JnfFormShell() {
               </Box>
 
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleSalarySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, '&:hover': { bgcolor: '#2C3345' }}}>
+                <Button variant="contained" onClick={handleSalarySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
                   Save Salary Details
                 </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                <Button variant="outlined" onClick={() => setActiveTab(1)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                <Button variant="contained" onClick={() => setActiveTab(3)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
               </Box>
             </Box>
           )}
@@ -2005,9 +2031,13 @@ export default function JnfFormShell() {
               </Box>
 
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleSelectionSave} sx={{ bgcolor: '#0A1628', px: 6, py: 1.2, fontWeight: 700, '&:hover': { bgcolor: '#2C3345' }}}>
+                <Button variant="contained" onClick={handleSelectionSave} sx={{ bgcolor: '#0A1628', px: 6, py: 1.2, fontWeight: 700, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
                   Save Selection Process
                 </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                <Button variant="outlined" onClick={() => setActiveTab(2)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                <Button variant="contained" onClick={() => setActiveTab(4)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
               </Box>
             </Box>
           )}
@@ -2079,7 +2109,7 @@ export default function JnfFormShell() {
                       }}
                       sx={{ p: 0, color: 'rgba(10, 22, 40, 0.3)', '&.Mui-checked': { color: '#C8922A' } }}
                     />
-                    <Typography sx={{ fontSize: '14px', color: '#334155', lineHeight: 1.6, userSelect: 'none' }}>
+                    <Typography sx={{ fontSize: '15px', color: '#334155', lineHeight: 1.6, userSelect: 'none' }}>
                       {item.text}
                     </Typography>
                   </Box>
@@ -2087,18 +2117,19 @@ export default function JnfFormShell() {
               </Box>
 
               <Box sx={{ mb: 6, p: 4, bgcolor: '#F8FAFC', borderRadius: 2, border: '1px solid rgba(0,0,0,0.05)' }}>
-                <Typography sx={{ fontWeight: 700, color: '#0A1628', mb: 3 }}>Signatory Details</Typography>
+                <Typography sx={{ fontWeight: 700, color: '#0A1628', mb: 3, fontSize: '16px' }}>Signatory Details</Typography>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={4}>
                     <TextField 
                       fullWidth 
-                      label="Signatory Name" 
+                      label={<>Signatory Name <span style={{ color: '#EF4444' }}>*</span></>} 
                       size="small"
                       value={formData?.declaration?.signatory_name || ''}
                       onChange={(e) => {
                         const decl = { ...formData.declaration, signatory_name: e.target.value };
                         handleChange('declaration', decl);
                       }}
+                      sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
                     />
                   </Grid>
                   <Grid item xs={12} md={4}>
@@ -2142,7 +2173,7 @@ export default function JnfFormShell() {
                 <Button 
                   variant="outlined" 
                   onClick={handleDeclarationSave} 
-                  sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}
+                  sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}
                 >
                   Save Draft
                 </Button>
@@ -2155,12 +2186,16 @@ export default function JnfFormShell() {
                     px: 6, 
                     py: 1.2, 
                     fontWeight: 700, 
+                    fontSize: '15px',
                     '&:hover': { bgcolor: isChangesRequested ? '#78350F' : '#1B2430' },
                     '&:disabled': { bgcolor: 'rgba(10,22,40,0.1)' }
                   }}
                 >
                   {isChangesRequested ? '✓ Re-submit After Revision' : 'Confirm & Submit JNF'}
                 </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
+                <Button variant="outlined" onClick={() => setActiveTab(3)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
               </Box>
             </Box>
           )}

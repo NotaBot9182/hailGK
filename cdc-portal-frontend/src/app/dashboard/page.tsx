@@ -45,7 +45,7 @@ const statusStyleMap: Record<string, { bgcolor: string; color: string }> = {
 
 export default function DashboardPage() {
   const { user, company, logout } = useAuth();
-  
+
   const isRecruiter = user?.role === 'recruiter';
 
   const { data: notificationsData, isLoading: loading } = useQuery({
@@ -69,7 +69,7 @@ export default function DashboardPage() {
   const contacts = contactsResponse?.data?.contacts || [];
   const hasHeadHr = contacts.some((c: any) => c.type === 'head_hr' && Boolean(c.name));
   const hasPrimaryPoc = contacts.some((c: any) => c.type === 'poc1' && Boolean(c.name));
-  
+
   const freshCompany = companyResponse?.data?.company || company;
   const isCompanyProfileComplete = Boolean(freshCompany?.category && freshCompany?.sector);
   const isContactsComplete = hasHeadHr && hasPrimaryPoc;
@@ -177,13 +177,51 @@ export default function DashboardPage() {
           }}
         >
           {/* Sidebar Logo */}
-          <Box sx={{ px: 2, pt: 2.5, pb: 2, borderBottom: '1px solid rgba(255,255,255,0.08)', mb: 1.5 }}>
-            <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '15px', color: '#FEFEFE', fontWeight: 500 }}>
-              {company?.name || user?.name || 'Dashboard'}
-            </Typography>
-            <Typography sx={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
-              {user?.role === 'admin' ? 'CDC Admin Panel' : 'Recruiter Portal'}
-            </Typography>
+          <Box sx={{ px: 2, pt: 2.5, pb: 2, borderBottom: '1px solid rgba(255,255,255,0.08)', mb: 1.5, display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {/* Company Logo */}
+            {freshCompany?.logo_path ? (
+              <Box
+                component="img"
+                src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}/storage/${freshCompany.logo_path}`}
+                alt={freshCompany?.name || 'Company logo'}
+                sx={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '6px',
+                  objectFit: 'contain',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  flexShrink: 0,
+                }}
+              />
+            ) : (
+              <Box
+                sx={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '6px',
+                  bgcolor: 'rgba(200,146,42,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  fontFamily: '"EB Garamond", serif',
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: '#E8B64A',
+                }}
+              >
+                {(company?.name || user?.name || 'D').charAt(0).toUpperCase()}
+              </Box>
+            )}
+            {/* Name + Email */}
+            <Box sx={{ minWidth: 0 }}>
+              <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '15px', color: '#FEFEFE', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {company?.name || user?.name || 'Dashboard'}
+              </Typography>
+              <Typography sx={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {user?.role === 'admin' ? 'CDC Admin Panel' : (user?.email || 'Recruiter Portal')}
+              </Typography>
+            </Box>
           </Box>
 
           {/* Nav Items */}
@@ -254,50 +292,60 @@ export default function DashboardPage() {
             }}
           >
             <Box>
-              <Typography sx={{ fontSize: '16px', fontWeight: 500, color: '#0A1628' }}>
-                {activeSideItem === 'Submissions' ? 'All Submissions' : activeSideItem}
-              </Typography>
-              <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: '2px' }}>
-                {company?.name || user?.name} · {user?.role === 'admin' ? 'CDC Admin Dashboard' : 'Recruiter Dashboard'}
-              </Typography>
+              {activeSideItem === 'Submissions' ? (
+                <>
+                  <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '48px', fontWeight: 500, fontStyle: 'normal', color: '#0A1628', lineHeight: 1.3 }}>
+                    Greetings, <Box component="span" sx={{ fontSize: '24px', fontStyle: 'italic', fontWeight: 500, color: '#1B5E6B' }}>{user?.name || company?.name || 'Recruiter'}</Box>
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography sx={{ fontSize: '16px', fontWeight: 500, color: '#0A1628' }}>
+                    {activeSideItem}
+                  </Typography>
+                  <Typography sx={{ fontSize: '12px', color: '#5A6478', mt: '2px' }}>
+                    {company?.name || user?.name} · {user?.role === 'admin' ? 'CDC Admin Dashboard' : 'Recruiter Dashboard'}
+                  </Typography>
+                </>
+              )}
             </Box>
-            
+
             {activeSideItem === 'Submissions' && (
               <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-              <Select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                size="small"
-                sx={{
-                  fontFamily: '"DM Sans", sans-serif',
-                  fontSize: '12.5px',
-                  minWidth: 120,
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(10,22,40,0.12)' },
-                }}
-                id="status-filter"
-              >
-                <MenuItem value="all">All Status</MenuItem>
-                <MenuItem value="draft">Draft</MenuItem>
-                <MenuItem value="submitted">Submitted</MenuItem>
-                <MenuItem value="under_review">Under Review</MenuItem>
-                <MenuItem value="approved">Approved</MenuItem>
-                <MenuItem value="rejected">Rejected</MenuItem>
-              </Select>
-              <Button
-                sx={{
-                  fontSize: '12.5px',
-                  color: '#0A1628',
-                  border: '1px solid rgba(10,22,40,0.15)',
-                  borderRadius: '4px',
-                  px: '14px',
-                  py: '5px',
-                  '&:hover': { bgcolor: '#F4F6F9' },
-                }}
-                id="export-btn"
-              >
-                Export .xlsx
-              </Button>
-            </Box>
+                <Select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  size="small"
+                  sx={{
+                    fontFamily: '"DM Sans", sans-serif',
+                    fontSize: '12.5px',
+                    minWidth: 120,
+                    '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(10,22,40,0.12)' },
+                  }}
+                  id="status-filter"
+                >
+                  <MenuItem value="all">All Status</MenuItem>
+                  <MenuItem value="draft">Draft</MenuItem>
+                  <MenuItem value="submitted">Submitted</MenuItem>
+                  <MenuItem value="under_review">Under Review</MenuItem>
+                  <MenuItem value="approved">Approved</MenuItem>
+                  <MenuItem value="rejected">Rejected</MenuItem>
+                </Select>
+                <Button
+                  sx={{
+                    fontSize: '12.5px',
+                    color: '#0A1628',
+                    border: '1px solid rgba(10,22,40,0.15)',
+                    borderRadius: '4px',
+                    px: '14px',
+                    py: '5px',
+                    '&:hover': { bgcolor: '#F4F6F9' },
+                  }}
+                  id="export-btn"
+                >
+                  Export .xlsx
+                </Button>
+              </Box>
             )}
           </Box>
 
@@ -331,253 +379,255 @@ export default function DashboardPage() {
 
               {/* Metrics */}
               <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: 2,
-              px: 3,
-              py: 2.5,
-              borderBottom: '1px solid rgba(10,22,40,0.12)',
-            }}
-          >
-            {metrics.map((metric) => (
-              <Box
-                key={metric.label}
                 sx={{
-                  bgcolor: '#F4F6F9',
-                  borderRadius: '8px',
-                  p: 2,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gap: 2,
+                  px: 3,
+                  py: 2.5,
+                  borderBottom: '1px solid rgba(10,22,40,0.12)',
                 }}
               >
-                <Typography
-                  sx={{
-                    fontFamily: '"EB Garamond", serif',
-                    fontSize: '26px',
-                    fontWeight: 500,
-                    color: '#0A1628',
-                    lineHeight: 1,
-                    mb: '4px',
-                  }}
-                >
-                  {metric.value}
-                </Typography>
-                <Typography sx={{ fontSize: '11.5px', color: '#5A6478' }}>
-                  {metric.label}
-                </Typography>
+                {metrics.map((metric) => (
+                  <Box
+                    key={metric.label}
+                    sx={{
+                      bgcolor: '#F4F6F9',
+                      borderRadius: '8px',
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: '"EB Garamond", serif',
+                        fontSize: '26px',
+                        fontWeight: 500,
+                        color: '#0A1628',
+                        lineHeight: 1,
+                        mb: '4px',
+                      }}
+                    >
+                      {metric.value}
+                    </Typography>
+                    <Typography sx={{ fontSize: '11.5px', color: '#5A6478' }}>
+                      {metric.label}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
 
-          {/* Action Bar */}
-          <Box sx={{ px: 3, py: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(10,22,40,0.12)' }}>
-            <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628' }}>
-              My Submissions
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button
-                onClick={() => { setNewFormData({ ...newFormData, type: 'jnf' }); setCreateDialogOpen(true); }}
-                id="new-jnf-btn"
-                disabled={currentWorkflowStep < 3 && isRecruiter}
-                sx={{
-                  bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#0A1628',
-                  color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#FEFEFE',
-                  fontSize: '12.5px',
-                  px: '16px',
-                  py: '6px',
-                  borderRadius: '4px',
-                  fontWeight: 500,
-                  '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#2C3345' },
-                }}
-              >
-                + New JNF
-              </Button>
-              <Button
-                onClick={() => { setNewFormData({ ...newFormData, type: 'inf' }); setCreateDialogOpen(true); }}
-                id="new-inf-btn"
-                disabled={currentWorkflowStep < 3 && isRecruiter}
-                sx={{
-                  fontSize: '12.5px',
-                  color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#1B5E6B',
-                  border: '1px solid',
-                  borderColor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : 'rgba(27,94,107,0.3)',
-                  borderRadius: '4px',
-                  px: '16px',
-                  py: '6px',
-                  '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'transparent' : 'rgba(27,94,107,0.05)' },
-                }}
-              >
-                + New INF
-              </Button>
-            </Box>
-          </Box>
+              {/* Action Bar */}
+              <Box sx={{ px: 3, py: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(10,22,40,0.12)' }}>
+                <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628' }}>
+                  My Submissions
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Button
+                    onClick={() => { setNewFormData({ ...newFormData, type: 'jnf' }); setCreateDialogOpen(true); }}
+                    id="new-jnf-btn"
+                    disabled={currentWorkflowStep < 3 && isRecruiter}
+                    sx={{
+                      bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#0A1628',
+                      color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#FEFEFE',
+                      fontSize: '12.5px',
+                      px: '16px',
+                      py: '6px',
+                      borderRadius: '4px',
+                      fontWeight: 500,
+                      '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : '#2C3345' },
+                    }}
+                  >
+                    + New JNF
+                  </Button>
+                  <Button
+                    onClick={() => { setNewFormData({ ...newFormData, type: 'inf' }); setCreateDialogOpen(true); }}
+                    id="new-inf-btn"
+                    disabled={currentWorkflowStep < 3 && isRecruiter}
+                    sx={{
+                      fontSize: '12.5px',
+                      color: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.4)' : '#1B5E6B',
+                      border: '1px solid',
+                      borderColor: currentWorkflowStep < 3 && isRecruiter ? 'rgba(10,22,40,0.1)' : 'rgba(27,94,107,0.3)',
+                      borderRadius: '4px',
+                      px: '16px',
+                      py: '6px',
+                      '&:hover': { bgcolor: currentWorkflowStep < 3 && isRecruiter ? 'transparent' : 'rgba(27,94,107,0.05)' },
+                    }}
+                  >
+                    + New INF
+                  </Button>
+                </Box>
+              </Box>
 
-          {/* Table */}
-          <Box sx={{ flex: 1, overflow: 'auto', px: 3 }}>
-            <TableContainer>
-              <Table sx={{ '& td, & th': { borderBottomColor: 'rgba(10,22,40,0.08)' } }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Company</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Type</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Reference</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Season</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Submitted</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Status</TableCell>
-                    <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {loading ? (
-                    <TableRow>
-                      <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
-                        <CircularProgress size={28} sx={{ color: '#0A1628' }} />
-                      </TableCell>
-                    </TableRow>
-                  ) : filteredNotifications.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
-                        <Box>
-                          <Typography sx={{ fontSize: '14px', color: '#5A6478', mb: 1 }}>
-                            No submissions yet
-                          </Typography>
-                          <Typography sx={{ fontSize: '12.5px', color: '#5A6478', opacity: 0.7 }}>
-                            Create your first JNF or INF using the buttons above.
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    filteredNotifications.map((notification) => (
-                      <TableRow key={notification.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' }, transition: 'background 0.1s' }}>
-                        <TableCell sx={{ fontWeight: 500, fontSize: '13px', color: '#0A1628' }}>
-                          {company?.name || '—'}
-                        </TableCell>
-                        <TableCell>
-                          <Box
-                            component="span"
-                            sx={{
-                              fontFamily: '"JetBrains Mono", monospace',
-                              fontSize: '11px',
-                              fontWeight: 500,
-                              px: '7px',
-                              py: '2px',
-                              borderRadius: '3px',
-                              ...(notification.type === 'jnf'
-                                ? { bgcolor: 'rgba(10,22,40,0.06)', color: '#0A1628' }
-                                : { bgcolor: 'rgba(27,94,107,0.08)', color: '#1B5E6B' }),
-                            }}
-                          >
-                            {notification.type.toUpperCase()}
-                          </Box>
-                        </TableCell>
-                        <TableCell sx={{ fontSize: '12.5px', color: '#5A6478', fontFamily: '"JetBrains Mono", monospace' }}>
-                          {notification.reference_number}
-                        </TableCell>
-                        <TableCell sx={{ fontSize: '12.5px', color: '#5A6478' }}>
-                          {notification.year} — {notification.season === 1 ? 'S1' : 'S2'}
-                        </TableCell>
-                        <TableCell sx={{ fontSize: '12.5px', color: '#5A6478' }}>
-                          {notification.submitted_at
-                            ? new Date(notification.submitted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-                            : '—'}
-                        </TableCell>
-                        <TableCell>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
-                            <Box
-                              component="span"
-                              sx={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '5px',
-                                px: '10px',
-                                py: '3px',
-                                borderRadius: '20px',
-                                fontSize: '11.5px',
-                                fontWeight: 500,
-                                ...(statusStyleMap[notification.status] || statusStyleMap['draft']),
-                              }}
-                            >
-                              {notification.status.replace('_', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())}
-                            </Box>
-                            {notification.review_notes && (
-                              <Typography sx={{ fontSize: '10.5px', color: '#5A6478', fontStyle: 'italic', maxWidth: '200px', lineHeight: 1.2 }}>
-                                ↳ {notification.review_notes}
-                              </Typography>
-                            )}
-                          </Box>
-                        </TableCell>
-                        <TableCell>
-                          <Box sx={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
-                            <Tooltip title={['draft', 'changes_requested'].includes(notification.status) ? "Edit submission" : "View submission"}>
-                              <IconButton
-                                component={Link}
-                                href={`/${notification.type}/${notification.id}`}
-                                size="small"
-                                sx={{ p: '5px', borderRadius: '6px', color: '#1B5E6B', '&:hover': { bgcolor: 'rgba(27,94,107,0.1)' } }}
-                              >
-                                {['draft', 'changes_requested'].includes(notification.status) ? <EditIcon sx={{ fontSize: '17px' }} /> : <VisibilityIcon sx={{ fontSize: '17px' }} />}
-                              </IconButton>
-                            </Tooltip>
-                            {['draft', 'changes_requested'].includes(notification.status) && (
-                              <Tooltip title="Preview form">
-                                <IconButton
-                                  component={Link}
-                                  href={`/${notification.type}/${notification.id}/preview`}
-                                  size="small"
-                                  sx={{ p: '5px', borderRadius: '6px', color: '#5A6478', '&:hover': { bgcolor: 'rgba(90,100,120,0.1)' } }}
-                                >
-                                  <VisibilityIcon sx={{ fontSize: '17px' }} />
-                                </IconButton>
-                              </Tooltip>
-                            )}
-                            <Tooltip title="Duplicate for this season">
-                              <IconButton
-                                size="small"
-                                onClick={() => {
-                                  if (confirm('Duplicate this submission for the current season?')) {
-                                    notificationsApi.duplicate(notification.id).then(() => {
-                                      window.location.reload();
-                                    }).catch(() => alert('Failed to duplicate.'));
-                                  }
-                                }}
-                                sx={{ p: '6px', borderRadius: '8px', color: '#1B5E6B', bgcolor: 'rgba(27,94,107,0.06)', transition: 'all 0.2s ease', '&:hover': { color: '#2A8A9E', bgcolor: 'rgba(42,138,158,0.15)', transform: 'scale(1.05)' } }}
-                              >
-                                <ForkRightIcon sx={{ fontSize: '20px' }} />
-                              </IconButton>
-                            </Tooltip>
-                            {notification.status === 'draft' && (
-                              <Tooltip title="Delete permanently">
-                                <IconButton
-                                  size="small"
-                                  onClick={() => {
-                                    if (confirm('Delete this draft permanently?')) {
-                                      notificationsApi.delete(notification.id).then(() => {
-                                        window.location.reload();
-                                      }).catch(() => alert('Failed to delete.'));
-                                    }
-                                  }}
-                                  sx={{ p: '5px', borderRadius: '6px', color: '#8B1A1A', opacity: 0.8, '&:hover': { opacity: 1, bgcolor: 'rgba(139,26,26,0.1)' } }}
-                                >
-                                  <DeleteIcon sx={{ fontSize: '17px' }} />
-                                </IconButton>
-                              </Tooltip>
-                            )}
-                          </Box>
-                        </TableCell>
+              {/* Table */}
+              <Box sx={{ flex: 1, overflow: 'auto', px: 3 }}>
+                <TableContainer>
+                  <Table sx={{ '& td, & th': { borderBottomColor: 'rgba(10,22,40,0.08)' } }}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Job Title</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Type</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Reference</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Season</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Submitted</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Status</TableCell>
+                        <TableCell sx={{ fontWeight: 500, fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Action</TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+                    </TableHead>
+                    <TableBody>
+                      {loading ? (
+                        <TableRow>
+                          <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
+                            <CircularProgress size={28} sx={{ color: '#0A1628' }} />
+                          </TableCell>
+                        </TableRow>
+                      ) : filteredNotifications.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={7} sx={{ textAlign: 'center', py: 6 }}>
+                            <Box>
+                              <Typography sx={{ fontSize: '14px', color: '#5A6478', mb: 1 }}>
+                                No submissions yet
+                              </Typography>
+                              <Typography sx={{ fontSize: '12.5px', color: '#5A6478', opacity: 0.7 }}>
+                                Create your first JNF or INF using the buttons above.
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        filteredNotifications.map((notification) => (
+                          <TableRow key={notification.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' }, transition: 'background 0.1s' }}>
+                            <TableCell sx={{ fontWeight: 500, fontSize: '13px', color: '#0A1628' }}>
+                              {notification.type === 'jnf'
+                                ? (notification.job_profile?.profile_name || '—')
+                                : (notification.intern_profile?.title || '—')}
+                            </TableCell>
+                            <TableCell>
+                              <Box
+                                component="span"
+                                sx={{
+                                  fontFamily: '"JetBrains Mono", monospace',
+                                  fontSize: '11px',
+                                  fontWeight: 500,
+                                  px: '7px',
+                                  py: '2px',
+                                  borderRadius: '3px',
+                                  ...(notification.type === 'jnf'
+                                    ? { bgcolor: 'rgba(10,22,40,0.06)', color: '#0A1628' }
+                                    : { bgcolor: 'rgba(27,94,107,0.08)', color: '#1B5E6B' }),
+                                }}
+                              >
+                                {notification.type.toUpperCase()}
+                              </Box>
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '12.5px', color: '#5A6478', fontFamily: '"JetBrains Mono", monospace' }}>
+                              {notification.reference_number}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '12.5px', color: '#5A6478' }}>
+                              {notification.year} — {notification.season === 1 ? 'S1' : 'S2'}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '12.5px', color: '#5A6478' }}>
+                              {notification.submitted_at
+                                ? new Date(notification.submitted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+                                : '—'}
+                            </TableCell>
+                            <TableCell>
+                              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '5px',
+                                    px: '10px',
+                                    py: '3px',
+                                    borderRadius: '20px',
+                                    fontSize: '11.5px',
+                                    fontWeight: 500,
+                                    ...(statusStyleMap[notification.status] || statusStyleMap['draft']),
+                                  }}
+                                >
+                                  {notification.status.replace('_', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())}
+                                </Box>
+                                {notification.review_notes && (
+                                  <Typography sx={{ fontSize: '10.5px', color: '#5A6478', fontStyle: 'italic', maxWidth: '200px', lineHeight: 1.2 }}>
+                                    ↳ {notification.review_notes}
+                                  </Typography>
+                                )}
+                              </Box>
+                            </TableCell>
+                            <TableCell>
+                              <Box sx={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+                                <Tooltip title={['draft', 'changes_requested'].includes(notification.status) ? "Edit submission" : "View submission"}>
+                                  <IconButton
+                                    component={Link}
+                                    href={`/${notification.type}/${notification.id}`}
+                                    size="small"
+                                    sx={{ p: '5px', borderRadius: '6px', color: '#1B5E6B', '&:hover': { bgcolor: 'rgba(27,94,107,0.1)' } }}
+                                  >
+                                    {['draft', 'changes_requested'].includes(notification.status) ? <EditIcon sx={{ fontSize: '17px' }} /> : <VisibilityIcon sx={{ fontSize: '17px' }} />}
+                                  </IconButton>
+                                </Tooltip>
+                                {['draft', 'changes_requested'].includes(notification.status) && (
+                                  <Tooltip title="Preview form">
+                                    <IconButton
+                                      component={Link}
+                                      href={`/${notification.type}/${notification.id}/preview`}
+                                      size="small"
+                                      sx={{ p: '5px', borderRadius: '6px', color: '#5A6478', '&:hover': { bgcolor: 'rgba(90,100,120,0.1)' } }}
+                                    >
+                                      <VisibilityIcon sx={{ fontSize: '17px' }} />
+                                    </IconButton>
+                                  </Tooltip>
+                                )}
+                                <Tooltip title="Duplicate for this season">
+                                  <IconButton
+                                    size="small"
+                                    onClick={() => {
+                                      if (confirm('Duplicate this submission for the current season?')) {
+                                        notificationsApi.duplicate(notification.id).then(() => {
+                                          window.location.reload();
+                                        }).catch(() => alert('Failed to duplicate.'));
+                                      }
+                                    }}
+                                    sx={{ p: '6px', borderRadius: '8px', color: '#1B5E6B', bgcolor: 'rgba(27,94,107,0.06)', transition: 'all 0.2s ease', '&:hover': { color: '#2A8A9E', bgcolor: 'rgba(42,138,158,0.15)', transform: 'scale(1.05)' } }}
+                                  >
+                                    <ForkRightIcon sx={{ fontSize: '20px' }} />
+                                  </IconButton>
+                                </Tooltip>
+                                {notification.status === 'draft' && (
+                                  <Tooltip title="Delete permanently">
+                                    <IconButton
+                                      size="small"
+                                      onClick={() => {
+                                        if (confirm('Delete this draft permanently?')) {
+                                          notificationsApi.delete(notification.id).then(() => {
+                                            window.location.reload();
+                                          }).catch(() => alert('Failed to delete.'));
+                                        }
+                                      }}
+                                      sx={{ p: '5px', borderRadius: '6px', color: '#8B1A1A', opacity: 0.8, '&:hover': { opacity: 1, bgcolor: 'rgba(139,26,26,0.1)' } }}
+                                    >
+                                      <DeleteIcon sx={{ fontSize: '17px' }} />
+                                    </IconButton>
+                                  </Tooltip>
+                                )}
+                              </Box>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
 
-          {/* Mobile Sign Out */}
-          <Box sx={{ display: { xs: 'block', md: 'none' }, px: 3, py: 2, borderTop: '1px solid rgba(10,22,40,0.12)' }}>
-            <Button onClick={handleLogout} fullWidth sx={{ fontSize: '13px', color: '#8B1A1A', border: '1px solid rgba(139,26,26,0.2)', borderRadius: '4px' }}>
-              Sign Out
-            </Button>
-          </Box>
+              {/* Mobile Sign Out */}
+              <Box sx={{ display: { xs: 'block', md: 'none' }, px: 3, py: 2, borderTop: '1px solid rgba(10,22,40,0.12)' }}>
+                <Button onClick={handleLogout} fullWidth sx={{ fontSize: '13px', color: '#8B1A1A', border: '1px solid rgba(139,26,26,0.2)', borderRadius: '4px' }}>
+                  Sign Out
+                </Button>
+              </Box>
             </>
           )}
 
