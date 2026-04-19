@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Switch, Snackbar, Alert, Checkbox, FormControlLabel, Collapse, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Button, CircularProgress, Grid, TextField, MenuItem, Autocomplete, Chip, Switch, Snackbar, Alert, Checkbox, FormControlLabel, Collapse, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, Radio, FormLabel } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -9,6 +9,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { notificationsApi, adminApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import AiParsePdfDialog from '@/components/AiParsePdfDialog';
+import CpiEditorTwoPane from '@/components/CpiEditorTwoPane';
 
 const INF_TABS = [
   'Intern Profile',
@@ -21,7 +22,7 @@ const INF_TABS = [
 const ELIGIBLE_PROGRAMS = [
   {
     title: 'B.Tech / B.E (Bachelor of Technology / Engineering)',
-    color: '#315482',
+    color: '#0A1628',
     courses: [
       'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
       'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
@@ -39,7 +40,7 @@ const ELIGIBLE_PROGRAMS = [
   },
   {
     title: 'M.Tech (Master of Technology)',
-    color: '#223868',
+    color: '#1B5E6B',
     courses: [
       'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
       'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
@@ -57,7 +58,7 @@ const ELIGIBLE_PROGRAMS = [
   },
   {
     title: 'M.Sc (Master of Science)',
-    color: '#3A4B5C',
+    color: '#5A6478',
     courses: [
       'Physics', 'Chemistry', 'Mathematics', 'Statistics', 'Environmental Science', 
       'Physical Science', 'Chemical Science', 'English', 'Humanities & Social Sciences', 
@@ -66,7 +67,7 @@ const ELIGIBLE_PROGRAMS = [
   },
   {
     title: 'M.A (Master of Arts)',
-    color: '#2E4C63',
+    color: '#5A6478',
     courses: [
       'English', 'Humanities & Social Sciences', 'Philosophy', 'Psychology', 
       'Sociology', 'Social Media and Culture', 'Digital Humanities and Social Sciences'
@@ -74,26 +75,26 @@ const ELIGIBLE_PROGRAMS = [
   },
   {
     title: 'MBA (Master of Business Administration)',
-    color: '#34816C',
+    color: '#C8922A',
     courses: [
       'Master of Business Administration', 'Operation Management', 'Financial Management', 'Management'
     ]
   },
   {
     title: 'Executive MBA',
-    color: '#2b6b59',
+    color: '#C8922A',
     courses: [
       'Executive Master of Business Administration', 'Operation Management', 'Financial Management', 'Management'
     ]
   },
   {
     title: 'MBA (Business Analytics)',
-    color: '#1a5944',
+    color: '#C8922A',
     courses: ['Business Analytics']
   },
   {
     title: 'Dual Degree',
-    color: '#25446e',
+    color: '#0A1628',
     courses: [
       'Computer Science and Engineering+Computer Science and Engineering', 
       'Mining Engineering+Mining Engineering', 'Mineral Engineering+Mineral Engineering', 
@@ -103,7 +104,7 @@ const ELIGIBLE_PROGRAMS = [
   },
   {
     title: 'Integrated M.Sc & M.Tech',
-    color: '#1d6e5f',
+    color: '#1B5E6B',
     courses: [
       'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
       'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
@@ -127,19 +128,19 @@ function ProgramBlock({ program, formData, onToggleCourse, onSelectAll }: any) {
   const count = program.courses.filter((c: string) => (formData?.eligible_courses || []).includes(`${program.title}|${c}`)).length;
   
   return (
-    <Box sx={{ mb: 4, border: `1px solid ${program.color}30`, borderRadius: 1, overflow: 'hidden' }}>
+    <Box sx={{ mb: 3, border: '1px solid rgba(10,22,40,0.12)', borderLeft: '4px solid #1B5E6B', borderRadius: '6px', overflow: 'hidden', bgcolor: '#FEFEFE' }}>
       <Box 
-        sx={{ bgcolor: program.color, color: '#FEFEFE', px: 2, py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s', '&:hover': { opacity: 0.95 } }}
+        sx={{ bgcolor: '#FEFEFE', color: '#0A1628', px: 2, py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s', '&:hover': { bgcolor: 'rgba(10,22,40,0.02)' } }}
         onClick={() => setExpanded(!expanded)}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Typography sx={{ fontWeight: 600, fontSize: '14.5px', letterSpacing: '0.02em' }}>
+          <Typography sx={{ fontWeight: 600, fontSize: '14.5px', letterSpacing: '0.02em', color: '#0A1628' }}>
             {program.title}
           </Typography>
           <Chip 
             label={expanded ? "▼ Hide" : `▶ Show (${count}/${program.courses.length} selected)`} 
             size="small" 
-            sx={{ bgcolor: 'rgba(255,255,255,0.15)', color: '#FFF', fontSize: '11px', height: 20, cursor: 'pointer', '&:hover': { bgcolor: 'rgba(255,255,255,0.25)' } }} 
+            sx={{ bgcolor: 'rgba(10,22,40,0.06)', color: '#0A1628', fontSize: '11px', height: 20, cursor: 'pointer', '&:hover': { bgcolor: 'rgba(10,22,40,0.1)' } }} 
             onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
           />
         </Box>
@@ -147,37 +148,43 @@ function ProgramBlock({ program, formData, onToggleCourse, onSelectAll }: any) {
           control={
             <Checkbox 
               size="small" 
-              sx={{ color: 'rgba(255,255,255,0.7)', '&.Mui-checked': { color: '#C8922A' }, py: 0 }}
+              sx={{ color: 'rgba(10,22,40,0.2)', '&.Mui-checked': { color: '#C8922A' }, py: 0 }}
               checked={allSelected}
               indeterminate={someSelected && !allSelected}
               onChange={(e) => { e.stopPropagation(); onSelectAll(program.title, program.courses, e.target.checked); }}
             />
           }
-          label={<Typography sx={{ fontSize: '13px', fontWeight: 500 }}>Select All</Typography>}
+          label={<Typography sx={{ fontSize: '13px', fontWeight: 500, color: '#0A1628' }}>Select All</Typography>}
           sx={{ mr: 0 }}
           onClick={(e) => e.stopPropagation()}
         />
       </Box>
       <Collapse in={expanded}>
-        <Box sx={{ p: 2, bgcolor: `${program.color}06`, maxHeight: 400, overflowY: 'auto' }}>
+        <Box sx={{ p: 2, borderTop: '1px solid rgba(10,22,40,0.06)', bgcolor: 'rgba(10,22,40,0.015)', maxHeight: 400, overflowY: 'auto' }}>
           <Grid container spacing={1}>
-            {program.courses.map((course: string, idx: number) => (
+            {program.courses.map((course: string, idx: number) => {
+              const courseId = `${program.title}|${course}`;
+              const isChecked = (formData?.eligible_courses || []).includes(courseId);
+              return (
               <Grid item xs={12} sm={6} md={4} key={idx}>
-                <FormControlLabel
-                  control={
-                    <Checkbox 
-                      size="small"
-                      checked={(formData?.eligible_courses || []).includes(`${program.title}|${course}`)}
-                      onChange={(e) => { e.stopPropagation(); onToggleCourse(`${program.title}|${course}`); }}
-                      onClick={(e) => e.stopPropagation()}
-                      sx={{ color: 'rgba(10,22,40,0.3)', p: 0.5, '&.Mui-checked': { color: '#0A1628' } }}
-                    />
-                  }
-                  label={<Typography sx={{ fontSize: '13px', color: '#334155' }}>{course}</Typography>}
-                  onClick={(e) => e.stopPropagation()}
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, p: 0.5 }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        size="small"
+                        checked={isChecked}
+                        onChange={(e) => { e.stopPropagation(); onToggleCourse(courseId); }}
+                        onClick={(e) => e.stopPropagation()}
+                        sx={{ color: 'rgba(10,22,40,0.3)', p: 0.5, '&.Mui-checked': { color: '#0A1628' } }}
+                      />
+                    }
+                    label={<Typography sx={{ fontSize: '13px', color: '#334155' }}>{course}</Typography>}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </Box>
               </Grid>
-            ))}
+              );
+            })}
           </Grid>
         </Box>
       </Collapse>
@@ -208,6 +215,9 @@ export default function InfFormShell() {
   const [changeNotes, setChangeNotes] = useState('');
   const [showChangeDialog, setShowChangeDialog] = useState(false);
   const [showAiDialog, setShowAiDialog] = useState(false);
+  const [courseCpiRequired, setCourseCpiRequired] = useState(false);
+  const [courseCpiMode, setCourseCpiMode] = useState<'all' | 'individual'>('all');
+  const [courseCpiDefault, setCourseCpiDefault] = useState<string>('');
   // Cached stipend data from AI — auto-applied when courses are selected
   const [aiStipendCache, setAiStipendCache] = useState<Record<string, any>>({})
 
@@ -274,13 +284,27 @@ export default function InfFormShell() {
       data.phd_allowed = !!data.eligibility_criteria?.phd_allowed;
       data.ma_dhss_allowed = !!data.eligibility_criteria?.ma_dhss_allowed;
 
+      const courseCpis: Record<string, string> = {};
       data.eligible_courses = (data.eligibility_criteria?.programmes || []).flatMap((p: any) => {
         let coursesArray = p.courses || [];
         if (typeof coursesArray === 'string') {
           try { coursesArray = JSON.parse(coursesArray); } catch (e) { coursesArray = []; }
         }
-        return coursesArray.map((c: string) => `${p.programme_name}|${c}`);
+        return coursesArray.map((c: any) => {
+          if (typeof c === 'string') {
+            return `${p.programme_name}|${c}`;
+          } else if (c && typeof c === 'object') {
+            const courseId = `${p.programme_name}|${c.name}`;
+            if (c.cpi !== null && c.cpi !== undefined && c.cpi !== '') courseCpis[courseId] = c.cpi.toString();
+            return courseId;
+          }
+          return null;
+        }).filter(Boolean);
       });
+      data.course_cpis = courseCpis;
+      data.course_cpi_required = !!data.eligibility_criteria?.course_cpi_required;
+      data.course_cpi_mode = (data.eligibility_criteria?.course_cpi_mode || 'all') as any;
+      data.course_cpi_default = data.eligibility_criteria?.course_cpi_default?.toString?.() || '';
       data.expected_duration_months = data.intern_profile?.expected_duration_months || '';
       data.ppo_provision = !!data.intern_profile?.ppo_provision;
       data.required_skills = data.intern_profile?.required_skills || [];
@@ -324,6 +348,9 @@ export default function InfFormShell() {
       };
 
       setFormData(data);
+      setCourseCpiRequired(!!data.course_cpi_required);
+      setCourseCpiMode((data.course_cpi_mode || 'all') as any);
+      setCourseCpiDefault(data.course_cpi_default || '');
     } catch (err) {
       console.error('Failed to load INF', err);
       router.push('/dashboard');
@@ -341,12 +368,32 @@ export default function InfFormShell() {
     setFormData((prev: any) => ({ ...(prev || {}), [field]: value }));
   };
 
+  const applyDefaultCpiToSelectedCourses = (defaultCpi: string, eligibleCourses: string[]) => {
+    const v = defaultCpi;
+    if (!v) return;
+    setFormData((prev: any) => {
+      const currentCourses: string[] = eligibleCourses ?? prev?.eligible_courses ?? [];
+      const updated = { ...(prev?.course_cpis || {}) };
+      currentCourses.forEach((cId: string) => { updated[cId] = v; });
+      return { ...prev, course_cpis: updated };
+    });
+  };
+
   const handleCourseToggle = (courseId: string) => {
     const current = formData?.eligible_courses || [];
     if (current.includes(courseId)) {
       handleChange('eligible_courses', current.filter((c: string) => c !== courseId));
+      if (courseCpiRequired && courseCpiMode === 'individual') {
+        const updated = { ...(formData?.course_cpis || {}) };
+        delete updated[courseId];
+        handleChange('course_cpis', updated);
+      }
     } else {
-      handleChange('eligible_courses', [...current, courseId]);
+      const nextCourses = [...current, courseId];
+      handleChange('eligible_courses', nextCourses);
+      if (courseCpiRequired && courseCpiMode === 'all' && courseCpiDefault) {
+        applyDefaultCpiToSelectedCourses(courseCpiDefault, nextCourses);
+      }
     }
   };
 
@@ -355,9 +402,18 @@ export default function InfFormShell() {
     const programCourseIds = courses.map(c => `${programTitle}|${c}`);
     if (select) {
       const otherCourses = current.filter((c: string) => !programCourseIds.includes(c));
-      handleChange('eligible_courses', [...otherCourses, ...programCourseIds]);
+      const nextCourses = [...otherCourses, ...programCourseIds];
+      handleChange('eligible_courses', nextCourses);
+      if (courseCpiRequired && courseCpiMode === 'all' && courseCpiDefault) {
+        applyDefaultCpiToSelectedCourses(courseCpiDefault, nextCourses);
+      }
     } else {
       handleChange('eligible_courses', current.filter((c: string) => !programCourseIds.includes(c)));
+      if (courseCpiRequired && courseCpiMode === 'individual') {
+        const updated = { ...(formData?.course_cpis || {}) };
+        programCourseIds.forEach(id => delete updated[id]);
+        handleChange('course_cpis', updated);
+      }
     }
   };
 
@@ -365,16 +421,45 @@ export default function InfFormShell() {
     try {
       setSavingStatus('saving');
       const safeFloat = (v: any) => (v !== null && v !== undefined && v !== '' && !isNaN(parseFloat(v))) ? parseFloat(v) : null;
+
+      if (courseCpiRequired) {
+        const selected = formData?.eligible_courses || [];
+        if (courseCpiMode === 'all') {
+          if (!courseCpiDefault || safeFloat(courseCpiDefault) === null) {
+            setSavingStatus('error');
+            setSnackbar({ open: true, message: 'Please enter the Specific CPI to apply to all selected courses.', severity: 'error' });
+            return;
+          }
+        } else {
+          const missing = selected.filter((cId: string) => safeFloat(formData?.course_cpis?.[cId]) === null);
+          if (missing.length > 0) {
+            setSavingStatus('error');
+            setSnackbar({ open: true, message: `Please add a Specific CPI for all selected courses (${missing.length} missing).`, severity: 'error' });
+            return;
+          }
+        }
+      }
       
       const programmes = ELIGIBLE_PROGRAMS.map(prog => {
-        const selectedCourses = (formData.eligible_courses || []).filter((c: string) => c.startsWith(`${prog.title}|`)).map((c: string) => c.split('|')[1]);
+        const selectedCourses = (formData.eligible_courses || []).filter((c: string) => c.startsWith(`${prog.title}|`));
         if (selectedCourses.length === 0) return null;
         return {
           code: prog.title.split('(')[0].trim(),
           name: prog.title,
           is_selected: true,
           min_cpi: safeFloat(formData.min_cpi),
-          courses: selectedCourses
+          courses: selectedCourses.map((cId: string) => {
+            const cName = cId.split('|')[1];
+            if (courseCpiRequired) {
+              const cpiVal = courseCpiMode === 'all'
+                ? safeFloat(courseCpiDefault)
+                : safeFloat(formData.course_cpis?.[cId]);
+              return { name: cName, cpi: cpiVal };
+            }
+            const courseCpi = safeFloat(formData.course_cpis?.[cId]);
+            if (courseCpi !== null) return { name: cName, cpi: courseCpi };
+            return cName;
+          })
         };
       }).filter(Boolean);
 
@@ -386,6 +471,9 @@ export default function InfFormShell() {
         phd_allowed: !!formData.phd_allowed,
         phd_departments: formData.phd_departments || '',
         ma_dhss_allowed: !!formData.ma_dhss_allowed,
+        course_cpi_required: !!courseCpiRequired,
+        course_cpi_mode: courseCpiRequired ? courseCpiMode : null,
+        course_cpi_default: courseCpiRequired && courseCpiMode === 'all' ? safeFloat(courseCpiDefault) : null,
         programmes: programmes
       };
 
@@ -593,6 +681,15 @@ export default function InfFormShell() {
     });
     setAiStipendCache(stipendCache);
 
+    const aiCourseCpiRequired = !!aiData.course_cpi_required;
+    const aiCourseCpiMode = (aiData.course_cpi_mode === 'individual' ? 'individual' : 'all') as 'all' | 'individual';
+    const aiCourseCpiDefault = (aiData.course_cpi_default !== null && aiData.course_cpi_default !== undefined)
+      ? String(aiData.course_cpi_default)
+      : '';
+    if (aiData.course_cpi_required != null) setCourseCpiRequired(aiCourseCpiRequired);
+    if (aiData.course_cpi_mode) setCourseCpiMode(aiCourseCpiMode);
+    if (aiData.course_cpi_default != null) setCourseCpiDefault(aiCourseCpiDefault);
+
     setFormData((prev: any) => {
       const next = { ...prev };
       if (aiData.intern_title)          next.intern_title = aiData.intern_title;
@@ -638,6 +735,12 @@ export default function InfFormShell() {
           }
         });
         next.eligible_courses = Array.from(newCourses);
+      }
+
+      if (aiCourseCpiRequired && aiCourseCpiMode === 'all' && aiCourseCpiDefault) {
+        const updated: Record<string, string> = { ...(next.course_cpis || {}) };
+        (next.eligible_courses || []).forEach((cId: string) => { updated[cId] = aiCourseCpiDefault; });
+        next.course_cpis = updated;
       }
 
       // Apply stipend immediately for already-active groups
@@ -978,13 +1081,100 @@ export default function InfFormShell() {
           {/* ─── Tab 1: Eligibility & Courses ─── */}
           {activeTab === 1 && (
             <Box sx={{ mt: 4, textAlign: 'left' }}>
+              <Box sx={{ mb: 3, p: 3, borderRadius: 2, border: '1px solid rgba(10,22,40,0.10)', bgcolor: 'linear-gradient(180deg, rgba(200,146,42,0.05) 0%, rgba(244,246,249,0.55) 100%)' as any }}>
+                <Typography sx={{ fontWeight: 800, color: '#0A1628', fontSize: '14px', mb: 1 }}>
+                  CPI criteria (Course-wise)
+                </Typography>
+                <Typography sx={{ fontSize: '12.5px', color: '#5A6478', mb: 2 }}>
+                  First, confirm whether you need a <strong>Specific CPI</strong> cutoff for the courses you select.
+                </Typography>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Switch
+                      checked={courseCpiRequired}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setCourseCpiRequired(checked);
+                        if (!checked) {
+                          setCourseCpiDefault('');
+                          setCourseCpiMode('all');
+                          handleChange('course_cpis', {});
+                        } else {
+                          setCourseCpiMode('all');
+                        }
+                      }}
+                      sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }}
+                    />
+                    <Box>
+                      <Typography sx={{ fontSize: '13px', fontWeight: 700, color: '#0A1628' }}>
+                        We need a Specific CPI cutoff per course
+                      </Typography>
+                      <Typography sx={{ fontSize: '12px', color: '#64748b' }}>
+                        If enabled, you can apply one CPI to all selected courses or set them individually.
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {courseCpiRequired && (
+                    <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', flexWrap: 'wrap' }}>
+                      <Box>
+                        <FormLabel sx={{ fontSize: '12px', fontWeight: 700, color: '#0A1628' }}>
+                          How do you want to add CPI?
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          value={courseCpiMode}
+                          onChange={(e) => {
+                            const mode = e.target.value as 'all' | 'individual';
+                            setCourseCpiMode(mode);
+                            if (mode === 'all') {
+                              handleChange('course_cpis', {});
+                              if (courseCpiDefault) applyDefaultCpiToSelectedCourses(courseCpiDefault, formData?.eligible_courses || []);
+                            }
+                          }}
+                        >
+                          <FormControlLabel value="all" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Apply to all selected</Typography>} />
+                          <FormControlLabel value="individual" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Add individually</Typography>} />
+                        </RadioGroup>
+                      </Box>
+
+                      {courseCpiMode === 'all' && (
+                        <TextField
+                          size="small"
+                          type="number"
+                          label="CPI for all selected courses"
+                          inputProps={{ step: '0.1', min: 0, max: 10 }}
+                          placeholder="e.g. 7.0"
+                          value={courseCpiDefault}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            setCourseCpiDefault(v);
+                            if (v) applyDefaultCpiToSelectedCourses(v, formData?.eligible_courses || []);
+                          }}
+                          sx={{ minWidth: 220 }}
+                        />
+                      )}
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+
+              {courseCpiRequired && courseCpiMode === 'individual' && (
+                <CpiEditorTwoPane
+                  eligibleCourses={formData?.eligible_courses || []}
+                  courseCpis={formData?.course_cpis || {}}
+                  onCourseCpisChange={(next) => handleChange('course_cpis', next)}
+                />
+              )}
+
               {ELIGIBLE_PROGRAMS.map((program, index) => (
                 <ProgramBlock 
                   key={index} 
                   program={program} 
                   formData={formData} 
                   onToggleCourse={handleCourseToggle} 
-                  onSelectAll={handleSelectAll} 
+                  onSelectAll={handleSelectAll}
                 />
               ))}
 
