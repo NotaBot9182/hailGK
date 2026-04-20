@@ -111,4 +111,9 @@ export const adminApi = {
   deleteUser: (id: number) => api.delete(`/admin/users/${id}`),
   getAnalytics: () => api.get('/admin/analytics'),
   getAuditLogs: (params?: Record<string, unknown>) => api.get('/admin/audit-logs', { params }),
+  listMentorships: (params?: Record<string, unknown>) => api.get('/admin/mentorships', { params }),
+};
+
+export const alumniApi = {
+  submitMentorshipForm: (data: Record<string, unknown>) => api.post('/alumni/mentorship', data),
 };
