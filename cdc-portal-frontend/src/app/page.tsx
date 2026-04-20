@@ -4,7 +4,7 @@ import { Box, Typography, Button } from '@mui/material';
 import Link from 'next/link';
 
 const stats = [
-  { value: '98', suffix: '', label: 'Years of academic excellence' },
+  { value: '100', suffix: '', label: 'Years of academic excellence' },
   { value: '500', suffix: '+', label: 'Recruiting companies' },
   { value: '1200', suffix: '+', label: 'Offers made (2024–25)' },
   { value: '32', suffix: '+', label: 'Academic departments' },
@@ -42,11 +42,11 @@ export default function LandingPage() {
       </Box>
 
       {/* ─── NOTICE BAR ─── */}
-      <Box sx={{ bgcolor: '#F5E6C8', borderTop: '2px solid #C8922A', borderBottom: '1px solid rgba(200,146,42,0.3)', px: '2rem', py: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '13px', color: '#0A1628' }}>
+      {/* <Box sx={{ bgcolor: '#F5E6C8', borderTop: '2px solid #C8922A', borderBottom: '1px solid rgba(200,146,42,0.3)', px: '2rem', py: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '13px', color: '#0A1628' }}>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="#C8922A"/><rect x="6.3" y="3" width="1.4" height="1.4" rx=".7" fill="#C8922A"/><rect x="6.3" y="5.5" width="1.4" height="5" rx=".7" fill="#C8922A"/></svg>
         <span><strong>Placement Season 2025–26 is now open.</strong> &nbsp;JNF submissions are accepted until 30 November 2025.</span>
         <Box component="a" href="#" sx={{ color: '#1B5E6B', fontWeight: 500, ml: '6px', textDecoration: 'none' }}>View Schedule →</Box>
-      </Box>
+      </Box> */}
 
       {/* ─── NAVBAR ─── */}
       <Box sx={{ bgcolor: '#FEFEFE', borderBottom: '1px solid rgba(10,22,40,0.12)', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 2px 8px rgba(10,22,40,0.08)' }}>
@@ -54,8 +54,8 @@ export default function LandingPage() {
           <Box component={Link} href="/" sx={{ display: 'flex', alignItems: 'center', gap: '14px', textDecoration: 'none' }}>
             <Box component="img" src="/iit-ism-logo.svg" alt="IIT (ISM) Dhanbad" sx={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0 }} />
             <Box>
-              <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '17px', fontWeight: 600, color: '#0A1628', lineHeight: 1.2 }}>IIT (ISM) Dhanbad</Typography>
-              <Typography sx={{ fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Career Development Centre</Typography>
+              <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '17px', fontWeight: 600, color: '#0A1628', lineHeight: 1.2, whiteSpace: 'nowrap' }}>IIT (ISM) Dhanbad</Typography>
+              <Typography sx={{ fontSize: '11px', color: '#5A6478', letterSpacing: '0.04em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Career Development Centre</Typography>
             </Box>
           </Box>
           <Box sx={{ width: '1px', height: 32, bgcolor: '#E8EBF0', ml: 1 }} />
@@ -66,9 +66,10 @@ export default function LandingPage() {
               { label: 'Programmes', href: '#' },
               { label: 'Past Recruiters', href: '#' },
               { label: 'Brochure', href: '/brochure.html' },
+              { label: 'Alumni Mentorship', href: '/alumni-mentorship' },
               { label: 'Contact', href: '#' }
             ].map((link) => (
-              <Box key={link.label} component="a" href={link.href} target={link.href === '/brochure.html' ? "_blank" : undefined} sx={{ px: '14px', py: '6px', fontSize: '13.5px', color: '#5A6478', textDecoration: 'none', borderRadius: '4px', transition: 'all 0.15s', '&:hover': { bgcolor: '#F4F6F9', color: '#0A1628' } }}>{link.label}</Box>
+              <Box key={link.label} component="a" href={link.href} target={link.href === '/brochure.html' ? "_blank" : undefined} sx={{ px: '14px', py: '6px', fontSize: '13.5px', color: '#5A6478', textDecoration: 'none', borderRadius: '4px', transition: 'all 0.15s', whiteSpace: 'nowrap', '&:hover': { bgcolor: '#F4F6F9', color: '#0A1628' } }}>{link.label}</Box>
             ))}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', ml: 'auto' }}>
@@ -98,7 +99,7 @@ export default function LandingPage() {
             <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <Button component={Link} href="/register" sx={{ bgcolor: '#C8922A', color: '#0A1628', fontWeight: 600, px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '8px', '&:hover': { bgcolor: '#E8B64A' } }}>
                 Register as Recruiter
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </Button>
               <Button component="a" href="/brochure.html" target="_blank" sx={{ bgcolor: 'transparent', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.25)', px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', '&:hover': { borderColor: 'rgba(255,255,255,0.5)', bgcolor: 'rgba(255,255,255,0.06)' } }}>
                 Download Brochure
@@ -190,7 +191,7 @@ export default function LandingPage() {
           </Box>
           <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '36px', fontWeight: 500, color: '#0A1628', lineHeight: 1.15, mb: 1.5 }}>Choose the right portal for your need</Typography>
 
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mt: 5 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3, mt: 5 }}>
             {/* JNF Card */}
             <Box component={Link} href="/register" sx={{ bgcolor: '#FEFEFE', border: '1px solid rgba(10,22,40,0.12)', borderRadius: '8px', p: 4.5, position: 'relative', overflow: 'hidden', textDecoration: 'none', display: 'block', transition: 'all 0.2s', '&:hover': { boxShadow: '0 8px 40px rgba(10,22,40,0.16)', transform: 'translateY(-2px)' } }}>
               <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', bgcolor: '#0A1628' }} />
@@ -204,7 +205,7 @@ export default function LandingPage() {
               </Box>
               <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 Start JNF Submission
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </Typography>
             </Box>
 
@@ -221,7 +222,24 @@ export default function LandingPage() {
               </Box>
               <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 Start INF Submission
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </Typography>
+            </Box>
+
+            {/* Alumni Mentorship Card */}
+            <Box component={Link} href="/alumni-mentorship" sx={{ bgcolor: '#FEFEFE', border: '1px solid rgba(10,22,40,0.12)', borderRadius: '8px', p: 4.5, position: 'relative', overflow: 'hidden', textDecoration: 'none', display: 'block', transition: 'all 0.2s', '&:hover': { boxShadow: '0 8px 40px rgba(10,22,40,0.16)', transform: 'translateY(-2px)' } }}>
+              <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', bgcolor: '#C8922A' }} />
+              <Typography sx={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', letterSpacing: '0.08em', fontWeight: 500, bgcolor: 'rgba(200,146,42,0.1)', color: '#C8922A', display: 'inline-flex', px: '10px', py: '4px', borderRadius: '2px', mb: 2 }}>ALUMNI · Mentorship</Typography>
+              <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '26px', fontWeight: 500, color: '#0A1628', mb: 1.5, lineHeight: 1.2 }}>Alumni Mentorship</Typography>
+              <Typography sx={{ fontSize: '14px', color: '#5A6478', lineHeight: 1.6, mb: 3 }}>For distinguished alumni willing to guide and mentor current students and young graduates of IIT (ISM) Dhanbad.</Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+                {['Single-page form', 'Domain preferences', 'Degree selection', 'Network integration'].map((f) => (
+                  <Box key={f} sx={{ fontSize: '12px', px: '12px', py: '4px', bgcolor: '#F4F6F9', border: '1px solid rgba(10,22,40,0.12)', borderRadius: '20px', color: '#5A6478' }}>{f}</Box>
+                ))}
+              </Box>
+              <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#0A1628', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                Join Mentorship Program
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </Typography>
             </Box>
           </Box>
@@ -260,8 +278,14 @@ export default function LandingPage() {
             <Box>
               <Typography sx={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#E8B64A', mb: 1.5 }}>Portals</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                {['Job Notification Form (JNF)', 'Intern Notification Form (INF)', 'Recruiter Login', 'Register Company'].map((l) => (
-                  <Box key={l} component="a" href="#" sx={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', '&:hover': { color: 'rgba(255,255,255,0.85)' } }}>{l}</Box>
+                {[
+                  { label: 'Job Notification Form (JNF)', href: '#' },
+                  { label: 'Intern Notification Form (INF)', href: '#' },
+                  { label: 'Alumni Mentorship Form', href: '/alumni-mentorship' },
+                  { label: 'Recruiter Login', href: '/login' },
+                  { label: 'Register Company', href: '/register' }
+                ].map((l) => (
+                  <Box key={l.label} component={Link} href={l.href} sx={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', '&:hover': { color: 'rgba(255,255,255,0.85)' } }}>{l.label}</Box>
                 ))}
               </Box>
             </Box>

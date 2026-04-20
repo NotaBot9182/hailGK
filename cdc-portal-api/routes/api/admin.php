@@ -9,6 +9,7 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
     Route::patch('/notifications/{id}/status', [App\Http\Controllers\Api\AdminController::class, 'updateStatus']);
     Route::get('/export', [App\Http\Controllers\Api\AdminController::class, 'export']);
     Route::get('/analytics', [App\Http\Controllers\Api\AdminController::class, 'analytics']);
+    Route::get('/mentorships', [App\Http\Controllers\Api\AdminController::class, 'mentorships']);
 });
 
 Route::middleware(['auth:sanctum', SuperAdminMiddleware::class])->group(function () {

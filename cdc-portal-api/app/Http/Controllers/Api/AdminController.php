@@ -503,4 +503,19 @@ class AdminController extends Controller
 
         return response()->json($logs);
     }
+
+    public function mentorships(Request $request): JsonResponse
+    {
+        $query = \App\Models\AlumniMentorship::query();
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', "%{$request->search}%")
+                ->orWhere('email', 'like', "%{$request->search}%")
+                ->orWhere('company', 'like', "%{$request->search}%");
+        }
+
+        $mentorships = $query->orderBy('created_at', 'desc')->paginate(20);
+
+        return response()->json($mentorships);
+    }
 }

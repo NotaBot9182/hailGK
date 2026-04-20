@@ -78,19 +78,28 @@ export default function AdminPage() {
     enabled: isSuperAdmin && activeSideItem === 'Audit Log',
   });
 
+  const { data: mentorshipsData, isLoading: loadingMentorships } = useQuery({
+    queryKey: ['admin-mentorships'],
+    queryFn: async () => adminApi.listMentorships(),
+    enabled: activeSideItem === 'Alumni Mentorships',
+  });
+
   const notifications: Notification[] = notificationsData?.data?.data || [];
   const users = usersData?.data?.data || [];
   const analytics = analyticsData?.data || {};
   const auditLogs = auditLogsData?.data?.data || [];
+  const mentorships = mentorshipsData?.data?.data || [];
 
   const sidebarItems = isSuperAdmin ? [
     { label: 'Submissions' },
     { label: 'Recruiters' },
+    { label: 'Alumni Mentorships' },
     { label: 'Analytics' },
     { label: 'Audit Log' },
     { label: 'Export Data' },
   ] : [
     { label: 'Submissions' },
+    { label: 'Alumni Mentorships' },
     { label: 'Analytics' },
     { label: 'Export Data' },
   ];
@@ -410,6 +419,65 @@ export default function AdminPage() {
                           <TableCell>{u.company?.name || '—'}</TableCell>
                           <TableCell><Chip label={u.role} size="small" /></TableCell>
                           <TableCell><Chip label={u.is_active ? 'Active' : 'Inactive'} size="small" color={u.is_active ? 'success' : 'default'} /></TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          )}
+
+          {/* Alumni Mentorships View */}
+          {activeSideItem === 'Alumni Mentorships' && (
+            <Box sx={{ flex: 1, overflow: 'auto', px: 3, pt: 3 }}>
+              <TableContainer>
+                <Table sx={{ '& td, & th': { borderBottomColor: 'rgba(10,22,40,0.08)' } }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Alumnus</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Degrees</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Company</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Mentorship Areas</TableCell>
+                      <TableCell sx={{ fontWeight: 600, fontSize: '11px', color: '#5A6478', textTransform: 'uppercase' }}>Submitted</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {loadingMentorships ? (
+                      <TableRow><TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}><CircularProgress size={28} /></TableCell></TableRow>
+                    ) : mentorships.length === 0 ? (
+                      <TableRow><TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}>No mentorship applications found</TableCell></TableRow>
+                    ) : (
+                      mentorships.map((m: any) => (
+                        <TableRow key={m.id} sx={{ '&:hover td': { bgcolor: '#F4F6F9' } }}>
+                          <TableCell>
+                            <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#0A1628' }}>{m.name}</Typography>
+                            <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>{m.email} {m.phone ? `· ${m.phone}` : ''}</Typography>
+                            <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>Class of {m.grad_year}</Typography>
+                          </TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                              {m.affiliated_degrees ? m.affiliated_degrees.map((d: string, i: number) => (
+                                <Chip key={i} label={d} size="small" sx={{ fontSize: '10px', height: 20, bgcolor: 'rgba(27,94,107,0.06)', color: '#1B5E6B' }} />
+                              )) : <Typography sx={{ fontSize: '11px', color: '#94a3b8' }}>—</Typography>}
+                            </Box>
+                          </TableCell>
+                          <TableCell>
+                            <Typography sx={{ fontSize: '12px', color: '#0A1628' }}>{m.company || '—'}</Typography>
+                            <Typography sx={{ fontSize: '11px', color: '#5A6478' }}>{m.designation || ''}</Typography>
+                          </TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                              {m.mentorship_areas ? m.mentorship_areas.map((a: string, i: number) => (
+                                <Chip key={i} label={a} size="small" sx={{ fontSize: '10px', height: 20, bgcolor: 'rgba(200,146,42,0.1)', color: '#8B6000' }} />
+                              )) : <Typography sx={{ fontSize: '11px', color: '#94a3b8' }}>—</Typography>}
+                            </Box>
+                          </TableCell>
+                          <TableCell>
+                            <Typography sx={{ fontSize: '12px', color: '#0A1628' }}>
+                              {new Date(m.created_at).toLocaleDateString()}
+                            </Typography>
+                          </TableCell>
                         </TableRow>
                       ))
                     )}
