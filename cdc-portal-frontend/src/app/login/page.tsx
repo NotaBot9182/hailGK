@@ -267,30 +267,12 @@ export default function LoginPage() {
                 boxShadow: '0 4px 20px rgba(10,22,40,0.12)',
               }}
             >
-              {/* Card Header */}
-              <Box sx={{
-                px: 3, py: 2,
-                borderBottom: '1px solid rgba(10,22,40,0.12)',
-                bgcolor: '#F4F6F9',
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              }}>
-                <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '18px', fontWeight: 500, color: '#0A1628' }}>
-                  {activeStep === 0 ? 'Recruiter Login' : loginSuccess ? 'Welcome Back!' : 'Authenticating...'}
-                </Typography>
-                <Typography sx={{
-                  fontFamily: '"JetBrains Mono", monospace', fontSize: '10px',
-                  color: '#5A6478', bgcolor: '#E8EBF0', px: '8px', py: '3px', borderRadius: '4px',
-                }}>
-                  Step {activeStep + 1} of {LOGIN_STEPS.length}
-                </Typography>
-              </Box>
-
               {/* Card Body */}
-              <Box sx={{ p: 3 }}>
+              <Box sx={{ p: { xs: 3, md: 4 } }}>
                 {/* Step 0: Credentials */}
                 {activeStep === 0 && (
                   <>
-                    <Typography sx={{ fontSize: '13px', color: '#5A6478', mb: 3, lineHeight: 1.6 }}>
+                    <Typography sx={{ fontSize: '14px', color: '#5A6478', mb: 4, lineHeight: 1.6 }}>
                       Sign in to access your recruitment dashboard and manage JNF/INF submissions.
                     </Typography>
 

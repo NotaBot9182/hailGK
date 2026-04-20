@@ -282,25 +282,12 @@ export default function RegisterPage() {
                 </Box>
               ))}
             </Box>
-            <Typography sx={{ fontSize: '11.5px', color: '#5A6478', mt: 1, fontFamily: '"JetBrains Mono", monospace' }}>
-              Step {activeStep + 1} of {steps.length}
-            </Typography>
           </Box>
 
           {/* ─── Form Card ─── */}
           <Box sx={{ bgcolor: '#FEFEFE', borderRadius: '8px', border: '1px solid rgba(10,22,40,0.12)', overflow: 'hidden', boxShadow: '0 4px 20px rgba(10,22,40,0.12)' }}>
-            {/* Card Header */}
-            <Box sx={{ bgcolor: '#F4F6F9', borderBottom: '1px solid rgba(10,22,40,0.12)', px: 3, py: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '18px', fontWeight: 500, color: '#0A1628' }}>
-                {steps[activeStep]}
-              </Typography>
-              <Typography sx={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', color: '#5A6478', bgcolor: '#E8EBF0', px: '8px', py: '3px', borderRadius: '4px' }}>
-                {activeStep === 0 ? 'Verify Email' : activeStep === 1 ? 'Personal Info' : 'Company Details'}
-              </Typography>
-            </Box>
-
             {/* Card Body */}
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ p: { xs: 3, md: 4 } }}>
               {error && (
                 <Alert severity="error" sx={{ mb: 3, bgcolor: 'rgba(139,26,26,0.08)', color: '#8B1A1A', borderRadius: '4px', border: '1px solid rgba(139,26,26,0.15)', '& .MuiAlert-icon': { color: '#8B1A1A' }, fontSize: '13px' }} onClose={() => setError('')}>
                   {error}
@@ -310,7 +297,6 @@ export default function RegisterPage() {
               {/* Step 0: Email Verification */}
               {activeStep === 0 && (
                 <Box>
-                  <SectionHeader>Email Verification</SectionHeader>
                   <Box sx={{ mb: 2.5 }}>
                     <FieldLabel required>Company Email Address</FieldLabel>
                     <TextField fullWidth type="email" placeholder="recruiter@company.com" value={formData.email} onChange={handleChange('email')} disabled={verificationToken !== ''} size="small" id="register-email" helperText="Use your official company email address" />
@@ -342,7 +328,6 @@ export default function RegisterPage() {
               {/* Step 1: Recruiter Details */}
               {activeStep === 1 && (
                 <Box>
-                  <SectionHeader>Recruiter Information</SectionHeader>
                   <Grid container spacing={2}>
                     <Grid item xs={12}><FieldLabel required>Full Name</FieldLabel><TextField fullWidth placeholder="John Doe" value={formData.name} onChange={handleChange('name')} required size="small" id="register-name" /></Grid>
                     <Grid item xs={12} sm={6}><FieldLabel required>Designation</FieldLabel><TextField fullWidth placeholder="HR Manager" value={formData.designation} onChange={handleChange('designation')} required size="small" id="register-designation" /></Grid>
@@ -362,7 +347,6 @@ export default function RegisterPage() {
               {/* Step 2: Company Profile */}
               {activeStep === 2 && (
                 <Box>
-                  <SectionHeader>Company Details</SectionHeader>
                   <Grid container spacing={2}>
                     <Grid item xs={12}><FieldLabel required>Company Name</FieldLabel><TextField fullWidth placeholder="Acme Corporation" value={formData.company_name} onChange={handleChange('company_name')} required size="small" id="register-company-name" /></Grid>
                     <Grid item xs={12} sm={6}>
