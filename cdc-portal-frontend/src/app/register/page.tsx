@@ -246,14 +246,16 @@ export default function RegisterPage() {
       <Box sx={{ flex: 1, bgcolor: '#F4F6F9', py: 5 }}>
         <Box sx={{ maxWidth: 800, mx: 'auto', px: '2rem' }}>
 
-          {/* ─── Stepper — matching login/JNF style ─── */}
+          {/* ─── Stepper — matching JNF style layout ─── */}
           <Box sx={{ mb: 4 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: `repeat(${steps.length}, 1fr)`, gap: 0, position: 'relative' }}>
+              <Box sx={{ position: 'absolute', top: 18, left: `calc(${100 / (steps.length * 2)}%)`, right: `calc(${100 / (steps.length * 2)}%)`, height: '1px', bgcolor: 'rgba(10,22,40,0.12)', zIndex: 0 }} />
+              
               {steps.map((label, i) => {
                 const isActive = activeStep === i;
                 const isDone = i < activeStep;
                 return (
-                  <Box key={label} sx={{ display: 'flex', alignItems: 'center', flex: i < steps.length - 1 ? 1 : 'none' }}>
+                  <Box key={label} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
                     <Box sx={{
                       width: 36, height: 36, borderRadius: '50%',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -263,24 +265,16 @@ export default function RegisterPage() {
                       bgcolor: isDone ? '#C8922A' : isActive ? '#0A1628' : '#FEFEFE',
                       color: isDone || isActive ? '#FEFEFE' : '#5A6478',
                       border: `2px solid ${isDone ? '#C8922A' : isActive ? '#0A1628' : 'rgba(10,22,40,0.12)'}`,
+                      mb: 1.5,
                     }}>
                       {isDone ? '✓' : `0${i + 1}`}
                     </Box>
-                    {i < steps.length - 1 && (
-                      <Box sx={{ flex: 1, height: '1px', mx: 1, bgcolor: isDone ? '#C8922A' : 'rgba(10,22,40,0.12)', display: { xs: 'none', sm: 'block' } }} />
-                    )}
+                    <Typography sx={{ fontSize: '13px', fontWeight: isActive ? 600 : 400, color: isActive ? '#0A1628' : '#5A6478', lineHeight: 1.2, textAlign: 'center' }}>
+                      {label}
+                    </Typography>
                   </Box>
                 );
               })}
-            </Box>
-            <Box sx={{ display: 'flex' }}>
-              {steps.map((label, i) => (
-                <Box key={label} sx={{ flex: 1, pr: 1 }}>
-                  <Typography sx={{ fontSize: '13px', fontWeight: activeStep === i ? 600 : 400, color: activeStep === i ? '#0A1628' : '#5A6478', lineHeight: 1.2 }}>
-                    {label}
-                  </Typography>
-                </Box>
-              ))}
             </Box>
           </Box>
 
