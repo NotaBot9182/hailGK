@@ -36,7 +36,7 @@ class AiParseController extends Controller
 
         $apiKey = env('GEMINI_API_KEY');
         if (!$apiKey) {
-            return response()->json(['message' => 'Gemini API key not configured.'], 500);
+            return response()->json(['message' => 'AI API key not configured.'], 500);
         }
 
         $endpoint = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key={$apiKey}";
@@ -66,19 +66,19 @@ class AiParseController extends Controller
             if (!$response->successful()) {
                 $status = $response->status();
                 $body   = $response->json();
-                $errMsg = $body['error']['message'] ?? 'Unknown Gemini error';
+                $errMsg = $body['error']['message'] ?? 'Unknown AI error';
 
-                Log::error('Gemini API error', ['status' => $status, 'body' => $response->body()]);
+                Log::error('AI API error', ['status' => $status, 'body' => $response->body()]);
 
                 if ($status === 429) {
                     return response()->json([
-                        'message' => 'Gemini API quota exceeded. Please generate a new API key at aistudio.google.com and update GEMINI_API_KEY in .env.',
+                        'message' => 'AI API quota exceeded. Please generate a new API key at aistudio.google.com and update GEMINI_API_KEY in .env.',
                     ], 429);
                 }
 
                 if ($status === 404) {
                     return response()->json([
-                        'message' => 'Gemini model not available. Please check your API key and endpoint.',
+                        'message' => 'AI model not available. Please check your API key and endpoint.',
                     ], 502);
                 }
 
@@ -103,7 +103,7 @@ class AiParseController extends Controller
             $parsed = json_decode($rawText, true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::error('Gemini JSON parse failed', ['raw' => $rawText]);
+                Log::error('AI JSON parse failed', ['raw' => $rawText]);
                 return response()->json(['message' => 'AI could not parse the document. Please fill manually.'], 422);
             }
 
