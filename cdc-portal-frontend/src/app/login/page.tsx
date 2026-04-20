@@ -17,15 +17,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 
-const LOGIN_STEPS = ['Credentials', 'Signing In'];
-
 export default function LoginPage() {
   const router = useRouter();
   const { setAuth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
+
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -41,7 +39,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setActiveStep(1);
+    setError('');
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
@@ -53,7 +51,6 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setActiveStep(0);
         throw new Error(data.message || 'Login failed');
       }
 
@@ -216,46 +213,7 @@ export default function LoginPage() {
               </Box>
             </Box>
 
-            {/* ─── Stepper ─── */}
-            <Box sx={{ mb: 4 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-                {LOGIN_STEPS.map((label, i) => {
-                  const isActive = activeStep === i;
-                  const isDone = i < activeStep || loginSuccess;
-                  return (
-                    <Box key={label} sx={{ display: 'flex', alignItems: 'center', flex: i < LOGIN_STEPS.length - 1 ? 1 : 'none' }}>
-                      <Box sx={{
-                        width: 32, height: 32, borderRadius: '50%',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '12px', fontWeight: 500,
-                        fontFamily: '"JetBrains Mono", monospace',
-                        transition: 'all 0.2s',
-                        bgcolor: isDone ? '#C8922A' : isActive ? '#0A1628' : '#FEFEFE',
-                        color: isDone || isActive ? '#FEFEFE' : '#5A6478',
-                        border: `2px solid ${isDone ? '#C8922A' : isActive ? '#0A1628' : 'rgba(10,22,40,0.12)'}`,
-                      }}>
-                        {isDone ? '✓' : `0${i + 1}`}
-                      </Box>
-                      {i < LOGIN_STEPS.length - 1 && (
-                        <Box sx={{ flex: 1, height: '1px', mx: 1.5, bgcolor: isDone ? '#C8922A' : 'rgba(10,22,40,0.12)' }} />
-                      )}
-                    </Box>
-                  );
-                })}
-              </Box>
-              <Box sx={{ display: 'flex', mt: 1 }}>
-                {LOGIN_STEPS.map((label, i) => (
-                  <Box key={label} sx={{ flex: 1 }}>
-                    <Typography sx={{
-                      fontSize: '12px', fontWeight: activeStep === i ? 600 : 400,
-                      color: activeStep === i ? '#0A1628' : '#5A6478',
-                    }}>
-                      {label}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
+
 
             {/* ─── Form Card ─── */}
             <Box
@@ -269,9 +227,7 @@ export default function LoginPage() {
             >
               {/* Card Body */}
               <Box sx={{ p: { xs: 3, md: 4 } }}>
-                {/* Step 0: Credentials */}
-                {activeStep === 0 && (
-                  <>
+
                     <Typography sx={{ fontSize: '14px', color: '#5A6478', mb: 4, lineHeight: 1.6 }}>
                       Sign in to access your recruitment dashboard and manage JNF/INF submissions.
                     </Typography>
@@ -369,49 +325,30 @@ export default function LoginPage() {
                         )}
                       </Button>
                     </form>
-                  </>
-                )}
-
-                {/* Step 1: Signing In / Success */}
-                {activeStep === 1 && (
-                  <Box sx={{ textAlign: 'center', py: 4 }}>
-                    {loginSuccess ? (
-                      <>
-                        <Box sx={{
-                          width: 64, height: 64, borderRadius: '50%',
-                          bgcolor: 'rgba(29,107,58,0.1)',
-                          border: '2px solid rgba(29,107,58,0.25)',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          mx: 'auto', mb: 3,
-                        }}>
-                          <Typography sx={{ fontSize: '28px', color: '#1d6b3a' }}>✓</Typography>
-                        </Box>
-                        <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '22px', fontWeight: 500, color: '#0A1628', mb: 1 }}>
-                          Authentication Successful
-                        </Typography>
-                        <Typography sx={{ fontSize: '13px', color: '#5A6478' }}>
-                          Redirecting to your dashboard...
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <CircularProgress size={48} sx={{ color: '#1B5E6B', mb: 3 }} />
-                        <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '20px', fontWeight: 500, color: '#0A1628', mb: 1 }}>
-                          Verifying credentials...
-                        </Typography>
-                        <Typography sx={{ fontSize: '13px', color: '#5A6478' }}>
-                          Please wait while we authenticate your account.
-                        </Typography>
-                      </>
-                    )}
+                {loginSuccess && (
+                  <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'rgba(254,254,254,0.95)', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <Box sx={{
+                      width: 64, height: 64, borderRadius: '50%',
+                      bgcolor: 'rgba(29,107,58,0.1)',
+                      border: '2px solid rgba(29,107,58,0.25)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      mb: 2,
+                    }}>
+                      <Typography sx={{ fontSize: '28px', color: '#1d6b3a' }}>✓</Typography>
+                    </Box>
+                    <Typography sx={{ fontFamily: '"EB Garamond", serif', fontSize: '22px', fontWeight: 500, color: '#0A1628', mb: 1 }}>
+                      Authentication Successful
+                    </Typography>
+                    <Typography sx={{ fontSize: '13px', color: '#5A6478' }}>
+                      Redirecting to your dashboard...
+                    </Typography>
                   </Box>
                 )}
               </Box>
             </Box>
 
             {/* Register link */}
-            {activeStep === 0 && (
-              <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
                 <Typography sx={{ fontSize: '13px', color: '#5A6478' }}>
                   New recruiter?{' '}
                   <Link href="/register" style={{ color: '#1B5E6B', fontWeight: 500, textDecoration: 'none' }}>
@@ -419,7 +356,6 @@ export default function LoginPage() {
                   </Link>
                 </Typography>
               </Box>
-            )}
 
             {/* Quick links */}
             <Box sx={{ mt: 4, pt: 3, borderTop: '1px solid rgba(10,22,40,0.12)', display: 'flex', justifyContent: 'center', gap: '20px' }}>
