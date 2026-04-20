@@ -24,17 +24,17 @@ const ELIGIBLE_PROGRAMS = [
     title: 'B.Tech / B.E (Bachelor of Technology / Engineering)',
     color: '#0A1628',
     courses: [
-      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
-      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
-      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering', 
-      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing', 
-      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering', 
-      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering', 
-      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering', 
-      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics', 
-      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing', 
-      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Optical Communication & Integrated Photonics', 'Artificial Intelligence & Data Science', 
-      'Water Resources Engineering', 'Transportation Engineering', 'Fuel, Minerals and Metallurgical Engineering', 'Minerals and Metallurgical Engineering', 
+      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering',
+      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering',
+      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering',
+      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing',
+      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering',
+      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering',
+      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering',
+      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics',
+      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing',
+      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Optical Communication & Integrated Photonics', 'Artificial Intelligence & Data Science',
+      'Water Resources Engineering', 'Transportation Engineering', 'Fuel, Minerals and Metallurgical Engineering', 'Minerals and Metallurgical Engineering',
       'Pharmaceutical Science & Engineering', 'Mechanical Engg (Spl: Machine Design)', 'Mechanical Engg. (Spl: Maintenance Engineering and Tribology)'
     ]
   },
@@ -42,17 +42,17 @@ const ELIGIBLE_PROGRAMS = [
     title: 'M.Tech (Master of Technology)',
     color: '#1B5E6B',
     courses: [
-      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
-      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
-      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering', 
-      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing', 
-      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering', 
-      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering', 
-      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering', 
-      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics', 
-      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing', 
-      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Optical Communication & Integrated Photonics', 'Artificial Intelligence & Data Science', 
-      'Water Resources Engineering', 'Transportation Engineering', 'Fuel, Minerals and Metallurgical Engineering', 'Minerals and Metallurgical Engineering', 
+      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering',
+      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering',
+      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering',
+      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing',
+      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering',
+      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering',
+      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering',
+      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics',
+      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing',
+      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Optical Communication & Integrated Photonics', 'Artificial Intelligence & Data Science',
+      'Water Resources Engineering', 'Transportation Engineering', 'Fuel, Minerals and Metallurgical Engineering', 'Minerals and Metallurgical Engineering',
       'Pharmaceutical Science & Engineering', 'Mechanical Engg (Spl: Machine Design)', 'Mechanical Engg. (Spl: Maintenance Engineering and Tribology)'
     ]
   },
@@ -60,8 +60,8 @@ const ELIGIBLE_PROGRAMS = [
     title: 'M.Sc (Master of Science)',
     color: '#5A6478',
     courses: [
-      'Physics', 'Chemistry', 'Mathematics', 'Statistics', 'Environmental Science', 
-      'Physical Science', 'Chemical Science', 'English', 'Humanities & Social Sciences', 
+      'Physics', 'Chemistry', 'Mathematics', 'Statistics', 'Environmental Science',
+      'Physical Science', 'Chemical Science', 'English', 'Humanities & Social Sciences',
       'Philosophy', 'Psychology', 'Sociology', 'Social Media and Culture', 'Digital Humanities and Social Sciences'
     ]
   },
@@ -69,7 +69,7 @@ const ELIGIBLE_PROGRAMS = [
     title: 'M.A (Master of Arts)',
     color: '#5A6478',
     courses: [
-      'English', 'Humanities & Social Sciences', 'Philosophy', 'Psychology', 
+      'English', 'Humanities & Social Sciences', 'Philosophy', 'Psychology',
       'Sociology', 'Social Media and Culture', 'Digital Humanities and Social Sciences'
     ]
   },
@@ -96,9 +96,9 @@ const ELIGIBLE_PROGRAMS = [
     title: 'Dual Degree',
     color: '#0A1628',
     courses: [
-      'Computer Science and Engineering+Computer Science and Engineering', 
-      'Mining Engineering+Mining Engineering', 'Mineral Engineering+Mineral Engineering', 
-      'Mechanical Engg. (Spl: Manufacturing Engineering)', 'Mechanical Engg. (Spl: Thermal Engineering)', 
+      'Computer Science and Engineering+Computer Science and Engineering',
+      'Mining Engineering+Mining Engineering', 'Mineral Engineering+Mineral Engineering',
+      'Mechanical Engg. (Spl: Manufacturing Engineering)', 'Mechanical Engg. (Spl: Thermal Engineering)',
       'Mining engineering & MBA'
     ]
   },
@@ -106,16 +106,16 @@ const ELIGIBLE_PROGRAMS = [
     title: 'Integrated M.Sc & M.Tech',
     color: '#1B5E6B',
     courses: [
-      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering', 
-      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering', 
-      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering', 
-      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing', 
-      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering', 
-      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering', 
-      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering', 
-      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics', 
-      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing', 
-      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Physics', 'Chemistry', 'Mathematics', 'Statistics', 
+      'Applied Geology', 'Applied Geophysics', 'Civil Engineering', 'Computer Science and Engineering',
+      'Electronics and Communication Engineering', 'Electrical Engineering', 'Engineering Geology', 'Environmental Engineering',
+      'Engineering Physics', 'Earthquake Science & Engineering', 'Environmental Science and Engineering', 'Fuel Engineering',
+      'Geomatics', 'Geotechnical Engineering', 'Industrial Engineering and Management', 'Mathematics and Computing',
+      'Mining Engineering', 'Mechanical Engineering', 'Mine Electrical Engineering', 'Mineral Engineering',
+      'Mining Machinery Engineering', 'Opencast Mining', 'Optoelectronics and Optical Communication Engineering', 'Petroleum Engineering',
+      'Power Electronics and Electrical Drives', 'Petroleum Exploration', 'Power System Engineering', 'RF & Microwave Engineering',
+      'Structural Engineering', 'Tunnelling and Underground Space Technology', 'VLSI Design', 'Data Analytics',
+      'Geo-Exploration', 'Chemical Engineering', 'Electronics and Instrumentation Engineering', 'Communication and Signal Processing',
+      'Metallurgical Engineering', 'Fuel & Energy Engineering', 'Physics', 'Chemistry', 'Mathematics', 'Statistics',
       'Environmental Science', 'Physical Science', 'Chemical Science'
     ]
   }
@@ -158,8 +158,8 @@ function SalaryTextField({ label, value, onChange, placeholder = "", multiline =
 }
 
 const SALARY_COMPONENTS = [
-  { 
-    category: 'Bonuses & Performance', 
+  {
+    category: 'Bonuses & Performance',
     items: [
       { field: 'joining_bonus', label: 'Joining Bonus', color: '#0A1628', bg: 'rgba(10, 22, 40, 0.03)' },
       { field: 'retention_bonus', label: 'Retention Bonus', color: '#0A1628', bg: 'rgba(10, 22, 40, 0.03)' },
@@ -202,10 +202,10 @@ function ProgramBlock({ program, formData, onToggleCourse, onSelectAll }: any) {
   const allSelected = program.courses.every((c: string) => (formData?.eligible_courses || []).includes(`${program.title}|${c}`));
   const someSelected = program.courses.some((c: string) => (formData?.eligible_courses || []).includes(`${program.title}|${c}`));
   const count = program.courses.filter((c: string) => (formData?.eligible_courses || []).includes(`${program.title}|${c}`)).length;
-  
+
   return (
     <Box sx={{ mb: 3, border: '1px solid rgba(10,22,40,0.12)', borderLeft: '4px solid #1B5E6B', borderRadius: '6px', overflow: 'hidden', bgcolor: '#FEFEFE' }}>
-      <Box 
+      <Box
         sx={{ bgcolor: '#FEFEFE', color: '#0A1628', px: 2, py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s', '&:hover': { bgcolor: 'rgba(10,22,40,0.02)' } }}
         onClick={() => setExpanded(!expanded)}
       >
@@ -213,17 +213,17 @@ function ProgramBlock({ program, formData, onToggleCourse, onSelectAll }: any) {
           <Typography sx={{ fontWeight: 600, fontSize: '14.5px', letterSpacing: '0.02em', color: '#0A1628' }}>
             {program.title}
           </Typography>
-          <Chip 
-            label={expanded ? "▼ Hide" : `▶ Show (${count}/${program.courses.length} selected)`} 
-            size="small" 
-            sx={{ bgcolor: 'rgba(10,22,40,0.06)', color: '#0A1628', fontSize: '11px', height: 20, cursor: 'pointer', '&:hover': { bgcolor: 'rgba(10,22,40,0.1)' } }} 
+          <Chip
+            label={expanded ? "▼ Hide" : `▶ Show (${count}/${program.courses.length} selected)`}
+            size="small"
+            sx={{ bgcolor: 'rgba(10,22,40,0.06)', color: '#0A1628', fontSize: '11px', height: 20, cursor: 'pointer', '&:hover': { bgcolor: 'rgba(10,22,40,0.1)' } }}
             onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
           />
         </Box>
         <FormControlLabel
           control={
-            <Checkbox 
-              size="small" 
+            <Checkbox
+              size="small"
               sx={{ color: 'rgba(10,22,40,0.2)', '&.Mui-checked': { color: '#C8922A' }, py: 0 }}
               checked={allSelected}
               indeterminate={someSelected && !allSelected}
@@ -242,23 +242,23 @@ function ProgramBlock({ program, formData, onToggleCourse, onSelectAll }: any) {
               const courseId = `${program.title}|${course}`;
               const isChecked = (formData?.eligible_courses || []).includes(courseId);
               return (
-              <Grid item xs={12} sm={6} md={4} key={idx}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, p: 0.5 }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox 
-                        size="small"
-                        checked={isChecked}
-                        onChange={(e) => { e.stopPropagation(); onToggleCourse(courseId); }}
-                        onClick={(e) => e.stopPropagation()}
-                        sx={{ color: 'rgba(10,22,40,0.3)', p: 0.5, '&.Mui-checked': { color: '#0A1628' } }}
-                      />
-                    }
-                    label={<Typography sx={{ fontSize: '13px', color: '#334155' }}>{course}</Typography>}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                </Box>
-              </Grid>
+                <Grid item xs={12} sm={6} md={4} key={idx}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, p: 0.5 }}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          size="small"
+                          checked={isChecked}
+                          onChange={(e) => { e.stopPropagation(); onToggleCourse(courseId); }}
+                          onClick={(e) => e.stopPropagation()}
+                          sx={{ color: 'rgba(10,22,40,0.3)', p: 0.5, '&.Mui-checked': { color: '#0A1628' } }}
+                        />
+                      }
+                      label={<Typography sx={{ fontSize: '13px', color: '#334155' }}>{course}</Typography>}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </Box>
+                </Grid>
               );
             })}
           </Grid>
@@ -272,7 +272,7 @@ export default function JnfFormShell() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
-  
+
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [savingStatus, setSavingStatus] = useState<'saved' | 'saving' | 'error'>('saved');
@@ -321,12 +321,12 @@ export default function JnfFormShell() {
 
       activeGroups.forEach((group: any) => {
         const gid = group.id;
-        const ctc   = cvt(aiSalaryCache[`ctc_${gid}`]);
-        const base  = cvt(aiSalaryCache.base_salary);
+        const ctc = cvt(aiSalaryCache[`ctc_${gid}`]);
+        const base = cvt(aiSalaryCache.base_salary);
         const gross = cvt(aiSalaryCache.gross_salary);
         if (ctc != null || base != null || gross != null) {
           if (!salaryDetails[gid]) salaryDetails[gid] = {};
-          if (ctc  != null && !salaryDetails[gid].ctc)  { salaryDetails[gid].ctc  = ctc;  changed = true; }
+          if (ctc != null && !salaryDetails[gid].ctc) { salaryDetails[gid].ctc = ctc; changed = true; }
           if (base != null && !salaryDetails[gid].base) { salaryDetails[gid].base = base; changed = true; }
           if (gross != null && !salaryDetails[gid].gross) { salaryDetails[gid].gross = gross; changed = true; }
         }
@@ -339,7 +339,7 @@ export default function JnfFormShell() {
       if (!changed) return prev;
       return { ...prev, salary_details: salaryDetails, additional_salary_components: addComp };
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData?.eligible_courses, formData?.phd_allowed, formData?.salary_currency, aiSalaryCache]);
 
   const fetchNotification = async () => {
@@ -350,7 +350,7 @@ export default function JnfFormShell() {
       }
       const res = await notificationsApi.get(parsedId);
       const data = res.data.notification;
-      
+
       // Initialize salary fields if missing
       const mapperReverse: Record<string, string> = {
         'btech_dual': 'btech',
@@ -372,7 +372,7 @@ export default function JnfFormShell() {
                 base: s.base_fixed,
                 take_home: s.monthly_takehome
               };
-              
+
               // Only parse additional components once from the first salary record 
               // (since UI treats additional components globally per notification)
               if (!data.additional_salary_components) {
@@ -395,11 +395,11 @@ export default function JnfFormShell() {
           });
         }
       }
-      
+
       if (!data.additional_salary_components) data.additional_salary_components = {};
       if (!data.salary_currency) data.salary_currency = 'INR';
       if (data.salary_same_for_all === undefined) data.salary_same_for_all = false;
-      
+
       // Derive included components if missing
       if (!data.included_salary_components) {
         const hasValues = Object.keys(data.additional_salary_components).filter(k => !!data.additional_salary_components[k]);
@@ -434,7 +434,7 @@ export default function JnfFormShell() {
       data.job_title = data.job_profile?.profile_name || '';
       data.job_designation = data.job_profile?.designation || '';
       data.place_of_posting = data.job_profile?.place_of_posting || [];
-      
+
       // format work mode back to standard label
       if (data.job_profile?.work_mode === 'on_site') data.work_location_mode = 'On-site';
       else if (data.job_profile?.work_mode === 'remote') data.work_location_mode = 'Remote';
@@ -559,7 +559,7 @@ export default function JnfFormShell() {
 
   const handleSalaryChange = (groupId: string, field: string, value: any) => {
     const current = { ...(formData?.salary_details || {}) };
-    
+
     if (formData?.salary_same_for_all) {
       // Apply to all active groups
       const updated = { ...current };
@@ -638,12 +638,12 @@ export default function JnfFormShell() {
       console.log('Saving Job Profile...', formData);
       setSavingStatus('saving');
       const safeInt = (v: any) => (v !== null && v !== undefined && v !== '' && !isNaN(parseInt(v))) ? parseInt(v) : null;
-      
+
       const payload = {
         profile_name: formData.job_title || '',
         designation: formData.job_designation || '',
-        place_of_posting: (Array.isArray(formData.place_of_posting) && formData.place_of_posting.length > 0) 
-          ? formData.place_of_posting 
+        place_of_posting: (Array.isArray(formData.place_of_posting) && formData.place_of_posting.length > 0)
+          ? formData.place_of_posting
           : [formData.place_of_posting || 'TBD'].filter(Boolean),
         work_mode: (formData.work_location_mode || 'on_site').toLowerCase().replace('-', '_').replace(' ', '_'),
         expected_hires: safeInt(formData.expected_hires),
@@ -656,7 +656,7 @@ export default function JnfFormShell() {
         registration_link: formData.registration_link || '',
         onboarding_procedure: formData.onboarding_procedure || '',
       };
-      
+
       console.log('Job Profile Payload:', payload);
       await notificationsApi.updateJobProfile(parseInt(id), payload);
       setSavingStatus('saved');
@@ -691,7 +691,7 @@ export default function JnfFormShell() {
           }
         }
       }
-      
+
       const programmes = ELIGIBLE_PROGRAMS.map(prog => {
         const selectedCourses = (formData.eligible_courses || []).filter((c: string) => c.startsWith(`${prog.title}|`));
         if (selectedCourses.length === 0) return null;
@@ -745,7 +745,7 @@ export default function JnfFormShell() {
     try {
       setSavingStatus('saving');
       const safeFloat = (v: any) => (v !== null && v !== undefined && v !== '' && !isNaN(parseFloat(v))) ? parseFloat(v) : null;
-      
+
       const mapper: Record<string, string> = {
         'btech': 'btech_dual',
         'mtech': 'mtech',
@@ -794,7 +794,7 @@ export default function JnfFormShell() {
   const handleSelectionSave = async () => {
     try {
       setSavingStatus('saving');
-      
+
       const normalizedStages = (formData.selection_stages || []).map((stage: any) => ({
         ...stage,
         stage_mode: (stage.stage_mode || 'online').toLowerCase(),
@@ -874,7 +874,7 @@ export default function JnfFormShell() {
     const selectedCourses = formData?.eligible_courses || [];
     return SALARY_GROUPS.filter(group => {
       if (group.isPhd) return !!formData?.phd_allowed;
-      return group.sourcePrograms?.some(progTitle => 
+      return group.sourcePrograms?.some(progTitle =>
         selectedCourses.some((cId: string) => cId.startsWith(`${progTitle}|`))
       );
     });
@@ -900,9 +900,9 @@ export default function JnfFormShell() {
     // Build and persist the salary cache (always in LPA/INR as extracted)
     const salaryCache: Record<string, any> = {};
     const salaryFields = [
-      'ctc_btech','ctc_mtech','ctc_mba','ctc_msc','ctc_phd',
-      'base_salary','gross_salary','take_home_monthly',
-      'joining_bonus','performance_bonus','retention_bonus','relocation_allowance',
+      'ctc_btech', 'ctc_mtech', 'ctc_mba', 'ctc_msc', 'ctc_phd',
+      'base_salary', 'gross_salary', 'take_home_monthly',
+      'joining_bonus', 'performance_bonus', 'retention_bonus', 'relocation_allowance',
     ];
     salaryFields.forEach(k => { if (aiData[k] != null) salaryCache[k] = aiData[k]; });
     setAiSalaryCache(salaryCache);
@@ -920,29 +920,29 @@ export default function JnfFormShell() {
       const next = { ...prev };
 
       // Job Profile fields
-      if (aiData.job_title)       next.job_title = aiData.job_title;
+      if (aiData.job_title) next.job_title = aiData.job_title;
       // Always fill designation: use extracted designation, or fall back to title if AI returned null
       const des = aiData.job_designation || aiData.job_title;
       if (des) next.job_designation = des;
       if (aiData.place_of_posting?.length) next.place_of_posting = aiData.place_of_posting;
       if (aiData.work_location_mode) next.work_location_mode = aiData.work_location_mode;
-      if (aiData.expected_hires)     next.expected_hires = aiData.expected_hires;
-      if (aiData.job_description)    next.job_description = aiData.job_description;
+      if (aiData.expected_hires) next.expected_hires = aiData.expected_hires;
+      if (aiData.job_description) next.job_description = aiData.job_description;
       if (aiData.required_skills?.length) next.required_skills = aiData.required_skills;
-      if (aiData.bond_details)       next.bond_details = aiData.bond_details;
+      if (aiData.bond_details) next.bond_details = aiData.bond_details;
       if (aiData.tentative_joining_month) next.tentative_joining_month = aiData.tentative_joining_month;
 
       // Eligibility fields
-      if (aiData.min_cpi != null)          next.min_cpi = aiData.min_cpi;
+      if (aiData.min_cpi != null) next.min_cpi = aiData.min_cpi;
       if (aiData.backlogs_allowed != null) next.backlogs_allowed = aiData.backlogs_allowed;
-      if (aiData.gender_filter)            next.gender_filter = aiData.gender_filter;
+      if (aiData.gender_filter) next.gender_filter = aiData.gender_filter;
 
       // Auto-select courses based on target_programmes
       if (aiData.target_programmes && Array.isArray(aiData.target_programmes)) {
         const newCourses = new Set(prev.eligible_courses || []);
         const mappedTitles: string[] = [];
         const targets = aiData.target_programmes.map((p: string) => p.toLowerCase());
-        
+
         if (targets.some(t => t.includes('b.tech') || t.includes('btech') || t.includes('b.e'))) {
           mappedTitles.push('B.Tech / B.E (Bachelor of Technology / Engineering)', 'Dual Degree', 'Integrated M.Sc & M.Tech');
         }
@@ -994,13 +994,13 @@ export default function JnfFormShell() {
           salaryDetails[gid].ctc = ctcConverted;
           const baseConverted = cvt(aiData.base_salary);
           const grossConverted = cvt(aiData.gross_salary);
-          if (baseConverted  != null) salaryDetails[gid].base  = baseConverted;
+          if (baseConverted != null) salaryDetails[gid].base = baseConverted;
           if (grossConverted != null) salaryDetails[gid].gross = grossConverted;
         }
       });
-      if (aiData.joining_bonus)        addComp.joining_bonus        = aiData.joining_bonus;
-      if (aiData.performance_bonus)    addComp.performance_bonus    = aiData.performance_bonus;
-      if (aiData.retention_bonus)      addComp.retention_bonus      = aiData.retention_bonus;
+      if (aiData.joining_bonus) addComp.joining_bonus = aiData.joining_bonus;
+      if (aiData.performance_bonus) addComp.performance_bonus = aiData.performance_bonus;
+      if (aiData.retention_bonus) addComp.retention_bonus = aiData.retention_bonus;
       if (aiData.relocation_allowance) addComp.relocation_allowance = aiData.relocation_allowance;
 
       next.salary_details = salaryDetails;
@@ -1030,8 +1030,8 @@ export default function JnfFormShell() {
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           {!isAdmin && (
-            <Typography sx={{ 
-              fontSize: '12px', 
+            <Typography sx={{
+              fontSize: '12px',
               fontWeight: 500,
               color: savingStatus === 'saving' ? '#E8B64A' : savingStatus === 'error' ? '#EF4444' : '#10B981'
             }}>
@@ -1060,8 +1060,8 @@ export default function JnfFormShell() {
               AI Auto-Fill
             </Button>
           )}
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             onClick={() => router.push(isAdmin ? '/admin' : '/dashboard')}
             sx={{ color: '#FEFEFE', borderColor: 'rgba(255,255,255,0.3)', '&:hover': { borderColor: '#FEFEFE' } }}
           >
@@ -1134,10 +1134,10 @@ export default function JnfFormShell() {
         <Box sx={{ maxWidth: 1000, mx: 'auto', px: '2rem' }}>
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: `repeat(${JNF_TABS.length}, 1fr)` }, gap: 0, position: 'relative' }}>
             <Box sx={{ position: 'absolute', top: 16, left: `calc(${100 / (JNF_TABS.length * 2)}% + 20px)`, right: `calc(${100 / (JNF_TABS.length * 2)}% + 20px)`, height: '2px', bgcolor: 'rgba(10,22,40,0.06)', display: { xs: 'none', md: 'block' }, zIndex: 0 }} />
-            
+
             {JNF_TABS.map((label, i) => {
               const isActive = activeTab === i;
-              
+
               let isSaved = false;
               if (formData) {
                 if (i === 0) isSaved = !!formData.job_title;
@@ -1150,25 +1150,25 @@ export default function JnfFormShell() {
               const isPast = isSaved && !isActive;
 
               return (
-                <Box 
-                  key={i} 
+                <Box
+                  key={i}
                   onClick={() => handleTabChange(null as any, i)}
-                  sx={{ 
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.25, px: 1, textAlign: 'center', 
-                    cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)', 
-                    opacity: isActive ? 1 : isPast ? 0.9 : 0.6, 
+                  sx={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.25, px: 1, textAlign: 'center',
+                    cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                    opacity: isActive ? 1 : isPast ? 0.9 : 0.6,
                     '&:hover': { opacity: 1, transform: isActive ? 'none' : 'translateY(-2px)' },
                     position: 'relative', zIndex: 2
                   }}
                 >
-                  <Box sx={{ 
-                    width: 34, height: 34, 
-                    bgcolor: isActive ? '#0A1628' : isPast ? '#FEFEFE' : '#FEFEFE', 
-                    border: `1.5px solid ${isActive ? '#0A1628' : isPast ? '#107B4F' : '#E2E8F0'}`, 
-                    borderRadius: '50%', 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                    fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', fontWeight: isActive ? 700 : 600, 
-                    color: isActive ? '#FEFEFE' : isPast ? '#107B4F' : '#94A3B8', 
+                  <Box sx={{
+                    width: 34, height: 34,
+                    bgcolor: isActive ? '#0A1628' : isPast ? '#FEFEFE' : '#FEFEFE',
+                    border: `1.5px solid ${isActive ? '#0A1628' : isPast ? '#107B4F' : '#E2E8F0'}`,
+                    borderRadius: '50%',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', fontWeight: isActive ? 700 : 600,
+                    color: isActive ? '#FEFEFE' : isPast ? '#107B4F' : '#94A3B8',
                     boxShadow: isActive ? '0 8px 16px rgba(10,22,40,0.15), 0 0 0 4px rgba(10,22,40,0.03)' : isPast ? '0 2px 8px rgba(16,123,79,0.08)' : 'none',
                     transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
                     transform: isActive ? 'scale(1.1)' : 'scale(1)',
@@ -1194,453 +1194,453 @@ export default function JnfFormShell() {
       {/* Content Area (Phase 3 implementation for Job Profile tab, placeholders for others) */}
       <Box sx={{ flex: 1, p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <fieldset disabled={isReadOnly} style={{ border: 'none', padding: 0, margin: 0, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: isReadOnly ? 0.85 : 1 }}>
-        <Box sx={{ 
-          width: '100%', 
-          maxWidth: 900, 
-          bgcolor: '#FEFEFE', 
-          p: 6, 
-          borderRadius: 2, 
-          boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
-          textAlign: activeTab === 0 ? 'left' : 'center' 
-        }}>
-          <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#0A1628', mb: 2, textAlign: 'center' }}>
-            {JNF_TABS[activeTab]}
-          </Typography>
+          <Box sx={{
+            width: '100%',
+            maxWidth: 900,
+            bgcolor: '#FEFEFE',
+            p: 6,
+            borderRadius: 2,
+            boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
+            textAlign: activeTab === 0 ? 'left' : 'center'
+          }}>
+            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#0A1628', mb: 2, textAlign: 'center' }}>
+              {JNF_TABS[activeTab]}
+            </Typography>
 
-          {activeTab === 0 && (
-            <Box sx={{ mt: 4 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth label={<>Profile Name / Job Title <span style={{ color: '#EF4444' }}>*</span></>} size="small" value={formData?.job_title || ''} onChange={(e) => handleChange('job_title', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="Job Designation (formal)" size="small" value={formData?.job_designation || ''} onChange={(e) => handleChange('job_designation', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
-                </Grid>
-                
-                <Grid item xs={12} md={6}>
-                  <Autocomplete
-                    multiple
-                    freeSolo
-                    options={[]}
-                    size="small"
-                    value={formData?.place_of_posting || []}
-                    onChange={(_, newValue) => handleChange('place_of_posting', newValue)}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
-                      ))
-                    }
-                    renderInput={(params) => <TextField {...params} label={<>Place of Posting <span style={{ color: '#EF4444' }}>*</span></>} placeholder="Add locations" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth select label="Work Location Mode" size="small" value={formData?.work_location_mode || ''} onChange={(e) => handleChange('work_location_mode', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}>
-                    <MenuItem value="On-site">On-site</MenuItem>
-                    <MenuItem value="Remote">Remote</MenuItem>
-                    <MenuItem value="Hybrid">Hybrid</MenuItem>
-                  </TextField>
-                </Grid>
+            {activeTab === 0 && (
+              <Box sx={{ mt: 4 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth label={<>Profile Name / Job Title <span style={{ color: '#EF4444' }}>*</span></>} size="small" value={formData?.job_title || ''} onChange={(e) => handleChange('job_title', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth label="Job Designation (formal)" size="small" value={formData?.job_designation || ''} onChange={(e) => handleChange('job_designation', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
+                  </Grid>
 
-                <Grid item xs={12} md={6}>
-                  <Box sx={{ display: 'flex', gap: 2 }}>
-                    <TextField fullWidth label={<>Expected Hires <span style={{ color: '#EF4444' }}>*</span></>} type="number" size="small" value={formData?.expected_hires || ''} onChange={(e) => handleChange('expected_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
-                    <TextField fullWidth label="Minimum Hires" type="number" size="small" value={formData?.minimum_hires || ''} onChange={(e) => handleChange('minimum_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField 
-                    fullWidth 
-                    label={<>Tentative Joining Month <span style={{ color: '#EF4444' }}>*</span></>} 
-                    type="month" 
-                    size="small" 
-                    InputLabelProps={{ shrink: true }} 
-                    value={formData?.tentative_joining_month || ''} 
-                    onChange={(e) => handleChange('tentative_joining_month', e.target.value)} 
-                    sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Autocomplete
-                    multiple
-                    freeSolo
-                    options={[]}
-                    size="small"
-                    value={formData?.required_skills || []}
-                    onChange={(_, newValue) => handleChange('required_skills', newValue)}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
-                      ))
-                    }
-                    renderInput={(params) => <TextField {...params} label="Required Skills" placeholder="Add skills" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField 
-                    fullWidth 
-                    multiline 
-                    rows={4} 
-                    label="Job Description" 
-                    size="small" 
-                    helperText="Provide full description. Alternatively, you can upload a PDF below." 
-                    value={formData?.job_description || ''} 
-                    onChange={(e) => handleChange('job_description', e.target.value)} 
-                    sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField 
-                    fullWidth 
-                    multiline 
-                    rows={3} 
-                    label="Additional Job Info" 
-                    size="small" 
-                    inputProps={{ maxLength: 1000 }} 
-                    helperText="Maximum 1000 characters" 
-                    value={formData?.additional_job_info || ''} 
-                    onChange={(e) => handleChange('additional_job_info', e.target.value)} 
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth multiline rows={2} label="Bond Details" size="small" value={formData?.bond_details || ''} onChange={(e) => handleChange('bond_details', e.target.value)} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="Registration Link" size="small" helperText="Company's own link (if any)" value={formData?.registration_link || ''} onChange={(e) => handleChange('registration_link', e.target.value)} />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField fullWidth multiline rows={3} label="Onboarding Procedure" size="small" value={formData?.onboarding_procedure || ''} onChange={(e) => handleChange('onboarding_procedure', e.target.value)} />
-                </Grid>
-              </Grid>
-
-              <Box sx={{ 
-                mt: 4, 
-                p: 3, 
-                border: '2px dashed #C8922A', 
-                borderRadius: 2, 
-                bgcolor: 'rgba(200, 146, 42, 0.05)', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center',
-                gap: 2
-              }}>
-                <Typography sx={{ fontWeight: 600, color: '#0A1628' }}>
-                  Alternative: Upload Job Description (PDF)
-                </Typography>
-                <Typography sx={{ fontSize: '13px', color: '#5A6478', mt: -1, textAlign: 'center' }}>
-                  If you have a pre-formatted job description document, you can upload it here directly instead of filling the text fields.
-                </Typography>
-                <Button variant="contained" component="label" sx={{ bgcolor: '#C8922A', color: '#1B2430', fontWeight: 600, px: 4, '&:hover': { bgcolor: '#E8B64A' } }}>
-                  Browse PDF File
-                  <input type="file" hidden accept="application/pdf" />
-                </Button>
-              </Box>
-              
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleJobProfileSave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
-                  Save Job Profile
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-                <Button variant="outlined" disabled sx={{ visibility: 'hidden', px: 4, py: 1, fontSize: '15px' }}>← Prev</Button>
-                <Button variant="contained" onClick={() => setActiveTab(1)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
-              </Box>
-            </Box>
-          )}
-
-          {activeTab === 1 && (
-            <Box sx={{ mt: 4, textAlign: 'left' }}>
-              <Box sx={{ mb: 3, p: 3, borderRadius: 2, border: '1px solid rgba(10,22,40,0.10)', bgcolor: 'linear-gradient(180deg, rgba(200,146,42,0.05) 0%, rgba(244,246,249,0.55) 100%)' as any }}>
-                <Typography sx={{ fontWeight: 800, color: '#0A1628', fontSize: '14px', mb: 1 }}>
-                  CPI criteria (Course-wise)
-                </Typography>
-                <Typography sx={{ fontSize: '12.5px', color: '#5A6478', mb: 2 }}>
-                  First, confirm whether you need a <strong>Specific CPI</strong> cutoff for the courses you select.
-                </Typography>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    <Switch
-                      checked={courseCpiRequired}
-                      onChange={(e) => {
-                        const checked = e.target.checked;
-                        setCourseCpiRequired(checked);
-                        if (!checked) {
-                          setCourseCpiDefault('');
-                          setCourseCpiMode('all');
-                          handleChange('course_cpis', {});
-                        } else {
-                          setCourseCpiMode('all');
-                        }
-                      }}
-                      sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }}
+                  <Grid item xs={12} md={6}>
+                    <Autocomplete
+                      multiple
+                      freeSolo
+                      options={[]}
+                      size="small"
+                      value={formData?.place_of_posting || []}
+                      onChange={(_, newValue) => handleChange('place_of_posting', newValue)}
+                      renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                          <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
+                        ))
+                      }
+                      renderInput={(params) => <TextField {...params} label={<>Place of Posting <span style={{ color: '#EF4444' }}>*</span></>} placeholder="Add locations" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
                     />
-                    <Box>
-                      <Typography sx={{ fontSize: '13px', fontWeight: 700, color: '#0A1628' }}>
-                        We need a Specific CPI cutoff per course
-                      </Typography>
-                      <Typography sx={{ fontSize: '12px', color: '#64748b' }}>
-                        If enabled, you can apply one CPI to all selected courses or set them individually.
-                      </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth select label="Work Location Mode" size="small" value={formData?.work_location_mode || ''} onChange={(e) => handleChange('work_location_mode', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}>
+                      <MenuItem value="On-site">On-site</MenuItem>
+                      <MenuItem value="Remote">Remote</MenuItem>
+                      <MenuItem value="Hybrid">Hybrid</MenuItem>
+                    </TextField>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <TextField fullWidth label={<>Expected Hires <span style={{ color: '#EF4444' }}>*</span></>} type="number" size="small" value={formData?.expected_hires || ''} onChange={(e) => handleChange('expected_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
+                      <TextField fullWidth label="Minimum Hires" type="number" size="small" value={formData?.minimum_hires || ''} onChange={(e) => handleChange('minimum_hires', e.target.value)} sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />
                     </Box>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label={<>Tentative Joining Month <span style={{ color: '#EF4444' }}>*</span></>}
+                      type="month"
+                      size="small"
+                      InputLabelProps={{ shrink: true }}
+                      value={formData?.tentative_joining_month || ''}
+                      onChange={(e) => handleChange('tentative_joining_month', e.target.value)}
+                      sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      multiple
+                      freeSolo
+                      options={[]}
+                      size="small"
+                      value={formData?.required_skills || []}
+                      onChange={(_, newValue) => handleChange('required_skills', newValue)}
+                      renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                          <Chip variant="outlined" label={option} size="small" {...getTagProps({ index })} />
+                        ))
+                      }
+                      renderInput={(params) => <TextField {...params} label="Required Skills" placeholder="Add skills" sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }} />}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={4}
+                      label="Job Description"
+                      size="small"
+                      helperText="Provide full description. Alternatively, you can upload a PDF below."
+                      value={formData?.job_description || ''}
+                      onChange={(e) => handleChange('job_description', e.target.value)}
+                      sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={3}
+                      label="Additional Job Info"
+                      size="small"
+                      inputProps={{ maxLength: 1000 }}
+                      helperText="Maximum 1000 characters"
+                      value={formData?.additional_job_info || ''}
+                      onChange={(e) => handleChange('additional_job_info', e.target.value)}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth multiline rows={2} label="Bond Details" size="small" value={formData?.bond_details || ''} onChange={(e) => handleChange('bond_details', e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField fullWidth label="Registration Link" size="small" helperText="Company's own link (if any)" value={formData?.registration_link || ''} onChange={(e) => handleChange('registration_link', e.target.value)} />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField fullWidth multiline rows={3} label="Onboarding Procedure" size="small" value={formData?.onboarding_procedure || ''} onChange={(e) => handleChange('onboarding_procedure', e.target.value)} />
+                  </Grid>
+                </Grid>
+
+                <Box sx={{
+                  mt: 4,
+                  p: 3,
+                  border: '2px dashed #C8922A',
+                  borderRadius: 2,
+                  bgcolor: 'rgba(200, 146, 42, 0.05)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 2
+                }}>
+                  <Typography sx={{ fontWeight: 600, color: '#0A1628' }}>
+                    Alternative: Upload Job Description (PDF)
+                  </Typography>
+                  <Typography sx={{ fontSize: '13px', color: '#5A6478', mt: -1, textAlign: 'center' }}>
+                    If you have a pre-formatted job description document, you can upload it here directly instead of filling the text fields.
+                  </Typography>
+                  <Button variant="contained" component="label" sx={{ bgcolor: '#C8922A', color: '#1B2430', fontWeight: 600, px: 4, '&:hover': { bgcolor: '#E8B64A' } }}>
+                    Browse PDF File
+                    <input type="file" hidden accept="application/pdf" />
+                  </Button>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                  <Button variant="contained" onClick={handleJobProfileSave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>
+                    Save Job Profile
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                  <Button variant="outlined" disabled sx={{ visibility: 'hidden', px: 4, py: 1, fontSize: '15px' }}>← Prev</Button>
+                  <Button variant="contained" onClick={() => setActiveTab(1)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
+                </Box>
+              </Box>
+            )}
+
+            {activeTab === 1 && (
+              <Box sx={{ mt: 4, textAlign: 'left' }}>
+                <Box sx={{ mb: 3, p: 3, borderRadius: 2, border: '1px solid rgba(10,22,40,0.10)', bgcolor: 'linear-gradient(180deg, rgba(200,146,42,0.05) 0%, rgba(244,246,249,0.55) 100%)' as any }}>
+                  <Typography sx={{ fontWeight: 800, color: '#0A1628', fontSize: '14px', mb: 1 }}>
+                    CPI criteria (Course-wise)
+                  </Typography>
+                  <Typography sx={{ fontSize: '12.5px', color: '#5A6478', mb: 2 }}>
+                    First, confirm whether you need a <strong>Specific CPI</strong> cutoff for the courses you select.
+                  </Typography>
+
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      <Switch
+                        checked={courseCpiRequired}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          setCourseCpiRequired(checked);
+                          if (!checked) {
+                            setCourseCpiDefault('');
+                            setCourseCpiMode('all');
+                            handleChange('course_cpis', {});
+                          } else {
+                            setCourseCpiMode('all');
+                          }
+                        }}
+                        sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }}
+                      />
+                      <Box>
+                        <Typography sx={{ fontSize: '13px', fontWeight: 700, color: '#0A1628' }}>
+                          We need a Specific CPI cutoff per course
+                        </Typography>
+                        <Typography sx={{ fontSize: '12px', color: '#64748b' }}>
+                          If enabled, you can apply one CPI to all selected courses or set them individually.
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {courseCpiRequired && (
+                      <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', flexWrap: 'wrap' }}>
+                        <Box>
+                          <FormLabel sx={{ fontSize: '12px', fontWeight: 700, color: '#0A1628' }}>
+                            How do you want to add CPI?
+                          </FormLabel>
+                          <RadioGroup
+                            row
+                            value={courseCpiMode}
+                            onChange={(e) => {
+                              const mode = e.target.value as 'all' | 'individual';
+                              setCourseCpiMode(mode);
+                              if (mode === 'all') {
+                                handleChange('course_cpis', {});
+                                if (courseCpiDefault) applyDefaultCpiToSelectedCourses(courseCpiDefault, formData?.eligible_courses || []);
+                              }
+                            }}
+                          >
+                            <FormControlLabel value="all" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Apply to all selected</Typography>} />
+                            <FormControlLabel value="individual" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Add individually</Typography>} />
+                          </RadioGroup>
+                        </Box>
+
+                        {courseCpiMode === 'all' && (
+                          <TextField
+                            size="small"
+                            type="number"
+                            label="CPI for all selected courses"
+                            inputProps={{ step: '0.1', min: 0, max: 10 }}
+                            placeholder="e.g. 7.0"
+                            value={courseCpiDefault}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              setCourseCpiDefault(v);
+                              if (v) applyDefaultCpiToSelectedCourses(v, formData?.eligible_courses || []);
+                            }}
+                            sx={{ minWidth: 220 }}
+                          />
+                        )}
+                      </Box>
+                    )}
+                  </Box>
+                </Box>
+
+                {courseCpiRequired && courseCpiMode === 'individual' && (
+                  <CpiEditorTwoPane
+                    eligibleCourses={formData?.eligible_courses || []}
+                    courseCpis={formData?.course_cpis || {}}
+                    onCourseCpisChange={(next) => handleChange('course_cpis', next)}
+                  />
+                )}
+
+                {ELIGIBLE_PROGRAMS.map((program, index) => (
+                  <ProgramBlock
+                    key={index}
+                    program={program}
+                    formData={formData}
+                    onToggleCourse={handleCourseToggle}
+                    onSelectAll={handleSelectAll}
+                  />
+                ))}
+
+                <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  <Box sx={{ p: 3, bgcolor: 'rgba(244,246,249,0.5)', borderRadius: 2, border: '1px solid rgba(10,22,40,0.1)' }}>
+                    <Typography sx={{ fontWeight: 600, color: '#0A1628', mb: 3 }}>Special Degree Programs</Typography>
+                    <Grid container spacing={3} alignItems="flex-start">
+                      <Grid item xs={12} md={6}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <Typography sx={{ fontSize: '14px', color: '#334155' }}>Ph.D (GATE/NET) Applicable?</Typography>
+                          <Switch
+                            checked={!!formData?.phd_allowed}
+                            onChange={(e) => handleChange('phd_allowed', e.target.checked)}
+                            color="primary"
+                          />
+                        </Box>
+                        {formData?.phd_allowed && (
+                          <TextField
+                            fullWidth
+                            size="small"
+                            label="Specify required departments"
+                            sx={{ mt: 2 }}
+                            value={formData?.phd_departments || ''}
+                            onChange={(e) => handleChange('phd_departments', e.target.value)}
+                          />
+                        )}
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+                          <Typography sx={{ fontSize: '14px', color: '#334155' }}>M.A. Digital Humanities & Social Sciences</Typography>
+                          <Switch
+                            checked={!!formData?.ma_dhss_allowed}
+                            onChange={(e) => handleChange('ma_dhss_allowed', e.target.checked)}
+                            color="primary"
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
                   </Box>
 
-                  {courseCpiRequired && (
-                    <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', flexWrap: 'wrap' }}>
-                      <Box>
-                        <FormLabel sx={{ fontSize: '12px', fontWeight: 700, color: '#0A1628' }}>
-                          How do you want to add CPI?
-                        </FormLabel>
-                        <RadioGroup
-                          row
-                          value={courseCpiMode}
-                          onChange={(e) => {
-                            const mode = e.target.value as 'all' | 'individual';
-                            setCourseCpiMode(mode);
-                            if (mode === 'all') {
-                              handleChange('course_cpis', {});
-                              if (courseCpiDefault) applyDefaultCpiToSelectedCourses(courseCpiDefault, formData?.eligible_courses || []);
-                            }
-                          }}
-                        >
-                          <FormControlLabel value="all" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Apply to all selected</Typography>} />
-                          <FormControlLabel value="individual" control={<Radio size="small" />} label={<Typography sx={{ fontSize: '12.5px' }}>Add individually</Typography>} />
-                        </RadioGroup>
-                      </Box>
-
-                      {courseCpiMode === 'all' && (
+                  <Box sx={{ p: 3, bgcolor: 'rgba(244,246,249,0.5)', borderRadius: 2, border: '1px solid rgba(10,22,40,0.1)' }}>
+                    <Typography sx={{ fontWeight: 600, color: '#0A1628', mb: 3 }}>General Eligibility Criteria</Typography>
+                    <Grid container spacing={3} alignItems="center">
+                      <Grid item xs={12} md={3}>
                         <TextField
+                          fullWidth
+                          label="Per-discipline Min. CPI"
                           size="small"
                           type="number"
-                          label="CPI for all selected courses"
-                          inputProps={{ step: '0.1', min: 0, max: 10 }}
-                          placeholder="e.g. 7.0"
-                          value={courseCpiDefault}
-                          onChange={(e) => {
-                            const v = e.target.value;
-                            setCourseCpiDefault(v);
-                            if (v) applyDefaultCpiToSelectedCourses(v, formData?.eligible_courses || []);
-                          }}
-                          sx={{ minWidth: 220 }}
+                          inputProps={{ step: "0.1", max: "10", min: "0" }}
+                          value={formData?.min_cpi || ''}
+                          onChange={(e) => handleChange('min_cpi', e.target.value)}
                         />
-                      )}
+                      </Grid>
+
+                      <Grid item xs={12} md={3}>
+                        <TextField
+                          fullWidth
+                          label="High School % Criterion"
+                          size="small"
+                          type="number"
+                          value={formData?.high_school_criterion || ''}
+                          onChange={(e) => handleChange('high_school_criterion', e.target.value)}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={3}>
+                        <TextField
+                          fullWidth
+                          select
+                          label="Gender Filter"
+                          size="small"
+                          value={formData?.gender_filter || 'All'}
+                          onChange={(e) => handleChange('gender_filter', e.target.value)}
+                        >
+                          <MenuItem value="All">All</MenuItem>
+                          <MenuItem value="Male">Male</MenuItem>
+                          <MenuItem value="Female">Female</MenuItem>
+                          <MenuItem value="Others">Others</MenuItem>
+                        </TextField>
+                      </Grid>
+
+                      <Grid item xs={12} md={3}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%', px: 1 }}>
+                          <Typography sx={{ fontSize: '14px', color: '#334155' }}>Backlogs allowed</Typography>
+                          <Switch
+                            checked={!!formData?.backlogs_allowed}
+                            onChange={(e) => handleChange('backlogs_allowed', e.target.checked)}
+                            color="primary"
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                  <Button variant="contained" onClick={handleEligibilitySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>
+                    Save Eligibility Settings
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                  <Button variant="outlined" onClick={() => setActiveTab(0)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                  <Button variant="contained" onClick={() => setActiveTab(2)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
+                </Box>
+              </Box>
+            )}
+
+            {activeTab === 2 && (
+              <Box sx={{ mt: 2 }}>
+                {/* Header with Currency and Same Structure Toggle */}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography sx={{ fontWeight: 600, fontSize: '15px', color: '#5A6478', mr: 1 }}>Currency:</Typography>
+                    {['INR', 'USD', 'EUR'].map((curr) => {
+                      const isSelected = (formData?.salary_currency || 'INR') === curr;
+                      return (
+                        <Box
+                          key={curr}
+                          onClick={() => handleChange('salary_currency', curr)}
+                          sx={{
+                            px: 2.5, py: 0.8, borderRadius: '20px', cursor: 'pointer',
+                            fontWeight: 700, fontSize: '14px', letterSpacing: '0.03em',
+                            transition: 'all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                            bgcolor: isSelected ? '#0A1628' : 'transparent',
+                            color: isSelected ? '#FEFEFE' : '#5A6478',
+                            border: `1.5px solid ${isSelected ? '#0A1628' : 'rgba(10,22,40,0.15)'}`,
+                            boxShadow: isSelected ? '0 4px 12px rgba(10,22,40,0.2)' : 'none',
+                            transform: isSelected ? 'scale(1.05)' : 'scale(1)',
+                            '&:hover': { borderColor: '#0A1628', bgcolor: isSelected ? '#0A1628' : 'rgba(10,22,40,0.04)' },
+                          }}
+                        >
+                          {curr === 'INR' ? '₹ INR' : curr === 'USD' ? '$ USD' : '€ EUR'}
+                        </Box>
+                      );
+                    })}
+                  </Box>
+
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Switch
+                      size="small"
+                      checked={!!formData?.salary_same_for_all}
+                      onChange={(e) => handleSameForAllToggle(e.target.checked)}
+                      sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }}
+                    />
+                    <Typography sx={{ fontSize: '14px', fontWeight: 600, color: '#334155' }}>Same structure for all programmes</Typography>
+                  </Box>
+                </Box>
+
+                {/* Salary Table */}
+                <Box sx={{ border: '1px solid rgba(10,22,40,0.15)', borderRadius: 1.5, overflow: 'hidden', mb: 4, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', bgcolor: '#0A1628', color: '#FFF', py: 1.8, px: 2 }}>
+                    <Typography sx={{ fontSize: '15px', fontWeight: 600, color: '#C8922A' }}>PROGRAMME</Typography>
+                    <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>CTC (Annual) <span style={{ color: '#EF4444' }}>*</span></Typography>
+                    <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Base/Fixed</Typography>
+                    <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Monthly Take-home</Typography>
+                  </Box>
+
+                  {getActiveSalaryGroups().length === 0 ? (
+                    <Box sx={{ p: 4, textAlign: 'center', bgcolor: 'rgba(0,0,0,0.02)' }}>
+                      <Typography sx={{ color: '#5A6478', fontSize: '14px' }}>
+                        No programs selected in "Eligibility & Courses". Please select programs first.
+                      </Typography>
                     </Box>
+                  ) : (
+                    getActiveSalaryGroups().map((group, idx) => (
+                      <Box key={group.id} sx={{
+                        display: 'grid',
+                        gridTemplateColumns: '2fr 1fr 1fr 1.2fr',
+                        px: 2,
+                        py: 2,
+                        alignItems: 'center',
+                        borderTop: idx > 0 ? '1px solid rgba(10,22,40,0.05)' : 'none',
+                        bgcolor: idx % 2 === 1 ? 'rgba(244,246,249,0.3)' : 'transparent'
+                      }}>
+                        <Typography sx={{ fontSize: '15px', fontWeight: 700, color: '#0A1628' }}>{group.label}</Typography>
+                        <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.ctc} onChange={(val: string) => handleSalaryChange(group.id, 'ctc', val)} /></Box>
+                        <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.base} onChange={(val: string) => handleSalaryChange(group.id, 'base', val)} /></Box>
+                        <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.take_home} onChange={(val: string) => handleSalaryChange(group.id, 'take_home', val)} /></Box>
+                      </Box>
+                    ))
                   )}
                 </Box>
-              </Box>
 
-              {courseCpiRequired && courseCpiMode === 'individual' && (
-                <CpiEditorTwoPane
-                  eligibleCourses={formData?.eligible_courses || []}
-                  courseCpis={formData?.course_cpis || {}}
-                  onCourseCpisChange={(next) => handleChange('course_cpis', next)}
-                />
-              )}
+                {/* Additional Components */}
+                <Box sx={{ mt: 2 }}>
+                  <Typography sx={{ bgcolor: '#0A1628', color: '#FFF', py: 1.2, px: 2, fontSize: '15px', fontWeight: 600, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
+                    ADDITIONAL SALARY COMPONENTS (Select which ones to include)
+                  </Typography>
 
-              {ELIGIBLE_PROGRAMS.map((program, index) => (
-                <ProgramBlock 
-                  key={index} 
-                  program={program} 
-                  formData={formData} 
-                  onToggleCourse={handleCourseToggle} 
-                  onSelectAll={handleSelectAll}
-                />
-              ))}
-
-              <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <Box sx={{ p: 3, bgcolor: 'rgba(244,246,249,0.5)', borderRadius: 2, border: '1px solid rgba(10,22,40,0.1)' }}>
-                  <Typography sx={{ fontWeight: 600, color: '#0A1628', mb: 3 }}>Special Degree Programs</Typography>
-                  <Grid container spacing={3} alignItems="flex-start">
-                    <Grid item xs={12} md={6}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Typography sx={{ fontSize: '14px', color: '#334155' }}>Ph.D (GATE/NET) Applicable?</Typography>
-                        <Switch 
-                          checked={!!formData?.phd_allowed} 
-                          onChange={(e) => handleChange('phd_allowed', e.target.checked)} 
-                          color="primary"
-                        />
-                      </Box>
-                      {formData?.phd_allowed && (
-                        <TextField 
-                          fullWidth 
-                          size="small" 
-                          label="Specify required departments" 
-                          sx={{ mt: 2 }}
-                          value={formData?.phd_departments || ''}
-                          onChange={(e) => handleChange('phd_departments', e.target.value)}
-                        />
-                      )}
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
-                        <Typography sx={{ fontSize: '14px', color: '#334155' }}>M.A. Digital Humanities & Social Sciences</Typography>
-                        <Switch 
-                          checked={!!formData?.ma_dhss_allowed} 
-                          onChange={(e) => handleChange('ma_dhss_allowed', e.target.checked)} 
-                          color="primary"
-                        />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-
-                <Box sx={{ p: 3, bgcolor: 'rgba(244,246,249,0.5)', borderRadius: 2, border: '1px solid rgba(10,22,40,0.1)' }}>
-                  <Typography sx={{ fontWeight: 600, color: '#0A1628', mb: 3 }}>General Eligibility Criteria</Typography>
-                  <Grid container spacing={3} alignItems="center">
-                    <Grid item xs={12} md={3}>
-                      <TextField 
-                        fullWidth 
-                        label="Per-discipline Min. CPI" 
-                        size="small" 
-                        type="number"
-                        inputProps={{ step: "0.1", max: "10", min: "0" }}
-                        value={formData?.min_cpi || ''}
-                        onChange={(e) => handleChange('min_cpi', e.target.value)}
-                      />
-                    </Grid>
-                    
-                    <Grid item xs={12} md={3}>
-                      <TextField 
-                        fullWidth 
-                        label="High School % Criterion" 
-                        size="small" 
-                        type="number"
-                        value={formData?.high_school_criterion || ''}
-                        onChange={(e) => handleChange('high_school_criterion', e.target.value)}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={3}>
-                      <TextField 
-                        fullWidth 
-                        select
-                        label="Gender Filter" 
-                        size="small" 
-                        value={formData?.gender_filter || 'All'}
-                        onChange={(e) => handleChange('gender_filter', e.target.value)}
-                      >
-                        <MenuItem value="All">All</MenuItem>
-                        <MenuItem value="Male">Male</MenuItem>
-                        <MenuItem value="Female">Female</MenuItem>
-                        <MenuItem value="Others">Others</MenuItem>
-                      </TextField>
-                    </Grid>
-
-                    <Grid item xs={12} md={3}>
-                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%', px: 1 }}>
-                        <Typography sx={{ fontSize: '14px', color: '#334155' }}>Backlogs allowed?</Typography>
-                        <Switch 
-                          checked={!!formData?.backlogs_allowed} 
-                          onChange={(e) => handleChange('backlogs_allowed', e.target.checked)} 
-                          color="primary"
-                        />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Box>
-
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleEligibilitySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
-                  Save Eligibility Settings
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-                <Button variant="outlined" onClick={() => setActiveTab(0)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
-                <Button variant="contained" onClick={() => setActiveTab(2)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
-              </Box>
-            </Box>
-          )}
-
-          {activeTab === 2 && (
-            <Box sx={{ mt: 2 }}>
-              {/* Header with Currency and Same Structure Toggle */}
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '15px', color: '#5A6478', mr: 1 }}>Currency:</Typography>
-                  {['INR', 'USD', 'EUR'].map((curr) => {
-                    const isSelected = (formData?.salary_currency || 'INR') === curr;
-                    return (
-                      <Box
-                        key={curr}
-                        onClick={() => handleChange('salary_currency', curr)}
-                        sx={{
-                          px: 2.5, py: 0.8, borderRadius: '20px', cursor: 'pointer',
-                          fontWeight: 700, fontSize: '14px', letterSpacing: '0.03em',
-                          transition: 'all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
-                          bgcolor: isSelected ? '#0A1628' : 'transparent',
-                          color: isSelected ? '#FEFEFE' : '#5A6478',
-                          border: `1.5px solid ${isSelected ? '#0A1628' : 'rgba(10,22,40,0.15)'}`,
-                          boxShadow: isSelected ? '0 4px 12px rgba(10,22,40,0.2)' : 'none',
-                          transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                          '&:hover': { borderColor: '#0A1628', bgcolor: isSelected ? '#0A1628' : 'rgba(10,22,40,0.04)' },
-                        }}
-                      >
-                        {curr === 'INR' ? '₹ INR' : curr === 'USD' ? '$ USD' : '€ EUR'}
-                      </Box>
-                    );
-                  })}
-                </Box>
-                
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Switch 
-                    size="small" 
-                    checked={!!formData?.salary_same_for_all} 
-                    onChange={(e) => handleSameForAllToggle(e.target.checked)}
-                    sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#C8922A' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#C8922A' } }} 
-                  />
-                  <Typography sx={{ fontSize: '14px', fontWeight: 600, color: '#334155' }}>Same structure for all programmes</Typography>
-                </Box>
-              </Box>
-
-              {/* Salary Table */}
-              <Box sx={{ border: '1px solid rgba(10,22,40,0.15)', borderRadius: 1.5, overflow: 'hidden', mb: 4, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', bgcolor: '#0A1628', color: '#FFF', py: 1.8, px: 2 }}>
-                  <Typography sx={{ fontSize: '15px', fontWeight: 600, color: '#C8922A' }}>PROGRAMME</Typography>
-                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>CTC (Annual) <span style={{ color: '#EF4444' }}>*</span></Typography>
-                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Base/Fixed</Typography>
-                  <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>Monthly Take-home</Typography>
-                </Box>
-                
-                {getActiveSalaryGroups().length === 0 ? (
-                  <Box sx={{ p: 4, textAlign: 'center', bgcolor: 'rgba(0,0,0,0.02)' }}>
-                    <Typography sx={{ color: '#5A6478', fontSize: '14px' }}>
-                      No programs selected in "Eligibility & Courses". Please select programs first.
-                    </Typography>
-                  </Box>
-                ) : (
-                  getActiveSalaryGroups().map((group, idx) => (
-                    <Box key={group.id} sx={{ 
-                      display: 'grid', 
-                      gridTemplateColumns: '2fr 1fr 1fr 1.2fr', 
-                      px: 2, 
-                      py: 2, 
-                      alignItems: 'center',
-                      borderTop: idx > 0 ? '1px solid rgba(10,22,40,0.05)' : 'none',
-                      bgcolor: idx % 2 === 1 ? 'rgba(244,246,249,0.3)' : 'transparent'
-                    }}>
-                      <Typography sx={{ fontSize: '15px', fontWeight: 700, color: '#0A1628' }}>{group.label}</Typography>
-                      <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.ctc} onChange={(val: string) => handleSalaryChange(group.id, 'ctc', val)} /></Box>
-                      <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.base} onChange={(val: string) => handleSalaryChange(group.id, 'base', val)} /></Box>
-                      <Box sx={{ px: 0.5 }}><SalaryTextField borderColor="#C8922A" value={formData?.salary_details?.[group.id]?.take_home} onChange={(val: string) => handleSalaryChange(group.id, 'take_home', val)} /></Box>
-                    </Box>
-                  ))
-                )}
-              </Box>
-
-              {/* Additional Components */}
-              <Box sx={{ mt: 2 }}>
-                <Typography sx={{ bgcolor: '#0A1628', color: '#FFF', py: 1.2, px: 2, fontSize: '15px', fontWeight: 600, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-                  ADDITIONAL SALARY COMPONENTS (Select which ones to include)
-                </Typography>
-                
-                <Box sx={{ p: 3, border: '1px solid rgba(10,22,40,0.1)', borderTop: 'none', bgcolor: 'rgba(10, 22, 40, 0.01)' }}>
-                   {SALARY_COMPONENTS.map((cat, catIdx) => (
+                  <Box sx={{ p: 3, border: '1px solid rgba(10,22,40,0.1)', borderTop: 'none', bgcolor: 'rgba(10, 22, 40, 0.01)' }}>
+                    {SALARY_COMPONENTS.map((cat, catIdx) => (
                       <Box key={catIdx} sx={{ mb: catIdx < SALARY_COMPONENTS.length - 1 ? 2.5 : 0 }}>
                         <Typography sx={{ fontSize: '11px', fontWeight: 700, color: '#C8922A', mb: 1.5, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           {cat.category}
@@ -1667,14 +1667,14 @@ export default function JnfFormShell() {
                           ))}
                         </Box>
                       </Box>
-                   ))}
-                </Box>
+                    ))}
+                  </Box>
 
-                <Box sx={{ p: 4, border: '1px solid rgba(10,22,40,0.15)', borderTop: 'none', borderBottomLeftRadius: 6, borderBottomRightRadius: 6, bgcolor: 'rgba(244, 246, 249, 0.4)', minHeight: 100 }}>
-                   {SALARY_COMPONENTS.map((cat, catIdx) => {
+                  <Box sx={{ p: 4, border: '1px solid rgba(10,22,40,0.15)', borderTop: 'none', borderBottomLeftRadius: 6, borderBottomRightRadius: 6, bgcolor: 'rgba(244, 246, 249, 0.4)', minHeight: 100 }}>
+                    {SALARY_COMPONENTS.map((cat, catIdx) => {
                       const activeItems = cat.items.filter(comp => (formData?.included_salary_components || []).includes(comp.field));
                       if (activeItems.length === 0) return null;
-                      
+
                       return (
                         <Box key={catIdx} sx={{ mb: 4 }}>
                           <Typography sx={{ fontSize: '14px', fontWeight: 700, color: '#0A1628', mb: 2.5, borderBottom: '2px solid #C8922A', display: 'inline-block', pb: 0.5 }}>
@@ -1684,10 +1684,10 @@ export default function JnfFormShell() {
                             {activeItems.map((comp: any) => (
                               <Grid item xs={12} sm={6} md={4} key={comp.field}>
                                 <Box sx={{ p: 1.5, borderRadius: 1.5, bgcolor: comp.bg, border: '1px solid rgba(0,0,0,0.02)', transition: 'all 0.2s', '&:hover': { bgcolor: 'rgba(255,255,255,0.8)', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' } }}>
-                                  <SalaryTextField 
-                                    label={comp.label} 
-                                    value={formData?.additional_salary_components?.[comp.field]} 
-                                    onChange={(val: string) => handleAdditionalSalaryChange(comp.field, val)} 
+                                  <SalaryTextField
+                                    label={comp.label}
+                                    value={formData?.additional_salary_components?.[comp.field]}
+                                    onChange={(val: string) => handleAdditionalSalaryChange(comp.field, val)}
                                     borderColor={comp.color}
                                     multiline={comp.multiline}
                                     rows={comp.rows}
@@ -1698,8 +1698,8 @@ export default function JnfFormShell() {
                           </Grid>
                         </Box>
                       );
-                   })}
-                   
+                    })}
+
                     {(formData?.included_salary_components || []).length === 0 && (
                       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', py: 4 }}>
                         <Typography sx={{ color: '#5A6478', fontSize: '13px', fontStyle: 'italic' }}>
@@ -1707,142 +1707,57 @@ export default function JnfFormShell() {
                         </Typography>
                       </Box>
                     )}
+                  </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                  <Button variant="contained" onClick={handleSalarySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>
+                    Save Salary Details
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                  <Button variant="outlined" onClick={() => setActiveTab(1)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                  <Button variant="contained" onClick={() => setActiveTab(3)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
                 </Box>
               </Box>
+            )}
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleSalarySave} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
-                  Save Salary Details
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-                <Button variant="outlined" onClick={() => setActiveTab(1)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
-                <Button variant="contained" onClick={() => setActiveTab(3)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
-              </Box>
-            </Box>
-          )}
+            {activeTab === 3 && (
+              <Box sx={{ mt: 2 }}>
+                {/* Stages Section */}
+                <Box sx={{ mb: 6 }}>
+                  <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    Selection Stages & Rounds
+                  </Typography>
 
-          {activeTab === 3 && (
-            <Box sx={{ mt: 2 }}>
-              {/* Stages Section */}
-              <Box sx={{ mb: 6 }}>
-                <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  Selection Stages & Rounds
-                </Typography>
-
-                <Grid container spacing={4}>
-                  {[
-                    { id: 'ppt', label: 'Pre-Placement Talk', type: 'ppt' },
-                    { id: 'resume', label: 'Resume Shortlisting', type: 'resume' },
-                    { id: 'gd', label: 'Group Discussion', type: 'gd' },
-                  ].map((stage) => {
-                    const activeStage = (formData?.selection_stages || []).find((s: any) => s.stage_type === stage.id);
-                    return (
-                      <Grid item xs={12} md={4} key={stage.id}>
-                        <Box sx={{ p: 3, border: '1px solid rgba(10,22,40,0.1)', borderRadius: 2, bgcolor: activeStage ? 'rgba(200, 146, 42, 0.03)' : 'rgba(0,0,0,0.02)', transition: 'all 0.3s' }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                            <Typography sx={{ fontWeight: 600, color: '#0A1628' }}>{stage.label}</Typography>
-                            <Switch 
-                              checked={!!activeStage} 
-                              onChange={(e) => handleSelectionStageToggle(stage.id, e.target.checked)} 
-                            />
-                          </Box>
-                          {activeStage && (
-                            <TextField
-                              select
-                              fullWidth
-                              size="small"
-                              label="Selection Mode"
-                              value={activeStage.stage_mode || 'offline'}
-                              onChange={(e) => {
-                                const stages = [...formData.selection_stages];
-                                const idx = stages.findIndex(s => s.stage_type === stage.id);
-                                stages[idx].stage_mode = e.target.value;
-                                handleChange('selection_stages', stages);
-                              }}
-                            >
-                              <MenuItem value="online">Online</MenuItem>
-                              <MenuItem value="offline">Offline</MenuItem>
-                              <MenuItem value="hybrid">Hybrid</MenuItem>
-                            </TextField>
-                          )}
-                        </Box>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-
-                {/* Test Rounds */}
-                <Box sx={{ mt: 5 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-                    <Typography sx={{ fontWeight: 700, color: '#0A1628', fontSize: '16px' }}>Online / Written Test Rounds</Typography>
-                    <Button 
-                      startIcon={<AddIcon />} 
-                      onClick={() => handleAddRound('test')}
-                      disabled={(formData?.selection_stages || []).filter((s:any) => s.stage_type === 'test').length >= 10}
-                      sx={{ color: '#C8922A', fontWeight: 600 }}
-                    >
-                      Add Test Round
-                    </Button>
-                  </Box>
-                  <Grid container spacing={3}>
-                    {(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'test').map((round: any, idx: number) => (
-                      <Grid item xs={12} md={6} key={idx}>
-                        <Box sx={{ p: 3, border: '1px solid #C8922A', borderRadius: 2, position: 'relative' }}>
-                          <IconButton 
-                            size="small" 
-                            onClick={() => handleRemoveRound('test', idx)}
-                            sx={{ position: 'absolute', top: 8, right: 8, color: '#ef4444' }}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                          <Typography sx={{ fontWeight: 700, mb: 2, color: '#C8922A', fontSize: '14px' }}>Round {idx + 1}</Typography>
-                          <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                              <TextField
-                                select
-                                fullWidth
-                                size="small"
-                                label="Test Type"
-                                value={round.test_type || 'Aptitude'}
-                                onChange={(e) => {
-                                  const stages = [...formData.selection_stages];
-                                  const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
-                                  stages[stageIdx].test_type = e.target.value;
-                                  handleChange('selection_stages', stages);
-                                }}
-                              >
-                                <MenuItem value="Aptitude">Aptitude</MenuItem>
-                                <MenuItem value="Technical">Technical</MenuItem>
-                                <MenuItem value="Written">Written</MenuItem>
-                              </TextField>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <TextField
-                                fullWidth
-                                size="small"
-                                type="number"
-                                label="Duration (mins)"
-                                value={round.duration_minutes || ''}
-                                onChange={(e) => {
-                                  const stages = [...formData.selection_stages];
-                                  const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
-                                  stages[stageIdx].duration_minutes = parseInt(e.target.value);
-                                  handleChange('selection_stages', stages);
-                                }}
+                  <Grid container spacing={4}>
+                    {[
+                      { id: 'ppt', label: 'Pre-Placement Talk', type: 'ppt' },
+                      { id: 'resume', label: 'Resume Shortlisting', type: 'resume' },
+                      { id: 'gd', label: 'Group Discussion', type: 'gd' },
+                    ].map((stage) => {
+                      const activeStage = (formData?.selection_stages || []).find((s: any) => s.stage_type === stage.id);
+                      return (
+                        <Grid item xs={12} md={4} key={stage.id}>
+                          <Box sx={{ p: 3, border: '1px solid rgba(10,22,40,0.1)', borderRadius: 2, bgcolor: activeStage ? 'rgba(200, 146, 42, 0.03)' : 'rgba(0,0,0,0.02)', transition: 'all 0.3s' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                              <Typography sx={{ fontWeight: 600, color: '#0A1628' }}>{stage.label}</Typography>
+                              <Switch
+                                checked={!!activeStage}
+                                onChange={(e) => handleSelectionStageToggle(stage.id, e.target.checked)}
                               />
-                            </Grid>
-                            <Grid item xs={12}>
+                            </Box>
+                            {activeStage && (
                               <TextField
                                 select
                                 fullWidth
                                 size="small"
-                                label="Mode"
-                                value={round.stage_mode || 'offline'}
+                                label="Selection Mode"
+                                value={activeStage.stage_mode || 'offline'}
                                 onChange={(e) => {
                                   const stages = [...formData.selection_stages];
-                                  const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
-                                  stages[stageIdx].stage_mode = e.target.value;
+                                  const idx = stages.findIndex(s => s.stage_type === stage.id);
+                                  stages[idx].stage_mode = e.target.value;
                                   handleChange('selection_stages', stages);
                                 }}
                               >
@@ -1850,356 +1765,441 @@ export default function JnfFormShell() {
                                 <MenuItem value="offline">Offline</MenuItem>
                                 <MenuItem value="hybrid">Hybrid</MenuItem>
                               </TextField>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Grid>
-                    ))}
+                            )}
+                          </Box>
+                        </Grid>
+                      );
+                    })}
                   </Grid>
-                </Box>
 
-                {/* Interview Rounds */}
-                <Box sx={{ mt: 5 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-                    <Typography sx={{ fontWeight: 700, color: '#0A1628', fontSize: '16px' }}>Interview Rounds</Typography>
-                    <Button 
-                      startIcon={<AddIcon />} 
-                      onClick={() => handleAddRound('interview')}
-                      disabled={(formData?.selection_stages || []).filter((s:any) => s.stage_type === 'interview').length >= 10}
-                      sx={{ color: '#0A1628', fontWeight: 600 }}
-                    >
-                      Add Interview Round
-                    </Button>
+                  {/* Test Rounds */}
+                  <Box sx={{ mt: 5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+                      <Typography sx={{ fontWeight: 700, color: '#0A1628', fontSize: '16px' }}>Online / Written Test Rounds</Typography>
+                      <Button
+                        startIcon={<AddIcon />}
+                        onClick={() => handleAddRound('test')}
+                        disabled={(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'test').length >= 10}
+                        sx={{ color: '#C8922A', fontWeight: 600 }}
+                      >
+                        Add Test Round
+                      </Button>
+                    </Box>
+                    <Grid container spacing={3}>
+                      {(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'test').map((round: any, idx: number) => (
+                        <Grid item xs={12} md={6} key={idx}>
+                          <Box sx={{ p: 3, border: '1px solid #C8922A', borderRadius: 2, position: 'relative' }}>
+                            <IconButton
+                              size="small"
+                              onClick={() => handleRemoveRound('test', idx)}
+                              sx={{ position: 'absolute', top: 8, right: 8, color: '#ef4444' }}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                            <Typography sx={{ fontWeight: 700, mb: 2, color: '#C8922A', fontSize: '14px' }}>Round {idx + 1}</Typography>
+                            <Grid container spacing={2}>
+                              <Grid item xs={6}>
+                                <TextField
+                                  select
+                                  fullWidth
+                                  size="small"
+                                  label="Test Type"
+                                  value={round.test_type || 'Aptitude'}
+                                  onChange={(e) => {
+                                    const stages = [...formData.selection_stages];
+                                    const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
+                                    stages[stageIdx].test_type = e.target.value;
+                                    handleChange('selection_stages', stages);
+                                  }}
+                                >
+                                  <MenuItem value="Aptitude">Aptitude</MenuItem>
+                                  <MenuItem value="Technical">Technical</MenuItem>
+                                  <MenuItem value="Written">Written</MenuItem>
+                                </TextField>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <TextField
+                                  fullWidth
+                                  size="small"
+                                  type="number"
+                                  label="Duration (mins)"
+                                  value={round.duration_minutes || ''}
+                                  onChange={(e) => {
+                                    const stages = [...formData.selection_stages];
+                                    const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
+                                    stages[stageIdx].duration_minutes = parseInt(e.target.value);
+                                    handleChange('selection_stages', stages);
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <TextField
+                                  select
+                                  fullWidth
+                                  size="small"
+                                  label="Mode"
+                                  value={round.stage_mode || 'offline'}
+                                  onChange={(e) => {
+                                    const stages = [...formData.selection_stages];
+                                    const stageIdx = stages.map((s, i) => s.stage_type === 'test' ? i : -1).filter(i => i !== -1)[idx];
+                                    stages[stageIdx].stage_mode = e.target.value;
+                                    handleChange('selection_stages', stages);
+                                  }}
+                                >
+                                  <MenuItem value="online">Online</MenuItem>
+                                  <MenuItem value="offline">Offline</MenuItem>
+                                  <MenuItem value="hybrid">Hybrid</MenuItem>
+                                </TextField>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </Box>
+
+                  {/* Interview Rounds */}
+                  <Box sx={{ mt: 5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+                      <Typography sx={{ fontWeight: 700, color: '#0A1628', fontSize: '16px' }}>Interview Rounds</Typography>
+                      <Button
+                        startIcon={<AddIcon />}
+                        onClick={() => handleAddRound('interview')}
+                        disabled={(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'interview').length >= 10}
+                        sx={{ color: '#0A1628', fontWeight: 600 }}
+                      >
+                        Add Interview Round
+                      </Button>
+                    </Box>
+                    <Grid container spacing={3}>
+                      {(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'interview').map((round: any, idx: number) => (
+                        <Grid item xs={12} md={6} key={idx}>
+                          <Box sx={{ p: 3, border: '1px solid #0A1628', borderRadius: 2, position: 'relative' }}>
+                            <IconButton
+                              size="small"
+                              onClick={() => handleRemoveRound('interview', idx)}
+                              sx={{ position: 'absolute', top: 8, right: 8, color: '#ef4444' }}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                            <Typography sx={{ fontWeight: 700, mb: 2, color: '#0A1628', fontSize: '14px' }}>Interview Round {idx + 1}</Typography>
+                            <Grid container spacing={2}>
+                              <Grid item xs={6}>
+                                <TextField
+                                  select
+                                  fullWidth
+                                  size="small"
+                                  label="Interview Mode"
+                                  value={round.interview_mode || 'video_conferencing'}
+                                  onChange={(e) => {
+                                    const stages = [...formData.selection_stages];
+                                    const stageIdx = stages.map((s, i) => s.stage_type === 'interview' ? i : -1).filter(i => i !== -1)[idx];
+                                    stages[stageIdx].interview_mode = e.target.value;
+                                    handleChange('selection_stages', stages);
+                                  }}
+                                >
+                                  <MenuItem value="on_campus">On-campus</MenuItem>
+                                  <MenuItem value="telephonic">Telephonic</MenuItem>
+                                  <MenuItem value="video_conferencing">Video Conferencing</MenuItem>
+                                </TextField>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <TextField
+                                  fullWidth
+                                  size="small"
+                                  type="number"
+                                  label="Duration (mins)"
+                                  value={round.duration_minutes || ''}
+                                  onChange={(e) => {
+                                    const stages = [...formData.selection_stages];
+                                    const stageIdx = stages.map((s, i) => s.stage_type === 'interview' ? i : -1).filter(i => i !== -1)[idx];
+                                    stages[stageIdx].duration_minutes = parseInt(e.target.value);
+                                    handleChange('selection_stages', stages);
+                                  }}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                </Box>
+
+                {/* Infrastructure & Logistics */}
+                <Box sx={{ mb: 6 }}>
+                  <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 3 }}>Infrastructure & Logistics</Typography>
                   <Grid container spacing={3}>
-                    {(formData?.selection_stages || []).filter((s: any) => s.stage_type === 'interview').map((round: any, idx: number) => (
-                      <Grid item xs={12} md={6} key={idx}>
-                        <Box sx={{ p: 3, border: '1px solid #0A1628', borderRadius: 2, position: 'relative' }}>
-                          <IconButton 
-                            size="small" 
-                            onClick={() => handleRemoveRound('interview', idx)}
-                            sx={{ position: 'absolute', top: 8, right: 8, color: '#ef4444' }}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                          <Typography sx={{ fontWeight: 700, mb: 2, color: '#0A1628', fontSize: '14px' }}>Interview Round {idx + 1}</Typography>
-                          <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                              <TextField
-                                select
-                                fullWidth
-                                size="small"
-                                label="Interview Mode"
-                                value={round.interview_mode || 'video_conferencing'}
-                                onChange={(e) => {
-                                  const stages = [...formData.selection_stages];
-                                  const stageIdx = stages.map((s, i) => s.stage_type === 'interview' ? i : -1).filter(i => i !== -1)[idx];
-                                  stages[stageIdx].interview_mode = e.target.value;
-                                  handleChange('selection_stages', stages);
-                                }}
-                              >
-                                <MenuItem value="on_campus">On-campus</MenuItem>
-                                <MenuItem value="telephonic">Telephonic</MenuItem>
-                                <MenuItem value="video_conferencing">Video Conferencing</MenuItem>
-                              </TextField>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <TextField
-                                fullWidth
-                                size="small"
-                                type="number"
-                                label="Duration (mins)"
-                                value={round.duration_minutes || ''}
-                                onChange={(e) => {
-                                  const stages = [...formData.selection_stages];
-                                  const stageIdx = stages.map((s, i) => s.stage_type === 'interview' ? i : -1).filter(i => i !== -1)[idx];
-                                  stages[stageIdx].duration_minutes = parseInt(e.target.value);
-                                  handleChange('selection_stages', stages);
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              </Box>
-
-              {/* Infrastructure & Logistics */}
-              <Box sx={{ mb: 6 }}>
-                <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 3 }}>Infrastructure & Logistics</Typography>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={3}>
-                    <TextField 
-                      fullWidth 
-                      label="Team Members Content" 
-                      type="number"
-                      size="small"
-                      value={formData?.selection_infra?.team_members_required || ''}
-                      onChange={(e) => {
-                        const infra = { ...formData.selection_infra, team_members_required: parseInt(e.target.value) };
-                        handleChange('selection_infra', infra);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <TextField 
-                      fullWidth 
-                      label="Rooms Required" 
-                      type="number"
-                      size="small"
-                      value={formData?.selection_infra?.rooms_required || ''}
-                      onChange={(e) => {
-                        const infra = { ...formData.selection_infra, rooms_required: parseInt(e.target.value) };
-                        handleChange('selection_infra', infra);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(0,0,0,0.1)', p: 1, borderRadius: 1 }}>
-                      <Typography sx={{ fontSize: '12px' }}>Psychometric Test?</Typography>
-                      <Switch 
+                    <Grid item xs={12} md={3}>
+                      <TextField
+                        fullWidth
+                        label="Team Members Content"
+                        type="number"
                         size="small"
-                        checked={!!formData?.selection_infra?.psychometric_test}
+                        value={formData?.selection_infra?.team_members_required || ''}
                         onChange={(e) => {
-                          const infra = { ...formData.selection_infra, psychometric_test: e.target.checked };
+                          const infra = { ...formData.selection_infra, team_members_required: parseInt(e.target.value) };
                           handleChange('selection_infra', infra);
                         }}
                       />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(0,0,0,0.1)', p: 1, borderRadius: 1 }}>
-                      <Typography sx={{ fontSize: '12px' }}>Medical Test?</Typography>
-                      <Switch 
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                      <TextField
+                        fullWidth
+                        label="Rooms Required"
+                        type="number"
                         size="small"
-                        checked={!!formData?.selection_infra?.medical_test}
+                        value={formData?.selection_infra?.rooms_required || ''}
                         onChange={(e) => {
-                          const infra = { ...formData.selection_infra, medical_test: e.target.checked };
+                          const infra = { ...formData.selection_infra, rooms_required: parseInt(e.target.value) };
                           handleChange('selection_infra', infra);
                         }}
                       />
-                    </Box>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(0,0,0,0.1)', p: 1, borderRadius: 1 }}>
+                        <Typography sx={{ fontSize: '12px' }}>Psychometric Test</Typography>
+                        <Switch
+                          size="small"
+                          checked={!!formData?.selection_infra?.psychometric_test}
+                          onChange={(e) => {
+                            const infra = { ...formData.selection_infra, psychometric_test: e.target.checked };
+                            handleChange('selection_infra', infra);
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(0,0,0,0.1)', p: 1, borderRadius: 1 }}>
+                        <Typography sx={{ fontSize: '12px' }}>Medical Test</Typography>
+                        <Switch
+                          size="small"
+                          checked={!!formData?.selection_infra?.medical_test}
+                          onChange={(e) => {
+                            const infra = { ...formData.selection_infra, medical_test: e.target.checked };
+                            handleChange('selection_infra', infra);
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={2}
+                        label="Other Screening Details"
+                        value={formData?.selection_infra?.other_screening || ''}
+                        onChange={(e) => {
+                          const infra = { ...formData.selection_infra, other_screening: e.target.value };
+                          handleChange('selection_infra', infra);
+                        }}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField 
-                      fullWidth 
-                      multiline 
-                      rows={2} 
-                      label="Other Screening Details" 
-                      value={formData?.selection_infra?.other_screening || ''}
-                      onChange={(e) => {
-                        const infra = { ...formData.selection_infra, other_screening: e.target.value };
-                        handleChange('selection_infra', infra);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-
-              {/* PDF Upload */}
-              <Box sx={{ mb: 6 }}>
-                <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 2 }}>Requirement Process Document</Typography>
-                <Box 
-                  sx={{ 
-                    border: '2px dashed #0A1628', 
-                    borderRadius: 2, 
-                    p: 4, 
-                    textAlign: 'center',
-                    bgcolor: 'rgba(10, 22, 40, 0.02)',
-                    transition: 'all 0.2s',
-                    '&:hover': { bgcolor: 'rgba(10, 22, 40, 0.05)', borderColor: '#C8922A' }
-                  }}
-                >
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    id="selection-pdf"
-                    style={{ display: 'none' }}
-                    onChange={(e) => setSelectionPdf(e.target.files?.[0] || null)}
-                  />
-                  <label htmlFor="selection-pdf">
-                    <Button component="span" variant="outlined" sx={{ mb: 1, borderColor: '#0A1628', color: '#0A1628' }}>
-                      {selectionPdf ? 'Change PDF' : 'Upload Process PDF'}
-                    </Button>
-                  </label>
-                  <Typography sx={{ fontSize: '12px', color: '#64748b' }}>
-                    {selectionPdf ? `Selected: ${selectionPdf.name}` : (formData?.selection_infra?.selection_process_pdf_path ? 'Process PDF already uploaded' : 'PDF format only, max 5MB')}
-                  </Typography>
                 </Box>
-              </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                <Button variant="contained" onClick={handleSelectionSave} sx={{ bgcolor: '#0A1628', px: 6, py: 1.2, fontWeight: 700, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' }}}>
-                  Save Selection Process
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-                <Button variant="outlined" onClick={() => setActiveTab(2)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
-                <Button variant="contained" onClick={() => setActiveTab(4)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
-              </Box>
-            </Box>
-          )}
-
-          {activeTab === 4 && (
-            <Box sx={{ mt: 4, textAlign: 'left' }}>
-              <Typography variant="h6" sx={{ color: '#0A1628', fontWeight: 700, mb: 1 }}>Declaration</Typography>
-              <Typography sx={{ fontSize: '13px', color: '#5A6478', mb: 3 }}>
-                Please review and accept the following terms to complete your Job Notification Form.
-              </Typography>
-              
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 6 }}>
-                {/* Declaration Block */}
-                {[
-                  { 
-                    id: 'aipc_guidelines', 
-                    text: 'We have gone through the AIPC guidelines thoroughly and agree to abide by the guidelines during the entire process of placement/internship activities. In case of violation of guidelines by us, we understand that an appropriate action may be taken on us as per AIPC guidelines.' 
-                  },
-                  { 
-                    id: 'shortlisting_commitment', 
-                    text: 'We declare that we would be providing the shortlisting criteria along with the CV-shortlisted and/or Test-shortlisted candidates. We also assure that the details of final shortlisted candidates will be provided within the 24 to 48 hours after the written test.' 
-                  },
-                  { 
-                    id: 'accuracy_profile', 
-                    text: 'The information related to various job/intern profiles posted by us is verified and correct to the best of our knowledge, and the company will abide by the terms and conditions as outlined in these job/intern profiles posted while making the offers. No new clauses/ changes would be added/made in the final offer rolled out to the candidates selected on the profile(s).' 
-                  },
-                  { 
-                    id: 'consent_ranking_agencies', 
-                    text: 'We consent to sharing of company name, logo and email with national ranking agencies and government directives, and to listing company names in social media platforms and press/media.' 
-                  },
-                  { 
-                    id: 'adherence_toc', 
-                    text: 'I/We confirm that the information pertaining to the posted job profile is accurate and verified to the best of our knowledge. The company commits to adhere to the terms and conditions outlined in these job profiles while extending offers. No additional clauses or changes will be introduced in the final offers extended to the candidates selected for the respective profiles.' 
-                  },
-                ].map((item) => (
-                  <Box 
-                    key={item.id}
-                    onClick={() => {
-                      const currentVal = !!formData?.declaration?.[item.id];
-                      const decl = { ...(formData?.declaration || {}), [item.id]: !currentVal };
-                      handleChange('declaration', decl);
-                    }}
-                    sx={{ 
-                      p: 2.5, 
-                      borderRadius: 2, 
-                      border: '1px solid',
-                      borderColor: formData?.declaration?.[item.id] ? '#C8922A' : 'rgba(10, 22, 40, 0.1)',
-                      bgcolor: formData?.declaration?.[item.id] ? 'rgba(200, 146, 42, 0.04)' : '#FFF',
-                      cursor: 'pointer',
+                {/* PDF Upload */}
+                <Box sx={{ mb: 6 }}>
+                  <Typography sx={{ color: '#0A1628', fontWeight: 700, fontSize: '18px', mb: 2 }}>Requirement Process Document</Typography>
+                  <Box
+                    sx={{
+                      border: '2px dashed #0A1628',
+                      borderRadius: 2,
+                      p: 4,
+                      textAlign: 'center',
+                      bgcolor: 'rgba(10, 22, 40, 0.02)',
                       transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 2,
-                      '&:hover': {
-                        borderColor: '#C8922A',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                      }
+                      '&:hover': { bgcolor: 'rgba(10, 22, 40, 0.05)', borderColor: '#C8922A' }
                     }}
                   >
-                    <Checkbox 
-                      checked={!!formData?.declaration?.[item.id]} 
-                      onMouseDown={(e) => e.stopPropagation()} // Stop focus/click issues
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        // The Box onClick also fires if we don't handle this carefully
-                        // But with stopPropagation on the checkbox, only this fires
-                        const decl = { ...(formData?.declaration || {}), [item.id]: e.target.checked };
-                        handleChange('declaration', decl);
-                      }}
-                      sx={{ p: 0, color: 'rgba(10, 22, 40, 0.3)', '&.Mui-checked': { color: '#C8922A' } }}
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      id="selection-pdf"
+                      style={{ display: 'none' }}
+                      onChange={(e) => setSelectionPdf(e.target.files?.[0] || null)}
                     />
-                    <Typography sx={{ fontSize: '15px', color: '#334155', lineHeight: 1.6, userSelect: 'none' }}>
-                      {item.text}
+                    <label htmlFor="selection-pdf">
+                      <Button component="span" variant="outlined" sx={{ mb: 1, borderColor: '#0A1628', color: '#0A1628' }}>
+                        {selectionPdf ? 'Change PDF' : 'Upload Process PDF'}
+                      </Button>
+                    </label>
+                    <Typography sx={{ fontSize: '12px', color: '#64748b' }}>
+                      {selectionPdf ? `Selected: ${selectionPdf.name}` : (formData?.selection_infra?.selection_process_pdf_path ? 'Process PDF already uploaded' : 'PDF format only, max 5MB')}
                     </Typography>
                   </Box>
-                ))}
-              </Box>
+                </Box>
 
-              <Box sx={{ mb: 6, p: 4, bgcolor: '#F8FAFC', borderRadius: 2, border: '1px solid rgba(0,0,0,0.05)' }}>
-                <Typography sx={{ fontWeight: 700, color: '#0A1628', mb: 3, fontSize: '16px' }}>Signatory Details</Typography>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={4}>
-                    <TextField 
-                      fullWidth 
-                      label={<>Signatory Name <span style={{ color: '#EF4444' }}>*</span></>} 
-                      size="small"
-                      value={formData?.declaration?.signatory_name || ''}
-                      onChange={(e) => {
-                        const decl = { ...formData.declaration, signatory_name: e.target.value };
-                        handleChange('declaration', decl);
-                      }}
-                      sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField 
-                      fullWidth 
-                      label="Designation" 
-                      size="small"
-                      value={formData?.declaration?.signatory_designation || ''}
-                      onChange={(e) => {
-                        const decl = { ...formData.declaration, signatory_designation: e.target.value };
-                        handleChange('declaration', decl);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField 
-                      fullWidth 
-                      label="Digital Signature (Type Full Name)" 
-                      size="small"
-                      placeholder="Type name here"
-                      value={formData?.declaration?.typed_signature || ''}
-                      onChange={(e) => {
-                        const decl = { ...formData.declaration, typed_signature: e.target.value };
-                        handleChange('declaration', decl);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                  <Button variant="contained" onClick={handleSelectionSave} sx={{ bgcolor: '#0A1628', px: 6, py: 1.2, fontWeight: 700, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>
+                    Save Selection Process
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                  <Button variant="outlined" onClick={() => setActiveTab(2)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                  <Button variant="contained" onClick={() => setActiveTab(4)} sx={{ bgcolor: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { bgcolor: '#2C3345' } }}>Next →</Button>
+                </Box>
               </Box>
+            )}
 
-              <Box sx={{ mb: 6, p: 3, borderLeft: '4px solid #C8922A', bgcolor: 'rgba(200, 146, 42, 0.05)' }}>
-                <Typography sx={{ fontSize: '13px', color: '#5A6478', fontStyle: 'italic', mb: 1 }}>
-                  Note: Student’s choices will be governed by the information you provide in this form. Therefore, please be as clear and detailed as possible. Before filling the form kindly refer to the placement brochure and placement website for the selection process and rules & regulations.
+            {activeTab === 4 && (
+              <Box sx={{ mt: 4, textAlign: 'left' }}>
+                <Typography variant="h6" sx={{ color: '#0A1628', fontWeight: 700, mb: 1 }}>Declaration</Typography>
+                <Typography sx={{ fontSize: '13px', color: '#5A6478', mb: 3 }}>
+                  Please review and accept the following terms to complete your Job Notification Form.
                 </Typography>
-                <Typography sx={{ fontSize: '13px', color: '#0A1628', fontWeight: 600 }}>
-                  For any queries, you may contact the placement cell.
-                </Typography>
-              </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 5 }}>
-                <Button 
-                  variant="outlined" 
-                  onClick={handleDeclarationSave} 
-                  sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}
-                >
-                  Save Draft
-                </Button>
-                <Button 
-                  variant="contained" 
-                  disabled={!formData?.declaration?.aipc_guidelines || !formData?.declaration?.shortlisting_commitment || !formData?.declaration?.accuracy_profile || !formData?.declaration?.consent_ranking_agencies || !formData?.declaration?.adherence_toc || !formData?.declaration?.signatory_name}
-                  onClick={handleJnfSubmit} 
-                  sx={{ 
-                    bgcolor: isChangesRequested ? '#92400E' : '#0A1628', 
-                    px: 6, 
-                    py: 1.2, 
-                    fontWeight: 700, 
-                    fontSize: '15px',
-                    '&:hover': { bgcolor: isChangesRequested ? '#78350F' : '#1B2430' },
-                    '&:disabled': { bgcolor: 'rgba(10,22,40,0.1)' }
-                  }}
-                >
-                  {isChangesRequested ? '✓ Re-submit After Revision' : 'Confirm & Submit JNF'}
-                </Button>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 6 }}>
+                  {/* Declaration Block */}
+                  {[
+                    {
+                      id: 'aipc_guidelines',
+                      text: 'We have gone through the AIPC guidelines thoroughly and agree to abide by the guidelines during the entire process of placement/internship activities. In case of violation of guidelines by us, we understand that an appropriate action may be taken on us as per AIPC guidelines.'
+                    },
+                    {
+                      id: 'shortlisting_commitment',
+                      text: 'We declare that we would be providing the shortlisting criteria along with the CV-shortlisted and/or Test-shortlisted candidates. We also assure that the details of final shortlisted candidates will be provided within the 24 to 48 hours after the written test.'
+                    },
+                    {
+                      id: 'accuracy_profile',
+                      text: 'The information related to various job/intern profiles posted by us is verified and correct to the best of our knowledge, and the company will abide by the terms and conditions as outlined in these job/intern profiles posted while making the offers. No new clauses/ changes would be added/made in the final offer rolled out to the candidates selected on the profile(s).'
+                    },
+                    {
+                      id: 'consent_ranking_agencies',
+                      text: 'We consent to sharing of company name, logo and email with national ranking agencies and government directives, and to listing company names in social media platforms and press/media.'
+                    },
+                    {
+                      id: 'adherence_toc',
+                      text: 'I/We confirm that the information pertaining to the posted job profile is accurate and verified to the best of our knowledge. The company commits to adhere to the terms and conditions outlined in these job profiles while extending offers. No additional clauses or changes will be introduced in the final offers extended to the candidates selected for the respective profiles.'
+                    },
+                  ].map((item) => (
+                    <Box
+                      key={item.id}
+                      onClick={() => {
+                        const currentVal = !!formData?.declaration?.[item.id];
+                        const decl = { ...(formData?.declaration || {}), [item.id]: !currentVal };
+                        handleChange('declaration', decl);
+                      }}
+                      sx={{
+                        p: 2.5,
+                        borderRadius: 2,
+                        border: '1px solid',
+                        borderColor: formData?.declaration?.[item.id] ? '#C8922A' : 'rgba(10, 22, 40, 0.1)',
+                        bgcolor: formData?.declaration?.[item.id] ? 'rgba(200, 146, 42, 0.04)' : '#FFF',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 2,
+                        '&:hover': {
+                          borderColor: '#C8922A',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                        }
+                      }}
+                    >
+                      <Checkbox
+                        checked={!!formData?.declaration?.[item.id]}
+                        onMouseDown={(e) => e.stopPropagation()} // Stop focus/click issues
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          // The Box onClick also fires if we don't handle this carefully
+                          // But with stopPropagation on the checkbox, only this fires
+                          const decl = { ...(formData?.declaration || {}), [item.id]: e.target.checked };
+                          handleChange('declaration', decl);
+                        }}
+                        sx={{ p: 0, color: 'rgba(10, 22, 40, 0.3)', '&.Mui-checked': { color: '#C8922A' } }}
+                      />
+                      <Typography sx={{ fontSize: '15px', color: '#334155', lineHeight: 1.6, userSelect: 'none' }}>
+                        {item.text}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+
+                <Box sx={{ mb: 6, p: 4, bgcolor: '#F8FAFC', borderRadius: 2, border: '1px solid rgba(0,0,0,0.05)' }}>
+                  <Typography sx={{ fontWeight: 700, color: '#0A1628', mb: 3, fontSize: '16px' }}>Signatory Details</Typography>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        fullWidth
+                        label={<>Signatory Name <span style={{ color: '#EF4444' }}>*</span></>}
+                        size="small"
+                        value={formData?.declaration?.signatory_name || ''}
+                        onChange={(e) => {
+                          const decl = { ...formData.declaration, signatory_name: e.target.value };
+                          handleChange('declaration', decl);
+                        }}
+                        sx={{ '& .MuiInputBase-input': { fontSize: '15px' }, '& .MuiInputLabel-root': { fontSize: '15px' } }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        fullWidth
+                        label="Designation"
+                        size="small"
+                        value={formData?.declaration?.signatory_designation || ''}
+                        onChange={(e) => {
+                          const decl = { ...formData.declaration, signatory_designation: e.target.value };
+                          handleChange('declaration', decl);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        fullWidth
+                        label="Digital Signature (Type Full Name)"
+                        size="small"
+                        placeholder="Type name here"
+                        value={formData?.declaration?.typed_signature || ''}
+                        onChange={(e) => {
+                          const decl = { ...formData.declaration, typed_signature: e.target.value };
+                          handleChange('declaration', decl);
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+
+                <Box sx={{ mb: 6, p: 3, borderLeft: '4px solid #C8922A', bgcolor: 'rgba(200, 146, 42, 0.05)' }}>
+                  <Typography sx={{ fontSize: '13px', color: '#5A6478', fontStyle: 'italic', mb: 1 }}>
+                    Note: Student’s choices will be governed by the information you provide in this form. Therefore, please be as clear and detailed as possible. Before filling the form kindly refer to the placement brochure and placement website for the selection process and rules & regulations.
+                  </Typography>
+                  <Typography sx={{ fontSize: '13px', color: '#0A1628', fontWeight: 600 }}>
+                    For any queries, you may contact the placement cell.
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 5 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleDeclarationSave}
+                    sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}
+                  >
+                    Save Draft
+                  </Button>
+                  <Button
+                    variant="contained"
+                    disabled={!formData?.declaration?.aipc_guidelines || !formData?.declaration?.shortlisting_commitment || !formData?.declaration?.accuracy_profile || !formData?.declaration?.consent_ranking_agencies || !formData?.declaration?.adherence_toc || !formData?.declaration?.signatory_name}
+                    onClick={handleJnfSubmit}
+                    sx={{
+                      bgcolor: isChangesRequested ? '#92400E' : '#0A1628',
+                      px: 6,
+                      py: 1.2,
+                      fontWeight: 700,
+                      fontSize: '15px',
+                      '&:hover': { bgcolor: isChangesRequested ? '#78350F' : '#1B2430' },
+                      '&:disabled': { bgcolor: 'rgba(10,22,40,0.1)' }
+                    }}
+                  >
+                    {isChangesRequested ? '✓ Re-submit After Revision' : 'Confirm & Submit JNF'}
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
+                  <Button variant="outlined" onClick={() => setActiveTab(3)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
+                </Box>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
-                <Button variant="outlined" onClick={() => setActiveTab(3)} sx={{ borderColor: '#0A1628', color: '#0A1628', px: 4, py: 1, fontSize: '15px', '&:hover': { borderColor: '#C8922A', bgcolor: 'rgba(0,0,0,0.02)' } }}>← Prev</Button>
-              </Box>
-            </Box>
-          )}
-        </Box>
+            )}
+          </Box>
         </fieldset>
 
         {/* Request Changes Dialog */}
@@ -2209,7 +2209,7 @@ export default function JnfFormShell() {
             <Typography sx={{ fontSize: '13px', color: '#5A6478', mb: 2 }}>
               This will change the status to &quot;Changes Requested&quot; and send an email to the company asking them to update the form.
             </Typography>
-            <TextField fullWidth multiline rows={4} label="What changes are needed?" placeholder="Please describe the required changes..." 
+            <TextField fullWidth multiline rows={4} label="What changes are needed?" placeholder="Please describe the required changes..."
               value={changeNotes} onChange={(e) => setChangeNotes(e.target.value)}
               sx={{ mt: 1 }} />
           </DialogContent>
@@ -2236,25 +2236,25 @@ export default function JnfFormShell() {
           </DialogActions>
         </Dialog>
 
-        <Snackbar 
-            open={snackbar.open} 
-            autoHideDuration={4000} 
-            onClose={() => setSnackbar({ ...snackbar, open: false })}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          >
-            <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
-        </Box>
-
-        {/* AI Auto-Fill Dialog */}
-        <AiParsePdfDialog
-          open={showAiDialog}
-          onClose={() => setShowAiDialog(false)}
-          onApply={handleAiApply}
-          type="jnf"
-        />
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={4000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
+
+      {/* AI Auto-Fill Dialog */}
+      <AiParsePdfDialog
+        open={showAiDialog}
+        onClose={() => setShowAiDialog(false)}
+        onApply={handleAiApply}
+        type="jnf"
+      />
+    </Box>
   );
 }

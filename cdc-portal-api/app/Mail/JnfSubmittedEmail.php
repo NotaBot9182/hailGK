@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JnfVerifiedEmail extends Mailable implements ShouldQueue
+class JnfSubmittedEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -22,32 +22,9 @@ class JnfVerifiedEmail extends Mailable implements ShouldQueue
     public function build()
     {
         $type = strtoupper($this->notification->type);
-        $statusRaw = $this->notification->status;
+        $companyName = $this->notification->company ? $this->notification->company->name : 'Company';
         
-        $statusText = 'Updated';
-        $statusColor = '#1B5E6B'; // Default info
-        
-        if ($statusRaw === 'approved') {
-            $statusText = 'Verified & Approved';
-            $statusColor = '#22643c'; // Greenish
-        } elseif ($statusRaw === 'changes_requested') {
-            $statusText = 'Requires Changes';
-            $statusColor = '#d97706'; // Amber
-        } elseif ($statusRaw === 'rejected') {
-            $statusText = 'Rejected';
-            $statusColor = '#8B1A1A'; // Red
-        }
-
-        $reviewNotesHtml = '';
-        if ($this->notification->review_notes) {
-            $reviewNotesHtml = '
-            <div style="margin: 25px 0;">
-                <p style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;">Review Notes from CDC Admin:</p>
-                <div style="background-color: #f8f9fa; padding: 15px; border-left: 3px solid ' . $statusColor . '; color: #444; font-size: 14px; white-space: pre-wrap;">' . htmlspecialchars($this->notification->review_notes) . '</div>
-            </div>';
-        }
-
-        return $this->subject("Your CDC {$type} Submission: {$statusText}")
+        return $this->subject("New CDC {$type} Submission - {$companyName}")
                     ->html('
                         <div style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; background-color: #f4f7f6; padding: 40px 20px; color: #333;">
                             <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
@@ -56,22 +33,21 @@ class JnfVerifiedEmail extends Mailable implements ShouldQueue
                                     <p style="color: rgba(255,255,255,0.7); margin: 5px 0 0 0; font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">Career Development Centre</p>
                                 </div>
                                 <div style="padding: 40px 30px;">
-                                    <h2 style="margin-top: 0; color: #0A1628; font-size: 20px;">Submission Update</h2>
+                                    <h2 style="margin-top: 0; color: #0A1628; font-size: 20px;">Submission Received</h2>
                                     <p style="font-size: 15px; line-height: 1.6; color: #5A6478;">
                                         Hello,<br><br>
-                                        The status of your <strong>' . $type . '</strong> submission (Ref: <span style="font-family: monospace;">' . $this->notification->reference_number . '</span>) has been updated to:
+                                        This is to confirm that we have successfully received the <strong>' . $type . '</strong> submission from <strong>' . htmlspecialchars($companyName) . '</strong>.
                                     </p>
                                     
-                                    <div style="text-align: center; margin: 30px 0;">
-                                        <span style="display: inline-block; background-color: ' . $statusColor . '; color: #ffffff; padding: 10px 24px; border-radius: 4px; font-weight: 600; font-size: 16px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                            ' . $statusText . '
-                                        </span>
+                                    <div style="margin: 30px 0; padding: 20px; background-color: #f8fafc; border-left: 4px solid #1B5E6B; border-radius: 0 4px 4px 0;">
+                                        <p style="margin: 0 0 5px 0; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">Reference Number</p>
+                                        <div style="font-size: 18px; font-weight: 600; color: #1B5E6B; font-family: monospace;">
+                                            ' . $this->notification->reference_number . '
+                                        </div>
                                     </div>
                                     
-                                    ' . $reviewNotesHtml . '
-                                    
-                                    <p style="font-size: 15px; line-height: 1.6; color: #5A6478; margin-top: 30px;">
-                                        Please log in to the Recruiter Portal to view the details or take any necessary actions.
+                                    <p style="font-size: 15px; line-height: 1.6; color: #5A6478;">
+                                        The CDC administrative team will review your submission shortly. You will be notified via email once the status gets updated or if any changes are required.
                                     </p>
                                     
                                     <div style="margin: 35px 0; text-align: center;">

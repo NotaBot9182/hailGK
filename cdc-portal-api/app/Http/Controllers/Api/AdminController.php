@@ -80,7 +80,19 @@ class AdminController extends Controller
             try {
                 $userEmail = $notification->user->email ?? null;
                 if ($userEmail) {
+                    $adminEmails = \App\Models\User::whereIn('role', ['admin', 'super_admin'])->pluck('email')->toArray();
+                    $contactEmails = [];
+                    if ($notification->company) {
+                        $contactEmails = \App\Models\CompanyContact::where('company_id', $notification->company_id)
+                            ->pluck('email')
+                            ->filter()
+                            ->toArray();
+                    }
+                    $ccEmails = array_unique(array_merge($adminEmails, $contactEmails));
+                    $ccEmails = array_diff($ccEmails, [$userEmail]);
+
                     \Illuminate\Support\Facades\Mail::to($userEmail)
+                        ->cc($ccEmails)
                         ->queue(new \App\Mail\JnfVerifiedEmail($notification));
                 }
 

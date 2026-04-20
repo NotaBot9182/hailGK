@@ -411,6 +411,32 @@ class NotificationController extends Controller
             'submitted_at' => now(),
         ]);
 
+        try {
+            $userEmail = $request->user()->email;
+            
+            $adminEmails = \App\Models\User::whereIn('role', ['admin', 'super_admin'])
+                ->pluck('email')
+                ->toArray();
+                
+            $contactEmails = [];
+            if ($notification->company) {
+                $contactEmails = \App\Models\CompanyContact::where('company_id', $notification->company_id)
+                    ->pluck('email')
+                    ->filter()
+                    ->toArray();
+            }
+            
+            $ccEmails = array_unique(array_merge($adminEmails, $contactEmails));
+            $ccEmails = array_diff($ccEmails, [$userEmail]);
+
+            \Illuminate\Support\Facades\Mail::to($userEmail)
+                ->cc($ccEmails)
+                ->queue(new \App\Mail\JnfSubmittedEmail($notification));
+                
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Submission notification email failed: ' . $e->getMessage());
+        }
+
         return response()->json([
             'message' => $notification->revision_count > 0
                 ? 'Form re-submitted successfully after revision.'

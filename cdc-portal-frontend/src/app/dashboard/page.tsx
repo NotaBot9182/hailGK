@@ -268,7 +268,7 @@ export default function DashboardPage() {
                 borderLeft: '3px solid transparent',
                 color: 'rgba(255,255,255,0.55)',
                 transition: 'all 0.15s',
-                '&:hover': { color: 'rgba(255,255,255,0.85)', bgcolor: 'rgba(255,255,255,0.05)' },
+                '&:hover': { color: '#ef4444', bgcolor: 'rgba(239,68,68,0.1)', borderLeft: '3px solid #ef4444' },
               }}
               id="logout-btn"
             >

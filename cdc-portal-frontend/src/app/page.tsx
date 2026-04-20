@@ -2,6 +2,7 @@
 
 import { Box, Typography, Button } from '@mui/material';
 import Link from 'next/link';
+import { useAuth } from '@/lib/auth';
 
 const stats = [
   { value: '100', suffix: '', label: 'Years of academic excellence' },
@@ -29,6 +30,8 @@ const processSteps = [
 ];
 
 export default function LandingPage() {
+  const { isAuthenticated, isLoading } = useAuth();
+  
   return (
     <Box sx={{ minHeight: '100vh' }}>
       {/* ─── TOP STRIP ─── */}
@@ -72,9 +75,17 @@ export default function LandingPage() {
               <Box key={link.label} component="a" href={link.href} target={link.href === '/brochure.html' ? "_blank" : undefined} sx={{ px: '14px', py: '6px', fontSize: '13.5px', color: '#5A6478', textDecoration: 'none', borderRadius: '4px', transition: 'all 0.15s', whiteSpace: 'nowrap', '&:hover': { bgcolor: '#F4F6F9', color: '#0A1628' } }}>{link.label}</Box>
             ))}
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', ml: 'auto' }}>
-            <Button component={Link} href="/login" sx={{ fontSize: '13.5px', color: '#0A1628', border: '1px solid rgba(10,22,40,0.2)', borderRadius: '4px', px: '20px', py: '6px', '&:hover': { bgcolor: '#F4F6F9' } }}>Recruiter Login</Button>
-            <Button component={Link} href="/register" sx={{ fontSize: '13.5px', bgcolor: '#0A1628', color: '#FEFEFE', borderRadius: '4px', px: '20px', py: '6px', '&:hover': { bgcolor: '#2C3345' } }}>Register Company</Button>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', ml: 'auto', minHeight: '36px' }}>
+            {!isLoading && (
+              isAuthenticated ? (
+                <Button component={Link} href="/dashboard" sx={{ fontSize: '13.5px', bgcolor: '#0A1628', color: '#FEFEFE', borderRadius: '4px', px: '20px', py: '6px', '&:hover': { bgcolor: '#2C3345' } }}>Dashboard</Button>
+              ) : (
+                <>
+                  <Button component={Link} href="/login" sx={{ fontSize: '13.5px', color: '#0A1628', border: '1px solid rgba(10,22,40,0.2)', borderRadius: '4px', px: '20px', py: '6px', '&:hover': { bgcolor: '#F4F6F9' } }}>Recruiter Login</Button>
+                  <Button component={Link} href="/register" sx={{ fontSize: '13.5px', bgcolor: '#0A1628', color: '#FEFEFE', borderRadius: '4px', px: '20px', py: '6px', '&:hover': { bgcolor: '#2C3345' } }}>Register Company</Button>
+                </>
+              )
+            )}
           </Box>
         </Box>
       </Box>
@@ -97,10 +108,12 @@ export default function LandingPage() {
               Submit Job Notification Forms (JNF) and Intern Notification Forms (INF) for India&apos;s premier institute of technology, mining, and applied sciences — established 1926.
             </Typography>
             <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Button component={Link} href="/register" sx={{ bgcolor: '#C8922A', color: '#0A1628', fontWeight: 600, px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '8px', '&:hover': { bgcolor: '#E8B64A' } }}>
-                Register as Recruiter
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </Button>
+              {!isLoading && (
+                <Button component={Link} href={isAuthenticated ? "/dashboard" : "/register"} sx={{ bgcolor: '#C8922A', color: '#0A1628', fontWeight: 600, px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '8px', '&:hover': { bgcolor: '#E8B64A' } }}>
+                  {isAuthenticated ? 'Go to Dashboard' : 'Register as Recruiter'}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </Button>
+              )}
               <Button component="a" href="/brochure.html" target="_blank" sx={{ bgcolor: 'transparent', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.25)', px: '28px', py: '12px', fontSize: '14.5px', borderRadius: '4px', '&:hover': { borderColor: 'rgba(255,255,255,0.5)', bgcolor: 'rgba(255,255,255,0.06)' } }}>
                 Download Brochure
               </Button>
